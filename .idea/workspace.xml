@@ -5,12 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6446f3a-efa2-4750-a0f7-920681e7d9cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/0/2/02eb9dd4f2e4e3737d8af9ae333ba7671181bf47" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/2/d/2d2f683b667f752a4ad5fca1e0c0331f6b5bcb3a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/4/b/4b29e3f307800b177c800df5663139bda784159a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/f/3/f3914408f73604b18b14278c9aa55b4451c13ba8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/0/2/02eb9dd4f2e4e3737d8af9ae333ba7671181bf47" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/2/d/2d2f683b667f752a4ad5fca1e0c0331f6b5bcb3a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/4/b/4b29e3f307800b177c800df5663139bda784159a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/f/3/f3914408f73604b18b14278c9aa55b4451c13ba8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/exception/AuthorizationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/subscriptionplan/PlanDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/subscriptionplan/SubscriptionPlans.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/Organization.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notifications/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptim/notifications/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/security/UserDetailsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/security/UserDetailsImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
