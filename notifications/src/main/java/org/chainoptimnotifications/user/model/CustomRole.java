@@ -1,21 +1,12 @@
 package org.chainoptimnotifications.user.model;
 
-import org.chainoptimnotifications.exception.ValidationException;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.security.Permissions;
 import java.time.LocalDateTime;
 import java.util.Set;
 
