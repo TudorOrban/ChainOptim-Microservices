@@ -1,8 +1,8 @@
-package org.chainoptimnotifications.config.security;
+package org.chainoptimnotifications.user.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.chainoptimnotifications.user.User;
+import org.chainoptimnotifications.user.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,6 +23,8 @@ public class UserDetailsImpl implements UserDetails, Serializable {
     private Integer organizationId;
     @Getter
     private User.Role role;
+    @Getter
+    private CustomRole customRole;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,4 +1,4 @@
-package org.chainoptimnotifications.user;
+package org.chainoptimnotifications.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;

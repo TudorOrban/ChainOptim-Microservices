@@ -57,7 +57,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/Programming/Java/ChainOptimizer-Microservices/notifications/src/main/java/org/chainoptimnotifications/subscriptionplan",
+    "last_opened_file_path": "D:/Projects/Programming/Java/ChainOptimizer-Microservices/notifications/src/main/java/org/chainoptimnotifications/user/service",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -66,17 +66,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptimnotifications\user\service" />
+      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptimnotifications\config" />
+      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptimnotifications\redis" />
+      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\resources" />
       <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptimnotifications\subscriptionplan" />
-      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptim\notifications" />
-      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptim\notifications\enums" />
-      <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptim\notifications\exception" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.chainoptimnotifications.config.security" />
       <recent name="org.chainoptimnotifications.notification.model" />
       <recent name="org.chainoptimnotifications.model" />
       <recent name="org.chainoptimnotifications.exception" />
       <recent name="org.chainoptimnotifications.user" />
-      <recent name="org.chainoptimnotifications.config.security" />
     </key>
   </component>
   <component name="RunManager">

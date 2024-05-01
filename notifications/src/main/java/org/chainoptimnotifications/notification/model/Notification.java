@@ -27,6 +27,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
+
+    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<NotificationUser> notificationUsers = new HashSet<>();
 
     @Column(name = "title")

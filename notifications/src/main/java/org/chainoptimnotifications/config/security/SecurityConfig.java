@@ -1,8 +1,9 @@
 package org.chainoptimnotifications.config.security;
 
-//import org.chainoptimnotifications.user.UserDetailsServiceImpl;
+//import org.chainoptimnotifications.user.service.UserDetailsServiceImpl;
 //import org.chainoptimnotifications.user.JwtAuthenticationFilter;
 
+import org.chainoptimnotifications.user.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +26,14 @@ import java.util.Collections;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-//    private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 //
 //    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-//    @Autowired
-//    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
-//        this.userDetailsService = userDetailsService;
-//        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-//    }
+    @Autowired
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,27 +44,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/user-settings/**").permitAll()
                         .requestMatchers("/api/v1/organization/**").permitAll()
-                        .requestMatchers("/api/v1/organization-invites/**").permitAll()
-                        .requestMatchers("/api/v1/organization-requests/**").permitAll()
-                        .requestMatchers("/api/v1/supply-chain-snapshots/**").permitAll()
-                        .requestMatchers("/api/v1/custom-roles/**").permitAll()
-                        .requestMatchers("/api/v1/products/**").permitAll()
-                        .requestMatchers("/api/v1/stages/**").permitAll()
-                        .requestMatchers("/api/v1/units-of-measurement/**").permitAll()
-                        .requestMatchers("/api/v1/raw-materials/**").permitAll()
-                        .requestMatchers("/api/v1/components/**").permitAll()
-                        .requestMatchers("/api/v1/factories/**").permitAll()
-                        .requestMatchers("/api/v1/factory-stages/**").permitAll()
-                        .requestMatchers("/api/v1/warehouses/**").permitAll()
-                        .requestMatchers("/api/v1/suppliers/**").permitAll()
-                        .requestMatchers("/api/v1/supplier-orders/**").permitAll()
-                        .requestMatchers("/api/v1/suppliers/shipments/**").permitAll()
-                        .requestMatchers("/api/v1/clients/**").permitAll()
-                        .requestMatchers("/api/v1/client-orders/**").permitAll()
-                        .requestMatchers("/api/v1/clients/shipments/**").permitAll()
-                        .requestMatchers("/api/v1/graphs/**").permitAll()
-                        .requestMatchers("/api/v1/product-graphs/**").permitAll()
-                        .requestMatchers("/api/v1/locations/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated()
@@ -72,7 +51,7 @@ public class SecurityConfig {
 //                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-//                .userDetailsService(userDetailsService)
+                .userDetailsService(userDetailsService)
                 .authenticationManager(authenticationManagerBean());
         return http.build();
     }
@@ -91,7 +70,7 @@ public class SecurityConfig {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-//        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 }

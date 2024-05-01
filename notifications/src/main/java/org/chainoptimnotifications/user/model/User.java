@@ -1,8 +1,17 @@
-package org.chainoptimnotifications.user;
+package org.chainoptimnotifications.user.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.chainoptimnotifications.user.model.CustomRole;
+import org.chainoptimnotifications.user.model.Organization;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     private String id;
@@ -21,6 +30,7 @@ public class User {
         NONE
     }
 
+    private Role role;
     private CustomRole customRole;
     private Boolean isProfilePublic;
     private String verificationToken;

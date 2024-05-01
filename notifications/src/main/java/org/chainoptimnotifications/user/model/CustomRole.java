@@ -1,4 +1,4 @@
-package org.chainoptimnotifications.user;
+package org.chainoptimnotifications.user.model;
 
 import org.chainoptimnotifications.exception.ValidationException;
 
@@ -23,8 +23,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "custom_roles")
 public class CustomRole implements Serializable {
 
     @Serial
