@@ -5,62 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6446f3a-efa2-4750-a0f7-920681e7d9cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/8/f8e6629def1a09428fabb16877ab739690f3e5f9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/8/f8e6629def1a09428fabb16877ab739690f3e5f9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/6/6/6651ddff6eb82c840ced7c1dddee15c6e1913dd4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/6/6/6651ddff6eb82c840ced7c1dddee15c6e1913dd4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#ib_16384_0.dblwr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#ib_16384_1.dblwr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo10_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo11_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo12_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo13_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo14_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo15_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo16_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo17_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo18_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo19_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo20_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo21_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo22_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo23_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo24_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo25_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo26_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo27_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo28_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo29_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo30_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo31_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo7_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo8_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_redo/#ib_redo9_tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_1.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_10.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_2.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_3.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_4.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_5.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_6.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_7.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_8.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/#innodb_temp/temp_9.ibt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/auto.cnf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/ibdata1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/ibtmp1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/mysql.ibd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/undo_001" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/mysql/undo_002" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/service/CachedUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/e/0e70d968b2855befbb299059551f47b7dbe760d6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/e/1ec8a2eaf530523212e3ee9aa85999e06cfae132" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/c/bc2cb04d93096fc13ab413e7e915fbbfa5af12a6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/e/0e70d968b2855befbb299059551f47b7dbe760d6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/e/1ec8a2eaf530523212e3ee9aa85999e06cfae132" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/c/bc2cb04d93096fc13ab413e7e915fbbfa5af12a6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/KafkaConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/enums/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/model/KafkaEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationListenerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationListenerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/ClientOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/ClientOrderEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/Component.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/SupplierOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/SupplierOrderEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/UnitOfMeasurement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/Restart.ps1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +56,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "21",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects/Programming/Java/ChainOptimizer-Microservices/notifications/src/main/java/org/chainoptim/notifications/model"
   }
