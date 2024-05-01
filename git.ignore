@@ -1,1 +1,8 @@
 .idea
+
+/mysql/
+
+docker-compose.yml
+
+core/src/main/resources/
+notifications/src/main/resources/
