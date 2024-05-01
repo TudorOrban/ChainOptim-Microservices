@@ -14,7 +14,6 @@ public class NotificationDTOMapper {
         notification.setEntityId(addNotificationDTO.getEntityId());
         notification.setEntityType(addNotificationDTO.getEntityType());
         notification.setMessage(addNotificationDTO.getMessage());
-        notification.setReadStatus(addNotificationDTO.getReadStatus());
         notification.setType(addNotificationDTO.getType());
 
         return notification;
@@ -26,7 +25,6 @@ public class NotificationDTOMapper {
         addNotificationDTO.setEntityId(notification.getEntityId());
         addNotificationDTO.setEntityType(notification.getEntityType());
         addNotificationDTO.setMessage(notification.getMessage());
-        addNotificationDTO.setReadStatus(notification.getReadStatus());
         addNotificationDTO.setType(notification.getType());
         addNotificationDTO.setUserIds(userIds);
 
@@ -38,7 +36,6 @@ public class NotificationDTOMapper {
         notification.setEntityId(updateNotificationDTO.getEntityId());
         notification.setEntityType(updateNotificationDTO.getEntityType());
         notification.setMessage(updateNotificationDTO.getMessage());
-        notification.setReadStatus(updateNotificationDTO.getReadStatus());
         notification.setType(updateNotificationDTO.getType());
 
         return notification;

@@ -47,6 +47,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         return null;
     }
 
+    public Organization getOrganizationWithUsersAndCustomRoles(Integer id) {
+        return organizationRepository.findByIdWithUsersAndCustomRoles(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Organization with ID: " + id + " not found"));
+    }
+
     @Transactional
     public Organization createOrganization(CreateOrganizationDTO createOrganizationDTO) {
         // Create organization

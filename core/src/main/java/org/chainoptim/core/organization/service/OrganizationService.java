@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface OrganizationService {
     OrganizationDTO getOrganizationById(Integer id, boolean includeUsers);
+    Organization getOrganizationWithUsersAndCustomRoles(Integer id);
     Organization createOrganization(CreateOrganizationDTO createOrganizationDTO);
     Organization updateOrganization(UpdateOrganizationDTO organizationDTO);
     void deleteOrganization(Integer id);

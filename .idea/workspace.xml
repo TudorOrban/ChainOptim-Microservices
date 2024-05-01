@@ -5,31 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6446f3a-efa2-4750-a0f7-920681e7d9cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailVerificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailVerificationServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/dto/AddNotificationDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/dto/NotificationDTOMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/dto/UpdateNotificationDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/model/NotificationUserDistribution.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/ExtraInfoFormatterService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/ExtraInfoFormatterServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationDistributionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationDistributionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationFormatterService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationFormatterServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/websocket/SimpleTextWebSocketHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/websocket/UserHandshakeInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/websocket/WebSocketMessagingService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/service/SupplierRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/a/8aaa8214543c4363772710078fa2121d6f38d922" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/6/964628e86c555acfd455f939482a5ea3a424428d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/4/a43511fb4a9504463e85c00f85b5661ec554bcb9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/a/8aaa8214543c4363772710078fa2121d6f38d922" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/6/964628e86c555acfd455f939482a5ea3a424428d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/4/a43511fb4a9504463e85c00f85b5661ec554bcb9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/e/7/e736c0e912b0a33e9d3dbb8f45973e9109099be8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/e/7/e736c0e912b0a33e9d3dbb8f45973e9109099be8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/org/chainoptim/apigateway/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/internalcommunication/controller/OrganizationInternalController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/repository/NotificationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/repository/NotificationSearchRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/repository/NotificationSearchRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/repository/NotificationUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/PaginatedResults.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/service/OrganizationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/service/OrganizationRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/UnitOfMeasurement.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/UnitOfMeasurement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/organization/service/OrganizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/organization/service/OrganizationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/organization/service/OrganizationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/organization/service/OrganizationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailVerificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/email/service/EmailVerificationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/dto/NotificationDTOMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/dto/NotificationDTOMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/model/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/model/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationDistributionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationDistributionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationFormatterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationFormatterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationListenerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationListenerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationPersistenceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/service/SupplierRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/service/SupplierRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

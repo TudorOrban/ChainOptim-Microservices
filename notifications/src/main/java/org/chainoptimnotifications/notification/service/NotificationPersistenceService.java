@@ -1,10 +1,10 @@
 package org.chainoptimnotifications.notification.service;
 
-import org.chainoptim.core.notifications.dto.AddNotificationDTO;
-import org.chainoptim.core.notifications.dto.UpdateNotificationDTO;
-import org.chainoptim.core.notifications.model.Notification;
-import org.chainoptim.core.notifications.model.NotificationUser;
-import org.chainoptim.shared.search.model.PaginatedResults;
+import org.chainoptimnotifications.notification.dto.AddNotificationDTO;
+import org.chainoptimnotifications.notification.dto.UpdateNotificationDTO;
+import org.chainoptimnotifications.notification.model.Notification;
+import org.chainoptimnotifications.notification.model.NotificationUser;
+import org.chainoptimnotifications.outsidefeatures.model.PaginatedResults;
 
 import java.util.List;
 

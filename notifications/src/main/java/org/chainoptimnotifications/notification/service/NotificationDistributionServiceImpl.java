@@ -13,6 +13,7 @@ import org.chainoptimnotifications.user.model.FeaturePermissions;
 import org.chainoptimnotifications.user.model.Organization;
 import org.chainoptimnotifications.user.model.Permissions;
 import org.chainoptimnotifications.user.model.User;
+import org.chainoptimnotifications.user.service.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,54 +24,58 @@ import java.util.Set;
 @Service
 public class NotificationDistributionServiceImpl implements NotificationDistributionService {
 
-    private final SupplierRepository supplierRepository;
-    private final ClientRepository clientRepository;
+//    private final SupplierRepository supplierRepository;
+//    private final ClientRepository clientRepository;
     private final OrganizationRepository organizationRepository;
-    private final UserSettingsRepository userSettingsRepository;
+//    private final UserSettingsRepository userSettingsRepository;
 
     @Autowired
-    public NotificationDistributionServiceImpl(SupplierRepository supplierRepository,
-                                               ClientRepository clientRepository,
-                                               OrganizationRepository organizationRepository,
-                                               UserSettingsRepository userSettingsRepository) {
-        this.supplierRepository = supplierRepository;
-        this.clientRepository = clientRepository;
+    public NotificationDistributionServiceImpl(
+//                                               ClientRepository clientRepository,
+                                               OrganizationRepository organizationRepository) {
+//                                               UserSettingsRepository userSettingsRepository) {
+//        this.supplierRepository = supplierRepository;
+//        this.clientRepository = clientRepository;
         this.organizationRepository = organizationRepository;
-        this.userSettingsRepository = userSettingsRepository;
+//        this.userSettingsRepository = userSettingsRepository;
     }
 
     public NotificationUserDistribution distributeEventToUsers(SupplierOrderEvent event) {
-        System.out.println("Distributing event: " + event);
-        Integer organizationId = determineOrderOrganization(event);
+        System.out.println("Distributing event in notifications ms: " + event);
+//        Integer organizationId = determineOrderOrganization(event);
+        Integer organizationId = 1;
 
         return distributeEventToUsers(organizationId, event.getEventType(), event.getEntityType());
     }
 
     public NotificationUserDistribution distributeEventToUsers(ClientOrderEvent event) {
-        System.out.println("Distributing event: " + event);
-        Integer organizationId = determineOrderOrganization(event);
+        System.out.println("Distributing event in notifications ms: " + event);
+//        Integer organizationId = determineOrderOrganization(event);
+        Integer organizationId = 1;
 
         return distributeEventToUsers(organizationId, event.getEventType(), event.getEntityType());
     }
 
     private NotificationUserDistribution distributeEventToUsers(Integer organizationId, KafkaEvent.EventType eventType, Feature entityType) {
         // TODO: Cache this with Redis
-        Organization organization = organizationRepository.findByIdWithUsersAndCustomRoles(organizationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Organization with ID: " + organizationId + " not found"));
+        Organization organization = organizationRepository.getOrganizationWithUsersAndCustomRoles(organizationId);
 
         List<String> candidateUserIds = new ArrayList<>();
         List<User> emailCandidateUsers = new ArrayList<>();
+        if (organization == null) {
+            return new NotificationUserDistribution(candidateUserIds, candidateUserIds);
+        }
 
         // Skip if subscription plan doesn't support notifications
-        if (!organization.getSubscriptionPlan().isRealTimeNotificationsOn()) {
+        if (organization.getSubscriptionPlan() != null && !organization.getSubscriptionPlan().isRealTimeNotificationsOn()) {
             return new NotificationUserDistribution(candidateUserIds, candidateUserIds);
         }
 
         determineMembersWithPermissions(organization.getUsers(), eventType, entityType, candidateUserIds, emailCandidateUsers);
 
         // Determine which candidate users should receive this event based on their settings
-        List<UserSettings> userSettings = userSettingsRepository.findByUserIdIn(candidateUserIds);
-
+//        List<UserSettings> userSettings = userSettingsRepository.findByUserIdIn(candidateUserIds);
+        List<UserSettings> userSettings = new ArrayList<>();
         List<String> usersToReceiveNotification = candidateUserIds.stream().filter(userId -> {
             UserSettings settings = userSettings.stream().filter(userSetting -> userSetting.getUserId().equals(userId)).findFirst().orElse(null);
             return settings != null && shouldReceiveNotification(settings.getNotificationSettings(), entityType);
@@ -105,15 +110,15 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
         }
     }
 
-    private Integer determineOrderOrganization(SupplierOrderEvent event) {
-        return supplierRepository.findOrganizationIdById(Long.valueOf(event.getNewEntity().getSupplierId()))
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier with ID: " + event.getNewEntity().getSupplierId() + " not found"));
-    }
-
-    private Integer determineOrderOrganization(ClientOrderEvent event) {
-        return clientRepository.findOrganizationIdById(Long.valueOf(event.getNewEntity().getClientId()))
-                .orElseThrow(() -> new ResourceNotFoundException("Client with ID: " + event.getNewEntity().getClientId() + " not found"));
-    }
+//    private Integer determineOrderOrganization(SupplierOrderEvent event) {
+//        return supplierRepository.findOrganizationIdById(Long.valueOf(event.getNewEntity().getSupplierId()))
+//                .orElseThrow(() -> new ResourceNotFoundException("Supplier with ID: " + event.getNewEntity().getSupplierId() + " not found"));
+//    }
+//
+//    private Integer determineOrderOrganization(ClientOrderEvent event) {
+//        return clientRepository.findOrganizationIdById(Long.valueOf(event.getNewEntity().getClientId()))
+//                .orElseThrow(() -> new ResourceNotFoundException("Client with ID: " + event.getNewEntity().getClientId() + " not found"));
+//    }
 
     private FeaturePermissions getFeaturePermissions(Permissions permissions, Feature entityType) {
         if (permissions == null) return null;

@@ -52,9 +52,6 @@ public class Notification {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "read_status")
-    private Boolean readStatus;
-
     @Column(name = "type")
     private String type;
 

@@ -1,15 +1,15 @@
 package org.chainoptimnotifications.notification.service;
 
-import org.chainoptim.core.notifications.dto.AddNotificationDTO;
-import org.chainoptim.core.notifications.dto.NotificationDTOMapper;
-import org.chainoptim.core.notifications.dto.UpdateNotificationDTO;
-import org.chainoptim.core.notifications.model.Notification;
-import org.chainoptim.core.notifications.model.NotificationUser;
-import org.chainoptim.core.notifications.repository.NotificationRepository;
-import org.chainoptim.core.notifications.repository.NotificationUserRepository;
-import org.chainoptim.exception.ResourceNotFoundException;
-import org.chainoptim.shared.search.model.PaginatedResults;
 import jakarta.transaction.Transactional;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
+import org.chainoptimnotifications.notification.dto.AddNotificationDTO;
+import org.chainoptimnotifications.notification.dto.NotificationDTOMapper;
+import org.chainoptimnotifications.notification.dto.UpdateNotificationDTO;
+import org.chainoptimnotifications.notification.model.Notification;
+import org.chainoptimnotifications.notification.model.NotificationUser;
+import org.chainoptimnotifications.notification.repository.NotificationRepository;
+import org.chainoptimnotifications.notification.repository.NotificationUserRepository;
+import org.chainoptimnotifications.outsidefeatures.model.PaginatedResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

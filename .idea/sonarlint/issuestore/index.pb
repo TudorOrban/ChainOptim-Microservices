@@ -46,3 +46,9 @@ H
 core/scripts/Restart.ps1,0\e\0e70d968b2855befbb299059551f47b7dbe760d6
 Œ
 \notifications/src/main/java/org/chainoptimnotifications/outsidefeatures/model/Component.java,1\e\1ec8a2eaf530523212e3ee9aa85999e06cfae132
+‹
+[notifications/src/main/java/org/chainoptimnotifications/email/service/EmailServiceImpl.java,8\a\8aaa8214543c4363772710078fa2121d6f38d922
+“
+cnotifications/src/main/java/org/chainoptimnotifications/notification/dto/NotificationDTOMapper.java,9\6\964628e86c555acfd455f939482a5ea3a424428d
+¢
+rnotifications/src/main/java/org/chainoptimnotifications/notification/service/NotificationFormatterServiceImpl.java,a\4\a43511fb4a9504463e85c00f85b5661ec554bcb9

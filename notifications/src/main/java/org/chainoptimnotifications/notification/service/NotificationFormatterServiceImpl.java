@@ -23,7 +23,6 @@ public class NotificationFormatterServiceImpl implements NotificationFormatterSe
         Notification notification = new Notification();
         notification.setTitle(formatTitle(event.getEntityType(), event.getEventType()));
         notification.setMessage(formatMessage(event.getEntityType(), event.getEventType(), event.getMainEntityType(), event.getMainEntityName()));
-        notification.setReadStatus(false);
         notification.setEntityType(event.getEntityType());
         notification.setExtraInfo(extraInfoFormatterService.formatExtraInfo(event));
 
@@ -35,7 +34,6 @@ public class NotificationFormatterServiceImpl implements NotificationFormatterSe
         Notification notification = new Notification();
         notification.setTitle(formatTitle(event.getEntityType(), event.getEventType()));
         notification.setMessage(formatMessage(event.getEntityType(), event.getEventType(), event.getMainEntityType(), event.getMainEntityName()));
-        notification.setReadStatus(false);
         notification.setEntityType(event.getEntityType());
 
         return notification;
