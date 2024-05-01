@@ -1,0 +1,36 @@
+networks:
+  default:
+    name: my_custom_network
+    external: false
+
+services:
+  # Core service
+  mysql-core:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Cjql195jsov
+      MYSQL_DATABASE: chain_optimizer_schema
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./core/database/schema:/docker-entrypoint-initdb.d
+    networks:
+      - default
+
+  chainoptim-core:
+    image: tudoraorban/chainoptim-core:latest
+    container_name: chainoptim-core
+    depends_on:
+      - mysql-core
+      - redis
+      - kafka
+    networks:
+      - default
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker-dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://chainoptim-db:5432/chainoptim
+      - SPRING_DATASOURCE_USERNAME=chainoptim
+      - SPRING_DATASOURCE_PASSWORD=chainoptim
