@@ -44,16 +44,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
         throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        Enumeration<String> headerNames = httpRequest.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            System.out.println(headerName + ": " + httpRequest.getHeader(headerName));
-        }
         String jwt = getJwtFromRequest(httpRequest);
-        System.out.println("Extracted JWT: " + jwt);
-        try {
-//            String jwt = getJwtFromRequest((HttpServletRequest) request);
 
+        try {
             // Validate token
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 // Get user details from token and set to SecurityContext

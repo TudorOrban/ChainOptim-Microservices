@@ -9,6 +9,7 @@ import org.chainoptimnotifications.outsidefeatures.model.NotificationSettings;
 import org.chainoptimnotifications.outsidefeatures.model.SupplierOrderEvent;
 import org.chainoptimnotifications.outsidefeatures.model.UserSettings;
 import org.chainoptimnotifications.outsidefeatures.service.SupplierRepository;
+import org.chainoptimnotifications.outsidefeatures.service.UserSettingsRepository;
 import org.chainoptimnotifications.user.model.FeaturePermissions;
 import org.chainoptimnotifications.user.model.Organization;
 import org.chainoptimnotifications.user.model.Permissions;
@@ -27,17 +28,17 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
 //    private final SupplierRepository supplierRepository;
 //    private final ClientRepository clientRepository;
     private final OrganizationRepository organizationRepository;
-//    private final UserSettingsRepository userSettingsRepository;
+    private final UserSettingsRepository userSettingsRepository;
 
     @Autowired
     public NotificationDistributionServiceImpl(
 //                                               ClientRepository clientRepository,
-                                               OrganizationRepository organizationRepository) {
-//                                               UserSettingsRepository userSettingsRepository) {
+                                               OrganizationRepository organizationRepository,
+                                               UserSettingsRepository userSettingsRepository) {
 //        this.supplierRepository = supplierRepository;
 //        this.clientRepository = clientRepository;
         this.organizationRepository = organizationRepository;
-//        this.userSettingsRepository = userSettingsRepository;
+        this.userSettingsRepository = userSettingsRepository;
     }
 
     public NotificationUserDistribution distributeEventToUsers(SupplierOrderEvent event) {
@@ -73,13 +74,14 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
 
         determineMembersWithPermissions(organization.getUsers(), eventType, entityType, candidateUserIds, emailCandidateUsers);
 
+        System.out.println("Candidate user IDs: " + candidateUserIds);
         // Determine which candidate users should receive this event based on their settings
-//        List<UserSettings> userSettings = userSettingsRepository.findByUserIdIn(candidateUserIds);
-        List<UserSettings> userSettings = new ArrayList<>();
+        List<UserSettings> userSettings = userSettingsRepository.getSettingsByUserIds(candidateUserIds);
         List<String> usersToReceiveNotification = candidateUserIds.stream().filter(userId -> {
             UserSettings settings = userSettings.stream().filter(userSetting -> userSetting.getUserId().equals(userId)).findFirst().orElse(null);
             return settings != null && shouldReceiveNotification(settings.getNotificationSettings(), entityType);
         }).toList();
+        System.out.println("Users to receive notification: " + usersToReceiveNotification);
 
         List<String> usersToReceiveEmail = emailCandidateUsers.stream().filter(user -> {
             UserSettings settings = userSettings.stream().filter(userSetting -> userSetting.getUserId().equals(user.getId())).findFirst().orElse(null);

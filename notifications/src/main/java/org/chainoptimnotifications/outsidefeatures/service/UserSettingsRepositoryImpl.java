@@ -1,33 +1,44 @@
-package org.chainoptimnotifications.user.service;
+package org.chainoptimnotifications.outsidefeatures.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.chainoptimnotifications.outsidefeatures.model.UserSettings;
 import org.chainoptimnotifications.user.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class OrganizationRepositoryImpl implements OrganizationRepository {
+public class UserSettingsRepositoryImpl implements UserSettingsRepository {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public OrganizationRepositoryImpl(ObjectMapper objectMapper) {
+    public UserSettingsRepositoryImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
-    public Organization getOrganizationWithUsersAndCustomRoles(Integer id) {
-        String routeAddress = "http://chainoptim-core:8080/api/v1/internal/organizations/" + id;
+    public List<UserSettings> getSettingsByUserIds(List<String> userIds) {
+        if (userIds.isEmpty()) return new ArrayList<>();
+
+        String routeAddress = "http://chainoptim-core:8080/api/v1/internal/settings/users";
+        URI uri = UriComponentsBuilder.fromHttpUrl(routeAddress)
+                .queryParam("userIds", String.join(",", userIds))  // Join user IDs into a single query parameter
+                .build()
+                .toUri();
+
         String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUdWRvckFPcmJhbjEiLCJvcmdhbml6YXRpb25faWQiOjEsImlhdCI6MTcxNDMzOTg5MCwiZXhwIjoxNzE0OTQ0NjkwfQ.sR98XrH6oKjFSU_-FevFIk-Cp_UqgDyaa8bmJqn7SCW0s6TH1PZyynGIqYiyeUfm0qOCcYuFU9Cd-RiD2NN6Lg";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(routeAddress))
+                .uri(uri)
                 .header("Authorization", "Bearer " + jwtToken)
                 .GET()
                 .build();
@@ -37,7 +48,7 @@ public class OrganizationRepositoryImpl implements OrganizationRepository {
                 .thenApply(response -> {
                     System.out.println(response);
                     try {
-                        return objectMapper.readValue(response, Organization.class);
+                        return objectMapper.readValue(response, new TypeReference<List<UserSettings>>() {});
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;

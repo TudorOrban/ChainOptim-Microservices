@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserSettingsServiceImpl implements UserSettingsService {
 
@@ -27,6 +29,10 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     public UserSettings getUserSettings(String userId) {
         return userSettingsRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User settings for user with ID: " + userId + " not found"));
+    }
+
+    public List<UserSettings> getSettingsByUserIdIn(List<String> userIds) {
+        return userSettingsRepository.findByUserIdIn(userIds);
     }
 
     public UserSettings saveUserSettings(CreateUserSettingsDTO userSettingsDTO) {

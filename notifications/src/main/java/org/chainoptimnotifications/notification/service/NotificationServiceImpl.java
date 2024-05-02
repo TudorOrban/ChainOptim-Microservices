@@ -81,6 +81,7 @@ public class NotificationServiceImpl implements NotificationService {
             String serializedNotification = objectMapper.writeValueAsString(notification);
 
             // Send the event to all users connected to the WebSocket
+            System.out.println("Sessions: " + messagingService.getSessions());
             for (String userId : userIds) {
                 if (messagingService.getSessions().containsKey(userId)) {
                     messagingService.sendMessageToUser(userId, serializedNotification);

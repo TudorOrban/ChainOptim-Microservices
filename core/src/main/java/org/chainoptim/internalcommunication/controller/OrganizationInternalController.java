@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/organizations-internal")
+@RequestMapping("/api/v1/internal/organizations")
 public class OrganizationInternalController {
 
     private final OrganizationService organizationService;
