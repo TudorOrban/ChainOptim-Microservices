@@ -22,6 +22,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Enumeration;
 
 @Component
 @EnableWebSecurity
@@ -42,8 +43,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
         throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        Enumeration<String> headerNames = httpRequest.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ": " + httpRequest.getHeader(headerName));
+        }
+        String jwt = getJwtFromRequest(httpRequest);
+        System.out.println("Extracted JWT: " + jwt);
         try {
-            String jwt = getJwtFromRequest((HttpServletRequest) request);
+//            String jwt = getJwtFromRequest((HttpServletRequest) request);
 
             // Validate token
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
