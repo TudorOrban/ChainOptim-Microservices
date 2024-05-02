@@ -25,6 +25,7 @@ public class WebSocketMessagingService {
 
     public void sendMessageToUser(String userId, String message) {
         System.out.println("Sending message to user: " + userId);
+
         WebSocketSession session = sessions.get(userId);
         if (session == null || !session.isOpen()) {
             return;

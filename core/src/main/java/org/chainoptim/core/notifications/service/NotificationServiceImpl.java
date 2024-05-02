@@ -79,6 +79,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     private void sendRealTimeNotification(Notification notification, List<String> userIds) {
         System.out.println("Sending notification: " + notification);
+        System.out.println("Sending notification to users: " + userIds);
+        System.out.println("Sessions: " + messagingService.getSessions());
         try {
             String serializedNotification = objectMapper.writeValueAsString(notification);
 
