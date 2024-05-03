@@ -16,6 +16,7 @@ public class UserHandshakeInterceptor implements HandshakeInterceptor {
         String uri = request.getURI().toString();
         String userId = extractUserIdFromUri(uri);
         if (userId == null) {
+            System.out.println("No userId found, aborting handshake.");
             return false;
         }
         attributes.put("userId", userId);
