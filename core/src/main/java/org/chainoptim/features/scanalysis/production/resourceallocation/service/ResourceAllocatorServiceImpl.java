@@ -12,7 +12,6 @@ import java.util.*;
 @Service
 public class ResourceAllocatorServiceImpl implements ResourceAllocatorService {
 
-
     public AllocationPlan allocateResourcesFromInventory(FactoryGraph factoryGraph,
                                             Map<Integer, FactoryInventoryItem> inventoryMap,
                                             Float duration) {

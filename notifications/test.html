@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+<script>
+    var ws = new WebSocket("ws://localhost:8081/ws?userId=086e9e96-a8ef-11ee-bffa-00155de90539");
+    ws.onopen = function() { console.log("Connection opened."); };
+    ws.onerror = function(error) { console.log("WebSocket Error:", error); };
+    ws.onmessage = function(e) { console.log("Received message:", e.data); };
+    ws.onclose = function(e) { console.log("Connection closed:", e); };
+</script>
+</body>
+</html>

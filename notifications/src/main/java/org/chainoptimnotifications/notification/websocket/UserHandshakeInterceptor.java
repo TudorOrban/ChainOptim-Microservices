@@ -32,16 +32,14 @@ public class UserHandshakeInterceptor implements HandshakeInterceptor {
             // Convert the URI string to a URI object to make parsing easier
             URI actualUri = new URI(uri);
 
-            // Extract the query part of the URI
             String query = actualUri.getQuery();
 
             // Split the query into parameters
             String[] queryParams = query.split("&");
 
-            // Iterate through the parameters to find the userId parameter
+            // Find the userId parameter
             for (String param : queryParams) {
                 if (param.startsWith("userId=")) {
-                    // Return the value part of the userId parameter
                     return param.split("=")[1];
                 }
             }

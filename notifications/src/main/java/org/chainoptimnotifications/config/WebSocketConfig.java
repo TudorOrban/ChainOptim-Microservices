@@ -23,6 +23,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        System.out.println("Registering WebSocket handlers");
         registry.addHandler(simpleTextWebSocketHandler(messagingService), "/ws")
                 .setAllowedOrigins("*")
                 .addInterceptors(new UserHandshakeInterceptor());

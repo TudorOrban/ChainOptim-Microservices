@@ -15,7 +15,6 @@ docker-compose -f docker-compose.yml down
 # Core
 if ($buildCore -eq "true") {
     Push-Location -Path "core"
-    Write-Host "Current directory: $(Get-Location)"
 
     Write-Host "Building the Core project (skipping tests)..."
     mvn clean package -DskipTests
@@ -29,11 +28,9 @@ if ($buildCore -eq "true") {
     Pop-Location
 }
 
-if ($buildNotifications -eq "true") {
-    # Notifications
+if ($buildNotifications -eq "true") {    
     Push-Location -Path "notifications"
 
-    Write-Host "Current directory: $(Get-Location)"
     Write-Host "Building the Notifications project (skipping tests)..."
     mvn clean package -DskipTests
 

@@ -1,6 +1,5 @@
 package org.chainoptimnotifications.notification.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.chainoptimnotifications.email.service.EmailService;
 import org.chainoptimnotifications.notification.dto.AddNotificationDTO;
 import org.chainoptimnotifications.notification.dto.NotificationDTOMapper;
@@ -9,6 +8,8 @@ import org.chainoptimnotifications.notification.model.NotificationUserDistributi
 import org.chainoptimnotifications.notification.websocket.WebSocketMessagingService;
 import org.chainoptimnotifications.outsidefeatures.model.ClientOrderEvent;
 import org.chainoptimnotifications.outsidefeatures.model.SupplierOrderEvent;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
