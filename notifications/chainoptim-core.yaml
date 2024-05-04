@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainoptim-core
+  labels:
+    app: chainoptim-core
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chainoptim-core
+  template:
+    metadata:
+      labels:
+        app: chainoptim-core
+    spec:
+      containers:
+      - name: chainoptim-core
+        image: tudoraorban/chainoptim-core:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker-dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainoptim-core
+  labels:
+    app: chainoptim-core
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: chainoptim-core

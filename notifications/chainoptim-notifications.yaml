@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainoptim-notifications
+  labels:
+    app: chainoptim-notifications
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chainoptim-notifications
+  template:
+    metadata:
+      labels:
+        app: chainoptim-notifications
+    spec:
+      containers:
+      - name: chainoptim-notifications
+        image: tudoraorban/chainoptim-notifications:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker-dev
+      automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainoptim-notifications
+  labels:
+    app: chainoptim-notifications
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+  selector:
+    app: chainoptim-notifications

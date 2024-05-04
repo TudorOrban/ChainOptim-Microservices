@@ -5,26 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6446f3a-efa2-4750-a0f7-920681e7d9cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/WebSocketConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/serialization/HibernateProxyMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/config/serialization/JacksonConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainoptim-core.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/d/1d66c9d2c81218662a1f2382271f54b21af7332b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/9/b9e150bb89b26ae2476d8b48a8d61d9949de48ca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/1/e1103377bbe8fd5e17e631e0aa74f2172dcafc7f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/d/1d66c9d2c81218662a1f2382271f54b21af7332b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/9/b9e150bb89b26ae2476d8b48a8d61d9949de48ca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/1/e1103377bbe8fd5e17e631e0aa74f2172dcafc7f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/e/7/e736c0e912b0a33e9d3dbb8f45973e9109099be8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/issuestore/index.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/e/7/e736c0e912b0a33e9d3dbb8f45973e9109099be8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/config/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/config/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/user/jwt/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/core/src/main/java/org/chainoptim/core/user/jwt/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/service/OrganizationRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notifications/src/main/java/org/chainoptimnotifications/user/service/OrganizationRepositoryImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +28,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2frKPV8jOgkJCc9MnsiCJpkNTFZ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -48,21 +39,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/Programming/Java/ChainOptimizer-Microservices/notifications/src/main/java/org/chainoptim/notifications/model"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Programming/Java/ChainOptimizer-Microservices&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptim\notifications\model" />
       <recent name="D:\Projects\Programming\Java\ChainOptimizer-Microservices\notifications\src\main\java\org\chainoptim\notifications\config" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ChainOptimizer-Microservices" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ChainOptimizer-Microservices" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
