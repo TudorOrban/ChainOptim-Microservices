@@ -37,18 +37,12 @@ spec:
         ports:
         - containerPort: 3307
         volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: mysql-notifications-data
         - mountPath: /docker-entrypoint-initdb.d
           name: mysql-notifications-initdb
       volumes:
-      - name: mysql-notifications-data
-        persistentVolumeClaim:
-          claimName: mysql-notifications-pvc
       - name: mysql-notifications-initdb
-        hostPath:
-          path: D:/projects/programming/Java/ChainOptimizer-Microservices/notifications/database/schema
-          type: Directory
+        configMap:
+          name: mysql-notifications-initdb
 ---
 apiVersion: v1
 kind: Service
