@@ -35,7 +35,7 @@ spec:
         - name: MYSQL_DATABASE
           value: "chainoptim-notifications-db"
         ports:
-        - containerPort: 3307
+        - containerPort: 3306
         volumeMounts:
         - mountPath: /docker-entrypoint-initdb.d
           name: mysql-notifications-initdb
@@ -53,6 +53,6 @@ metadata:
 spec:
   ports:
   - port: 3307
-    targetPort: 3307
+    targetPort: 3306
   selector:
     app: mysql-notifications
