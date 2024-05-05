@@ -11,12 +11,13 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-            .route("organizations-route", r -> r.path("/api/v1/organizations/**")
-                    .uri("http://chainoptim-core:8080"))
-            .route("products-route", r -> r.path("/api/v1/products/**")
-                .uri("http://chainoptim-core:8080"))
-            .route("notifications-route", r -> r.path("/api/v1/notifications/**")
-                    .uri("http://chainoptim-notifications:8081"))
-            .build();
+                .route("organizations-route", r -> r.path("/api/v1/organizations/**")
+                        .uri("lb://chainoptim-core"))  // Use load-balanced URI
+                .route("products-route", r -> r.path("/api/v1/products/**")
+                        .uri("lb://chainoptim-core"))  // Use load-balanced URI
+                .route("notifications-route", r -> r.path("/api/v1/notifications/**")
+                        .uri("lb://chainoptim-notifications"))  // Use load-balanced URI
+                .build();
     }
+
 }
