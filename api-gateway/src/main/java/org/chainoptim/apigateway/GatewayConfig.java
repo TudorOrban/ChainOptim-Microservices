@@ -11,12 +11,10 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("notifications-route", r -> r.path("/api/v1/notification/**")
-                        .filters(f -> f.stripPrefix(3))
-                        .uri("lb://chainoptim-notifications"))
                 .route("organizations-route", r -> r.path("/api/v1/organizations/**")
-                        .filters(f -> f.stripPrefix(3))
                         .uri("lb://chainoptim-core"))
+                .route("notifications-route", r -> r.path("/api/v1/notification/**")
+                        .uri("lb://chainoptim-notifications"))
                 .build();
     }
 }
