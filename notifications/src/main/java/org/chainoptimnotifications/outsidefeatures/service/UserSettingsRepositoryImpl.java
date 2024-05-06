@@ -35,7 +35,7 @@ public class UserSettingsRepositoryImpl implements UserSettingsRepository {
                 .build()
                 .toUri();
 
-        String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUdWRvckFPcmJhbjEiLCJvcmdhbml6YXRpb25faWQiOjEsImlhdCI6MTcxNDMzOTg5MCwiZXhwIjoxNzE0OTQ0NjkwfQ.sR98XrH6oKjFSU_-FevFIk-Cp_UqgDyaa8bmJqn7SCW0s6TH1PZyynGIqYiyeUfm0qOCcYuFU9Cd-RiD2NN6Lg";
+        String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUdWRvckFPcmJhbjEiLCJvcmdhbml6YXRpb25faWQiOjEsImlhdCI6MTcxNDk3NjQ1MiwiZXhwIjoxNzE1NTgxMjUyfQ.W3Je-xCtcfiazOkEfpoT8bpwy2IDQQG_e8YY1YhT_aG1iWJbxnFnJMtFpWYc036oJD4OmPrefozk_OtI1BAf9g";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
