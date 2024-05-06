@@ -28,4 +28,10 @@ kubectl apply -f api-gateway.yaml
 kubectl apply -f chainoptim-core.yaml
 kubectl apply -f chainoptim-notifications.yaml
 
+kubectl apply -f prometheus-clusterrole.yaml
+kubectl apply -f prometheus-clusterrolebinding.yaml
+
+kubectl apply -f prometheus.yaml
+kubectl apply -f grafana.yaml
+
 Push-Location -Path "../notifications/scripts"
