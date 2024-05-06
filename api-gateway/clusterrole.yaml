@@ -9,7 +9,7 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
-metadata:
+metadata:A
   name: chainoptim-cluster-role-binding
 subjects:
 - kind: ServiceAccount
