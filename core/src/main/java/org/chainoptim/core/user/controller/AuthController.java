@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -78,7 +78,7 @@ public class AuthController {
 
     @GetMapping("/verify-email")
     public ResponseEntity<String> verifyEmail(@RequestParam String token,
-                                              @RequestParam(required = false) boolean isInOrganization,
+                                              @RequestParam(required = false) Boolean isInOrganization,
                                               @RequestParam(required = false) String newPassword) {
         String response = emailVerificationService.verifyAccountEmail(token, isInOrganization, newPassword);
         return ResponseEntity.ok(response);

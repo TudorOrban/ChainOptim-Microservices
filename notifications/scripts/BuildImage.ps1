@@ -8,7 +8,7 @@ Write-Host "Building Notifications Image..."
 docker build -t tudoraorban/chainoptim-notifications:latest .
 
 Write-Host "Upload Notifications Image to DockerHub..."
-# docker push tudoraorban/chainoptim-notifications:latest
+docker push tudoraorban/chainoptim-notifications:latest
 
 Pop-Location
 

@@ -1,46 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chainoptim-core
+  name: chainoptim-supply
   labels:
-    app: chainoptim-core
+    app: chainoptim-supply
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chainoptim-core
+      app: chainoptim-supply
   template:
     metadata:
       labels:
-        app: chainoptim-core
+        app: chainoptim-supply
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/path: '/actuator/prometheus'
-        prometheus.io/port: '8080'
+        prometheus.io/port: '8083'
     spec:
       containers:
-      - name: chainoptim-core
-        image: tudoraorban/chainoptim-core:latest
-        ports:
-        - containerPort: 8080
+      - name: chainoptim-supply
+        image: tudoraorban/chainoptim-supply:latest
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8083
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: docker-dev
+      automountServiceAccountToken: false
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: chainoptim-core
+  name: chainoptim-supply
   labels:
-    app: chainoptim-core
+    app: chainoptim-supply
 spec:
   type: NodePort
   ports:
-  - port: 8080
-    targetPort: 8080
+  - port: 8083
+    targetPort: 8083
     protocol: TCP
-    nodePort: 31234
+    nodePort: 31280
   selector:
-    app: chainoptim-core
+    app: chainoptim-supply
