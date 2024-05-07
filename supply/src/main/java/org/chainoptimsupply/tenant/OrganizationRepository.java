@@ -1,8 +1,10 @@
 package org.chainoptimsupply.tenant;
 
-import org.chainoptimnotifications.user.model.Organization;
+
+import org.chainoptimsupply.tenant.model.Organization;
 
 public interface OrganizationRepository {
 
     Organization getOrganizationWithUsersAndCustomRoles(Integer id);
+    Organization.SubscriptionPlanTier getSubscriptionPlanTierById(Integer id);
 }

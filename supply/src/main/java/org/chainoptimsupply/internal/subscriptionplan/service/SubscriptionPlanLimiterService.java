@@ -1,6 +1,7 @@
-package org.chainoptimsupply.internal.service;
+package org.chainoptimsupply.internal.subscriptionplan.service;
 
-import org.chainoptim.shared.enums.Feature;
+
+import org.chainoptimsupply.kafka.Feature;
 
 public interface SubscriptionPlanLimiterService {
 

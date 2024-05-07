@@ -1,11 +1,15 @@
 package org.chainoptimsupply.supplier.service;
 
+import org.chainoptimsupply.exception.PlanLimitReachedException;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
-import org.chainoptimsupply.internal.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.exception.ValidationException;
+import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.kafka.Feature;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.shared.dto.Location;
 import org.chainoptimsupply.shared.location.LocationService;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
+import org.chainoptimsupply.supplier.dto.CreateSupplierDTO;
 import org.chainoptimsupply.supplier.dto.SupplierDTOMapper;
 import org.chainoptimsupply.supplier.dto.SuppliersSearchDTO;
 import org.chainoptimsupply.supplier.dto.UpdateSupplierDTO;
@@ -71,7 +75,7 @@ public class SupplierServiceImpl implements SupplierService {
         if (sanitizedSupplierDTO.isCreateLocation() && sanitizedSupplierDTO.getLocation() != null) {
             Location location = locationService.createLocation(sanitizedSupplierDTO.getLocation());
             Supplier supplier = SupplierDTOMapper.convertCreateSupplierDTOToSupplier(sanitizedSupplierDTO);
-            supplier.setLocation(location);
+            supplier.setLocationId(location.getId());
             return supplierRepository.save(supplier);
         } else {
             return supplierRepository.save(SupplierDTOMapper.convertCreateSupplierDTOToSupplier(sanitizedSupplierDTO));
@@ -96,7 +100,7 @@ public class SupplierServiceImpl implements SupplierService {
         } else {
             throw new ValidationException("Location is required.");
         }
-        supplier.setLocation(location);
+        supplier.setLocationId(location.getId());
 
         supplierRepository.save(supplier);
         return supplier;

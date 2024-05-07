@@ -1,78 +1,51 @@
 package org.chainoptimsupply.shared.location;
 
-import org.chainoptimsupply.exception.ResourceNotFoundException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.chainoptimsupply.shared.dto.CreateLocationDTO;
 import org.chainoptimsupply.shared.dto.Location;
-import org.chainoptimsupply.shared.dto.LocationDTOMapper;
-import org.chainoptimsupply.shared.dto.UpdateLocationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 @Service
 public class LocationServiceImpl implements LocationService {
 
-    private final LocationRepository locationRepository;
-    private final GeocodingService geocodingService;
-    private final EntitySanitizerService sanitizerService;
-
-    @Value("${app.environment}")
-    private String environment;
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository,
-                               GeocodingService geocodingService,
-                               EntitySanitizerService sanitizerService) {
-        this.locationRepository = locationRepository;
-        this.geocodingService = geocodingService;
-        this.sanitizerService = sanitizerService;
+    public LocationServiceImpl(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
-    // Fetch
-    public List<Location> getLocationsByOrganizationId(Integer organizationId) {
-        return locationRepository.findLocationsByOrganizationId(organizationId);
-    }
-
-    // Create
     public Location createLocation(CreateLocationDTO locationDTO) {
-        CreateLocationDTO sanitizedDTO = sanitizerService.sanitizeCreateLocationDTO(locationDTO);
+        String routeAddress = "http://chainoptim-core:8080/api/v1/internal/locations/create";
+        String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUdWRvckFPcmJhbjEiLCJvcmdhbml6YXRpb25faWQiOjEsImlhdCI6MTcxNDk3NjQ1MiwiZXhwIjoxNzE1NTgxMjUyfQ.W3Je-xCtcfiazOkEfpoT8bpwy2IDQQG_e8YY1YhT_aG1iWJbxnFnJMtFpWYc036oJD4OmPrefozk_OtI1BAf9g";
 
-        if (!environment.equals("prod")) {
-            return locationRepository.save(LocationDTOMapper.convertCreateLocationDTOToLocation(sanitizedDTO));
-        }
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(routeAddress))
+                .header("Authorization", "Bearer " + jwtToken)
+                .POST(HttpRequest.BodyPublishers.ofString(locationDTO.toString()))
+                .build();
 
-        // Only use geocoding in production
-        String fullAddress = Stream.of(sanitizedDTO.getAddress(), sanitizedDTO.getCity(), sanitizedDTO.getState(), sanitizedDTO.getCountry(), sanitizedDTO.getZipCode())
-                .filter(Objects::nonNull)
-                .collect(Collectors.joining(", "));
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(response -> {
+                    System.out.println(response);
+                    try {
+                        return objectMapper.readValue(response, new TypeReference<Location>() {});
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
+                .join();
 
-        if (sanitizedDTO.isUseGeocoding()) {
-            Double[] coordinates = geocodingService.getCoordinates(fullAddress);
-            if (coordinates != null && coordinates.length == 2) {
-                sanitizedDTO.setLatitude(coordinates[0]);
-                sanitizedDTO.setLongitude(coordinates[1]);
-            }
-        }
-
-        return locationRepository.save(LocationDTOMapper.convertCreateLocationDTOToLocation(sanitizedDTO));
     }
 
-    // Update
-    public Location updateLocation(UpdateLocationDTO locationDTO) {
-        UpdateLocationDTO sanitizedDTO = sanitizerService.sanitizeUpdateLocationDTO(locationDTO);
-        Location location = locationRepository.findById(sanitizedDTO.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Location with ID: " + sanitizedDTO.getId() + " not found."));
-        Location location1 = LocationDTOMapper.updateLocationFromUpdateLocationDTO(location, sanitizedDTO);
-        return locationRepository.save(location1);
-    }
-
-    // Delete
-    public void deleteLocation(Integer locationId) {
-        locationRepository.deleteById(locationId);
-    }
 }
