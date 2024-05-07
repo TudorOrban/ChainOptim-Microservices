@@ -111,6 +111,6 @@ public class UserWriteServiceImpl implements UserWriteService {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
         userRepository.deleteById(id);
 
-        kafkaUserService.sendUserEvent(new UserEvent(user, null, KafkaEvent.EventType.DELETE, null, null, null));
+        kafkaUserService.sendUserEvent(new UserEvent(null, user, KafkaEvent.EventType.DELETE, null, null, null));
     }
 }

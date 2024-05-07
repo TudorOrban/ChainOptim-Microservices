@@ -9,12 +9,12 @@ import org.chainoptimnotifications.outsidefeatures.model.SupplierOrderEvent;
 import org.chainoptimnotifications.outsidefeatures.model.UserSettings;
 import org.chainoptimnotifications.outsidefeatures.service.UserSettingsRepository;
 import org.chainoptimnotifications.redis.RedisService;
-import org.chainoptimnotifications.user.model.FeaturePermissions;
-import org.chainoptimnotifications.user.model.Organization;
-import org.chainoptimnotifications.user.model.Permissions;
-import org.chainoptimnotifications.user.model.User;
-import org.chainoptimnotifications.user.service.CachedOrganizationRepository;
-import org.chainoptimnotifications.user.service.OrganizationRepository;
+import org.chainoptimnotifications.tenant.model.FeaturePermissions;
+import org.chainoptimnotifications.tenant.model.Organization;
+import org.chainoptimnotifications.tenant.model.Permissions;
+import org.chainoptimnotifications.tenant.model.User;
+import org.chainoptimnotifications.tenant.service.CachedOrganizationRepository;
+import org.chainoptimnotifications.tenant.service.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

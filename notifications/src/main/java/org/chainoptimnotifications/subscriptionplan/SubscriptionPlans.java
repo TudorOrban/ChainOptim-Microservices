@@ -1,7 +1,7 @@
 package org.chainoptimnotifications.subscriptionplan;
 
 import lombok.Getter;
-import org.chainoptimnotifications.user.model.Organization;
+import org.chainoptimnotifications.tenant.model.Organization;
 
 import java.util.Map;
 

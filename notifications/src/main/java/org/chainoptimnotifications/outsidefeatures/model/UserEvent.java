@@ -3,7 +3,7 @@ package org.chainoptimnotifications.outsidefeatures.model;
 import lombok.AllArgsConstructor;
 import org.chainoptimnotifications.enums.Feature;
 import org.chainoptimnotifications.notification.model.KafkaEvent;
-import org.chainoptimnotifications.user.model.User;
+import org.chainoptimnotifications.tenant.model.User;
 
 @AllArgsConstructor
 public class UserEvent extends KafkaEvent<User> {

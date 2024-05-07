@@ -6,7 +6,6 @@ import jakarta.persistence.criteria.*;
 import org.chainoptimnotifications.notification.model.Notification;
 import org.chainoptimnotifications.notification.model.NotificationUser;
 import org.chainoptimnotifications.outsidefeatures.model.PaginatedResults;
-import org.chainoptimnotifications.user.model.User;
 
 import java.util.List;
 
