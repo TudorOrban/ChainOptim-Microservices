@@ -22,7 +22,6 @@ spec:
       containers:
       - name: chainoptim-notifications
         image: tudoraorban/chainoptim-notifications:latest
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
         env:

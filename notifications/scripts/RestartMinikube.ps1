@@ -8,12 +8,12 @@ minikube start --driver=docker
 
 Write-Host "Applying configurations"
 kubectl apply -f clusterrole.yaml
-kubectl apply -f mysql-core-config-map.yaml
-kubectl apply -f mysql-notifications-config-map.yaml
 
 kubectl create configmap mysql-notifications-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../core"
 kubectl create configmap chainoptim-core-config --from-file=schema.sql=database/schema/schema.sql
+Push-Location -Path "../supply"
+kubectl create configmap chainoptim-supply-config --from-file=schema.sql=database/schema/schema.sql
 
 Write-Host "Applying deployments"
 kubectl apply -f mysql-core.yaml

@@ -24,7 +24,6 @@ spec:
         image: tudoraorban/chainoptim-core:latest
         ports:
         - containerPort: 8080
-        imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: docker-dev
