@@ -1,6 +1,6 @@
 package org.chainoptim.features.factory.model;
 
-import org.chainoptim.core.notifications.model.KafkaEvent;
+import org.chainoptim.shared.kafka.KafkaEvent;
 import org.chainoptim.shared.enums.Feature;
 import lombok.AllArgsConstructor;
 

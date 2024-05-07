@@ -1,10 +1,8 @@
 package org.chainoptim.core.user.model;
 
-import org.chainoptim.core.notifications.model.NotificationUser;
 import org.chainoptim.core.organization.model.CustomRole;
 import org.chainoptim.core.organization.model.Organization;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

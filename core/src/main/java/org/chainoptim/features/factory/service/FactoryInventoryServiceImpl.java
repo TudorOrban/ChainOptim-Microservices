@@ -1,6 +1,5 @@
 package org.chainoptim.features.factory.service;
 
-import org.chainoptim.core.notifications.model.KafkaEvent;
 import org.chainoptim.core.subscriptionplan.service.SubscriptionPlanLimiterService;
 import org.chainoptim.exception.PlanLimitReachedException;
 import org.chainoptim.exception.ResourceNotFoundException;
@@ -16,6 +15,7 @@ import org.chainoptim.features.product.repository.ProductRepository;
 import org.chainoptim.features.productpipeline.model.Component;
 import org.chainoptim.features.productpipeline.repository.ComponentRepository;
 import org.chainoptim.shared.enums.Feature;
+import org.chainoptim.shared.kafka.KafkaEvent;
 import org.chainoptim.shared.sanitization.EntitySanitizerService;
 import org.chainoptim.shared.search.model.PaginatedResults;
 
