@@ -23,8 +23,7 @@ public class NotificationSearchRepositoryImpl implements NotificationSearchRepos
         CriteriaQuery<NotificationUser> query = builder.createQuery(NotificationUser.class);
         Root<NotificationUser> notificationUserRoot = query.from(NotificationUser.class);
         Join<NotificationUser, Notification> notificationJoin = notificationUserRoot.join("notification", JoinType.LEFT);
-        Join<NotificationUser, User> userJoin = notificationUserRoot.join("user", JoinType.LEFT);
-        Predicate conditions = getConditions(builder, userJoin, notificationJoin, userId, searchQuery);
+        Predicate conditions = getConditions(builder, notificationUserRoot, notificationJoin, userId, searchQuery);
         query.where(conditions);
         if (sortBy != null && !sortBy.isEmpty()) {
             Path<Object> sortProperty = notificationJoin.get(sortBy);
@@ -42,8 +41,7 @@ public class NotificationSearchRepositoryImpl implements NotificationSearchRepos
         countQuery.select(builder.count(countRoot));
         // Reapply joins specifically for count to avoid reuse
         Join<NotificationUser, Notification> countNotificationJoin = countRoot.join("notification", JoinType.LEFT);
-        Join<NotificationUser, User> countUserJoin = countRoot.join("user", JoinType.LEFT);
-        Predicate countConditions = getConditions(builder, countUserJoin, countNotificationJoin, userId, searchQuery);
+        Predicate countConditions = getConditions(builder, countRoot, countNotificationJoin, userId, searchQuery);
         countQuery.where(countConditions);
         long totalCount = entityManager.createQuery(countQuery).getSingleResult();
 
@@ -51,10 +49,11 @@ public class NotificationSearchRepositoryImpl implements NotificationSearchRepos
     }
 
 
-    private Predicate getConditions(CriteriaBuilder builder, Join<NotificationUser, User> userJoin, Join<NotificationUser, Notification> notificationJoin, String userId, String searchQuery) {
+    private Predicate getConditions(CriteriaBuilder builder, Root<NotificationUser> notificationUserRoot, Join<NotificationUser, Notification> notificationJoin, String userId, String searchQuery) {
         Predicate conditions = builder.conjunction();
         if (userId != null) {
-            conditions = builder.and(conditions, builder.equal(userJoin.get("id"), userId));
+
+            conditions = builder.and(conditions, builder.equal(notificationUserRoot.get("userId"), userId));
         }
         if (searchQuery != null && !searchQuery.isEmpty()) {
             conditions = builder.and(conditions, builder.like(notificationJoin.get("title"), "%" + searchQuery + "%"));

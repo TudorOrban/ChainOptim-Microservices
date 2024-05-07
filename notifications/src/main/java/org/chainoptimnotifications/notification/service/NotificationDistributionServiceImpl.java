@@ -1,6 +1,5 @@
 package org.chainoptimnotifications.notification.service;
 
-import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.chainoptimnotifications.enums.Feature;
 import org.chainoptimnotifications.notification.model.KafkaEvent;
 import org.chainoptimnotifications.notification.model.NotificationUserDistribution;
@@ -8,12 +7,13 @@ import org.chainoptimnotifications.outsidefeatures.model.ClientOrderEvent;
 import org.chainoptimnotifications.outsidefeatures.model.NotificationSettings;
 import org.chainoptimnotifications.outsidefeatures.model.SupplierOrderEvent;
 import org.chainoptimnotifications.outsidefeatures.model.UserSettings;
-import org.chainoptimnotifications.outsidefeatures.service.SupplierRepository;
 import org.chainoptimnotifications.outsidefeatures.service.UserSettingsRepository;
+import org.chainoptimnotifications.redis.RedisService;
 import org.chainoptimnotifications.user.model.FeaturePermissions;
 import org.chainoptimnotifications.user.model.Organization;
 import org.chainoptimnotifications.user.model.Permissions;
 import org.chainoptimnotifications.user.model.User;
+import org.chainoptimnotifications.user.service.CachedOrganizationRepository;
 import org.chainoptimnotifications.user.service.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,17 +28,19 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
 //    private final SupplierRepository supplierRepository;
 //    private final ClientRepository clientRepository;
     private final OrganizationRepository organizationRepository;
+    private final CachedOrganizationRepository cachedOrganizationRepository;
     private final UserSettingsRepository userSettingsRepository;
+    private final RedisService redisService;
 
     @Autowired
-    public NotificationDistributionServiceImpl(
-//                                               ClientRepository clientRepository,
-                                               OrganizationRepository organizationRepository,
-                                               UserSettingsRepository userSettingsRepository) {
-//        this.supplierRepository = supplierRepository;
-//        this.clientRepository = clientRepository;
+    public NotificationDistributionServiceImpl(OrganizationRepository organizationRepository,
+                                               CachedOrganizationRepository cachedOrganizationRepository,
+                                               UserSettingsRepository userSettingsRepository,
+                                               RedisService redisService) {
         this.organizationRepository = organizationRepository;
+        this.cachedOrganizationRepository = cachedOrganizationRepository;
         this.userSettingsRepository = userSettingsRepository;
+        this.redisService = redisService;
     }
 
     public NotificationUserDistribution distributeEventToUsers(SupplierOrderEvent event) {
@@ -59,7 +61,12 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
 
     private NotificationUserDistribution distributeEventToUsers(Integer organizationId, KafkaEvent.EventType eventType, Feature entityType) {
         // TODO: Cache this with Redis
-        Organization organization = organizationRepository.getOrganizationWithUsersAndCustomRoles(organizationId);
+        Organization organization;
+        if (redisService.isRedisAvailable()) {
+            organization = cachedOrganizationRepository.getOrganizationWithUsersAndCustomRoles(organizationId);
+        } else {
+            organization = organizationRepository.getOrganizationWithUsersAndCustomRoles(organizationId);
+        }
 
         List<String> candidateUserIds = new ArrayList<>();
         List<User> emailCandidateUsers = new ArrayList<>();
@@ -68,7 +75,7 @@ public class NotificationDistributionServiceImpl implements NotificationDistribu
         }
 
         // Skip if subscription plan doesn't support notifications
-        if (organization.getSubscriptionPlan() != null && !organization.getSubscriptionPlan().isRealTimeNotificationsOn()) {
+        if (organization.getSubscriptionPlanDetails() != null && !organization.getSubscriptionPlanDetails().isRealTimeNotificationsOn()) {
             return new NotificationUserDistribution(candidateUserIds, candidateUserIds);
         }
 

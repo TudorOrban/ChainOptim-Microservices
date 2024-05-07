@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/user-settings/**").permitAll()
                         .requestMatchers("/api/v1/organization/**").permitAll()
+                        .requestMatchers("/api/v1/notifications/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated()

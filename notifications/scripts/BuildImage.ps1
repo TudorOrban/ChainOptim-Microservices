@@ -1,7 +1,7 @@
 Push-Location -Path ".."
 Write-Host "Current directory: $(Get-Location)"
 
-Write-Host "Building the API Gateway project (skipping tests)..."
+Write-Host "Building the Notifications project (skipping tests)..."
 mvn clean package -DskipTests
 
 Write-Host "Building Notifications Image..."

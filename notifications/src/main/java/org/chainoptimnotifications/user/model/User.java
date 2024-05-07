@@ -6,13 +6,17 @@ import lombok.NoArgsConstructor;
 import org.chainoptimnotifications.user.model.CustomRole;
 import org.chainoptimnotifications.user.model.Organization;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String id;
 

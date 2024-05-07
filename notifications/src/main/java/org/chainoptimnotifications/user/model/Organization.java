@@ -5,6 +5,8 @@ import lombok.*;
 import org.chainoptimnotifications.subscriptionplan.PlanDetails;
 import org.chainoptimnotifications.subscriptionplan.SubscriptionPlans;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -14,7 +16,10 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Organization {
+public class Organization implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String name;
@@ -34,7 +39,7 @@ public class Organization {
     @Column(name = "subscription_plan", nullable = false)
     private SubscriptionPlanTier subscriptionPlanTier;
 
-    public PlanDetails getSubscriptionPlan() {
+    public PlanDetails getSubscriptionPlanDetails() {
         return SubscriptionPlans.getPlans().get(subscriptionPlanTier);
     }
 
