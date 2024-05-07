@@ -5,6 +5,8 @@ import org.chainoptim.core.organization.model.Organization;
 import org.chainoptim.core.organization.repository.OrganizationRepository;
 import org.chainoptim.core.user.model.User;
 import org.chainoptim.core.user.repository.UserRepository;
+import org.chainoptim.shared.kafka.KafkaEvent;
+import org.chainoptim.shared.kafka.UserEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +22,7 @@ public class UserWriteServiceImpl implements UserWriteService {
     private final UserRepository userRepository;
     private final OrganizationRepository organizationRepository;
     private final EmailVerificationService emailVerificationService;
+    private final KafkaUserService kafkaUserService;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${app.environment}")
@@ -29,10 +32,12 @@ public class UserWriteServiceImpl implements UserWriteService {
     public UserWriteServiceImpl(UserRepository userRepository,
                                 OrganizationRepository organizationRepository,
                                 EmailVerificationService emailVerificationService,
+                                KafkaUserService kafkaUserService,
                                 PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
         this.emailVerificationService = emailVerificationService;
+        this.kafkaUserService = kafkaUserService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -103,6 +108,9 @@ public class UserWriteServiceImpl implements UserWriteService {
 
     // Delete
     public void deleteUser(String id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
         userRepository.deleteById(id);
+
+        kafkaUserService.sendUserEvent(new UserEvent(user, null, KafkaEvent.EventType.DELETE, null, null, null));
     }
 }

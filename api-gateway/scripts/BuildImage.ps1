@@ -8,7 +8,7 @@ Write-Host "Building Gateway Image..."
 docker build -t tudoraorban/chainoptim-apigateway:latest .
 
 Write-Host "Upload Gateway Image to DockerHub..."
-docker push tudoraorban/chainoptim-apigateway:latest
+# docker push tudoraorban/chainoptim-apigateway:latest
 
 Pop-Location
 

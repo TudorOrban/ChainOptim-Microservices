@@ -23,6 +23,7 @@ spec:
           image: tudoraorban/chainoptim-apigateway:latest
           ports:
             - containerPort: 8082
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               memory: "512Mi"
