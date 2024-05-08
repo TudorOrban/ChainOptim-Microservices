@@ -53,6 +53,13 @@ public class GlobalExceptionHandler {
         logger.error("Authorization Exception: {}", errorDetails);
         return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(InternalCommunicationException.class)
+    public ResponseEntity<ErrorDetails> handleInternalCommunicationException(InternalCommunicationException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        logger.error("Internal Communication Exception: {}", errorDetails);
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 //
 //    @ExceptionHandler(PlanLimitReachedException.class)
 //    public ResponseEntity<ErrorDetails> handlePlanLimitReachedException(PlanLimitReachedException ex, WebRequest request) {

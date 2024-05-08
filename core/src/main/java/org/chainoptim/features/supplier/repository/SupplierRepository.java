@@ -14,10 +14,10 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer>, Su
 
     List<Supplier> findByOrganizationId(Integer organizationId);
 
-    @Query("SELECT p.organizationId FROM Supplier p WHERE p.id = :supplierId")
+    @Query("SELECT s.organizationId FROM Supplier s WHERE s.id = :supplierId")
     Optional<Integer> findOrganizationIdById(@Param("supplierId") Long supplierId);
 
-    @Query("SELECT p FROM Supplier p WHERE p.name = :name")
+    @Query("SELECT s FROM Supplier s WHERE s.name = :name")
     Optional<Supplier> findByName(@Param("name") String name);
 
     long countByOrganizationId(Integer organizationId);

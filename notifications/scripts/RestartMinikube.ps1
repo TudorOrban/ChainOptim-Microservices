@@ -11,9 +11,9 @@ kubectl apply -f clusterrole.yaml
 
 kubectl create configmap mysql-notifications-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../core"
-kubectl create configmap chainoptim-core-config --from-file=schema.sql=database/schema/schema.sql
+kubectl create configmap mysql-core-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../supply"
-kubectl create configmap chainoptim-supply-config --from-file=schema.sql=database/schema/schema.sql
+kubectl create configmap mysql-supply-initdb --from-file=schema.sql=database/schema/schema.sql
 
 Write-Host "Applying deployments"
 kubectl apply -f mysql-core.yaml
