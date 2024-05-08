@@ -1,6 +1,6 @@
 package org.chainoptimsupply.supplierorder.model;
 
-import org.chainoptimsupply.kafka.Feature;
+import org.chainoptimsupply.shared.enums.Feature;
 import org.chainoptimsupply.kafka.KafkaEvent;
 import lombok.AllArgsConstructor;
 

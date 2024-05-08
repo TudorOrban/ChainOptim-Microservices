@@ -9,6 +9,8 @@ import org.chainoptim.core.user.service.UserWriteService;
 import org.chainoptim.core.user.service.UserService;
 import org.chainoptim.exception.PlanLimitReachedException;
 import org.chainoptim.exception.ResourceNotFoundException;
+import org.chainoptim.shared.kafka.KafkaEvent;
+import org.chainoptim.shared.kafka.OrganizationEvent;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +26,21 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final UserService userService;
     private final UserWriteService userWriteService;
     private final OrganizationInviteService organizationInviteService;
+    private final KafkaOrganizationService kafkaOrganizationService;
 
     @Autowired
     public OrganizationServiceImpl(OrganizationRepository organizationRepository,
                                    UserRepository userRepository,
                                    UserService userService,
                                    UserWriteService userWriteService,
-                                   OrganizationInviteService organizationInviteService) {
+                                   OrganizationInviteService organizationInviteService,
+                                   KafkaOrganizationService kafkaOrganizationService) {
         this.organizationRepository = organizationRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.userWriteService = userWriteService;
         this.organizationInviteService = organizationInviteService;
+        this.kafkaOrganizationService = kafkaOrganizationService;
     }
 
     @Transactional
@@ -116,5 +121,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         organizationRepository.deleteById(id);
+
+        kafkaOrganizationService.sendOrganizationEvent(new OrganizationEvent(null, organization, KafkaEvent.EventType.DELETE, null, null, null));
     }
 }

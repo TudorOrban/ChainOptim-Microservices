@@ -1,3 +1,7 @@
+param (
+    [string]$rd = "false"
+)
+
 Push-Location -Path ".."
 Write-Host "Current directory: $(Get-Location)"
 
@@ -9,6 +13,10 @@ docker build -t tudoraorban/chainoptim-apigateway:latest .
 
 Write-Host "Upload Gateway Image to DockerHub..."
 docker push tudoraorban/chainoptim-apigateway:latest
+
+if ($rd -eq "true") {
+    minikube rollout restart deployment chainoptim-apigateway
+}
 
 Pop-Location
 

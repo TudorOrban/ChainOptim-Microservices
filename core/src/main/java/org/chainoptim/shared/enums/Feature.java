@@ -4,6 +4,7 @@ public enum Feature {
 
     // Organization
     MEMBER,
+    ORGANIZATION,
     CUSTOM_ROLE,
 
     // Products
@@ -41,6 +42,7 @@ public enum Feature {
     public String toString() {
         return switch (this) {
             case MEMBER -> "Member";
+            case ORGANIZATION -> "Organization";
             case CUSTOM_ROLE -> "Custom Role";
             case PRODUCT -> "Product";
             case PRODUCT_STAGE -> "Product Stage";

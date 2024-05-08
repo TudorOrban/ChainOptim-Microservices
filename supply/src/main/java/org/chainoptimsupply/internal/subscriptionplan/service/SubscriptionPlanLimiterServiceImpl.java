@@ -3,7 +3,7 @@ package org.chainoptimsupply.internal.subscriptionplan.service;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
 import org.chainoptimsupply.internal.subscriptionplan.model.PlanDetails;
 import org.chainoptimsupply.internal.subscriptionplan.model.SubscriptionPlans;
-import org.chainoptimsupply.kafka.Feature;
+import org.chainoptimsupply.shared.enums.Feature;
 import org.chainoptimsupply.supplier.repository.SupplierRepository;
 import org.chainoptimsupply.tenant.OrganizationRepository;
 import org.chainoptimsupply.tenant.model.Organization;

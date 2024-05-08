@@ -6,7 +6,7 @@ import org.chainoptimsupply.exception.ValidationException;
 import org.chainoptimsupply.internal.component.repository.ComponentRepository;
 import org.chainoptimsupply.internal.subscriptionplan.model.Component;
 import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.kafka.Feature;
+import org.chainoptimsupply.shared.enums.Feature;
 import org.chainoptimsupply.kafka.KafkaEvent;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.shared.enums.SearchMode;

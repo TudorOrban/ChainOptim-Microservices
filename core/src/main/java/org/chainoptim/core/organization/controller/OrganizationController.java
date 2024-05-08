@@ -51,7 +51,7 @@ public class OrganizationController {
         return ResponseEntity.ok(organizationService.updateOrganization(organizationDTO));
     }
 
-    @PreAuthorize("@securityService.canAccessOrganizationEntity(#id, \"Organization\", \"Delete\")")
+//    @PreAuthorize("@securityService.canAccessOrganizationEntity(#id, \"Organization\", \"Delete\")")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrganization(@PathVariable Integer id) {
         organizationService.deleteOrganization(id);

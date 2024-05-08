@@ -4,7 +4,7 @@ import org.chainoptimsupply.exception.PlanLimitReachedException;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
 import org.chainoptimsupply.exception.ValidationException;
 import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.kafka.Feature;
+import org.chainoptimsupply.shared.enums.Feature;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.shared.dto.Location;
 import org.chainoptimsupply.shared.location.LocationService;

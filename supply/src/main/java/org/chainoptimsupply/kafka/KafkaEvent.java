@@ -3,6 +3,7 @@ package org.chainoptimsupply.kafka;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.chainoptimsupply.shared.enums.Feature;
 
 @Data
 @AllArgsConstructor
