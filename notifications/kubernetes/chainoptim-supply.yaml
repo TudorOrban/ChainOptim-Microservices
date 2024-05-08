@@ -22,7 +22,6 @@ spec:
       containers:
       - name: chainoptim-supply
         image: tudoraorban/chainoptim-supply:latest
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8083
         env:

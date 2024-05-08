@@ -47,7 +47,7 @@ CREATE TABLE `supplier_orders` (
   KEY `organization_id` (`organization_id`),
   KEY `supplier_warehouse_id` (`delivery_warehouse_id`),
   KEY `supplier_delively_factory_id` (`delivery_factory_id`),
-  CONSTRAINT `supplier_orders_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
+  CONSTRAINT `supplier_orders_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,7 +115,7 @@ CREATE TABLE `supplier_shipments` (
   KEY `source_location_id` (`source_location_id`),
   KEY `destination_location_id` (`destination_location_id`),
   KEY `supplier_order_id` (`supplier_order_id`),
-  CONSTRAINT `supplier_shipments_ibfk_1` FOREIGN KEY (`supplier_order_id`) REFERENCES `supplier_orders` (`id`),
+  CONSTRAINT `supplier_shipments_ibfk_1` FOREIGN KEY (`supplier_order_id`) REFERENCES `supplier_orders` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -145,7 +145,7 @@ CREATE TABLE `suppliers` (
   `location_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKcdasbtce0ulnp7hhdryn3mo5s` (`organization_id`),
-  KEY `FK62w6tt0p4ti7f1ofonportcsg` (`location_id`),
+  KEY `FK62w6tt0p4ti7f1ofonportcsg` (`location_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

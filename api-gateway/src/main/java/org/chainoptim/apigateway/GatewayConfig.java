@@ -15,6 +15,7 @@ import java.util.Objects;
 public class GatewayConfig {
 
     private static final String CORE_SERVICE = "lb://chainoptim-core";
+    private static final String SUPPLY_SERVICE = "lb://chainoptim-supply";
     private static final String NOTIFICATIONS_SERVICE = "lb://chainoptim-notifications";
 
 
@@ -69,7 +70,7 @@ public class GatewayConfig {
                         .uri(CORE_SERVICE))
                 .route("suppliers-route", r -> r.path("/api/v1/suppliers/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
+                        .uri(SUPPLY_SERVICE))
                 .route("supplier-orders-route", r -> r.path("/api/v1/supplier-orders/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))

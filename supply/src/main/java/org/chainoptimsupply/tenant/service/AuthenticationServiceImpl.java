@@ -1,8 +1,8 @@
-package org.chainoptimnotifications.tenant.service;
+package org.chainoptimsupply.tenant.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.chainoptimnotifications.tenant.model.User;
-import org.chainoptimnotifications.tenant.model.UserDetailsImpl;
+import org.chainoptimsupply.tenant.model.User;
+import org.chainoptimsupply.tenant.model.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
