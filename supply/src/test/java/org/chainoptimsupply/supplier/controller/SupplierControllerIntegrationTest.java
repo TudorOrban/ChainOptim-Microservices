@@ -1,8 +1,8 @@
 package org.chainoptimsupply.supplier.controller;
 
-import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.internal.location.dto.CreateLocationDTO;
-import org.chainoptimsupply.internal.location.service.LocationService;
+import org.chainoptimsupply.internal.in.tenant.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.internal.in.location.dto.CreateLocationDTO;
+import org.chainoptimsupply.internal.in.location.service.LocationService;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierDTO;

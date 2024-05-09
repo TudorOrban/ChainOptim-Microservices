@@ -1,8 +1,8 @@
 package org.chainoptimnotifications.core.notification.service;
 
 
-import org.chainoptimnotifications.internal.demand.model.ClientOrderEvent;
-import org.chainoptimnotifications.internal.supply.model.SupplierOrderEvent;
+import org.chainoptimnotifications.internal.in.demand.model.ClientOrderEvent;
+import org.chainoptimnotifications.internal.in.supply.model.SupplierOrderEvent;
 
 public interface NotificationService {
 

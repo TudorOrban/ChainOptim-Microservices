@@ -2,7 +2,7 @@ package org.chainoptimnotifications.core.notification.service;
 
 
 import org.chainoptimnotifications.core.notification.model.NotificationExtraInfo;
-import org.chainoptimnotifications.internal.supply.model.SupplierOrderEvent;
+import org.chainoptimnotifications.internal.in.supply.model.SupplierOrderEvent;
 
 public interface ExtraInfoFormatterService {
 

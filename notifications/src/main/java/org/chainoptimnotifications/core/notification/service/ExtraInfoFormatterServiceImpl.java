@@ -2,8 +2,8 @@ package org.chainoptimnotifications.core.notification.service;
 
 import org.chainoptimnotifications.core.notification.model.NotificationExtraInfo;
 import org.chainoptimnotifications.shared.enums.OrderStatus;
-import org.chainoptimnotifications.internal.goods.model.Component;
-import org.chainoptimnotifications.internal.supply.model.SupplierOrderEvent;
+import org.chainoptimnotifications.internal.in.goods.model.Component;
+import org.chainoptimnotifications.internal.in.supply.model.SupplierOrderEvent;
 import org.chainoptimnotifications.shared.TimeUtil;
 import org.springframework.stereotype.Service;
 

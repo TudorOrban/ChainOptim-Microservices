@@ -30,7 +30,7 @@ public class SupplierShipmentController {
     @PreAuthorize("@securityService.canAccessEntity(#supplierOrderId, \"SupplierOrder\", \"Read\")")
     @GetMapping("/order/{supplierOrderId}")
     public ResponseEntity<List<SupplierShipment>> getSupplierShipmentsBySupplierOrderId(@PathVariable("supplierOrderId") Integer supplierOrderId) {
-        List<SupplierShipment> supplierShipments = supplierShipmentService.getSupplierShipmentBySupplierOrderId(supplierOrderId);
+        List<SupplierShipment> supplierShipments = supplierShipmentService.getSupplierShipmentsBySupplierOrderId(supplierOrderId);
         return ResponseEntity.ok(supplierShipments);
     }
 

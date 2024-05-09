@@ -15,11 +15,11 @@ import org.chainoptim.features.productpipeline.dto.CreateComponentDTO;
 import org.chainoptim.features.productpipeline.dto.CreateStageDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateComponentDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateStageDTO;
-import org.chainoptim.features.supplier.dto.*;
 import org.chainoptim.features.warehouse.dto.CreateWarehouseDTO;
 import org.chainoptim.features.warehouse.dto.CreateWarehouseInventoryItemDTO;
 import org.chainoptim.features.warehouse.dto.UpdateWarehouseDTO;
 import org.chainoptim.features.warehouse.dto.UpdateWarehouseInventoryItemDTO;
+import org.chainoptim.internalcommunication.in.supplier.dto.*;
 import org.chainoptim.shared.commonfeatures.location.dto.CreateLocationDTO;
 import org.chainoptim.shared.commonfeatures.location.dto.UpdateLocationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,35 +105,6 @@ public class EntitySanitizerServiceImpl implements EntitySanitizerService {
 
     public UpdateWarehouseInventoryItemDTO sanitizeUpdateWarehouseInventoryItemDTO(UpdateWarehouseInventoryItemDTO itemDTO) {
         return itemDTO;
-    }
-
-    // Suppliers
-    public CreateSupplierDTO sanitizeCreateSupplierDTO(CreateSupplierDTO supplierDTO) {
-        supplierDTO.setName(sanitizationService.sanitize(supplierDTO.getName()));
-
-        return supplierDTO;
-    }
-
-    public UpdateSupplierDTO sanitizeUpdateSupplierDTO(UpdateSupplierDTO supplierDTO) {
-        supplierDTO.setName(sanitizationService.sanitize(supplierDTO.getName()));
-
-        return supplierDTO;
-    }
-
-    public CreateSupplierOrderDTO sanitizeCreateSupplierOrderDTO(CreateSupplierOrderDTO orderDTO) {
-        return orderDTO;
-    }
-
-    public UpdateSupplierOrderDTO sanitizeUpdateSupplierOrderDTO(UpdateSupplierOrderDTO orderDTO) {
-        return orderDTO;
-    }
-
-    public CreateSupplierShipmentDTO sanitizeCreateSupplierShipmentDTO(CreateSupplierShipmentDTO shipmentDTO) {
-        return shipmentDTO;
-    }
-
-    public UpdateSupplierShipmentDTO sanitizeUpdateSupplierShipmentDTO(UpdateSupplierShipmentDTO shipmentDTO) {
-        return shipmentDTO;
     }
 
     // Clients

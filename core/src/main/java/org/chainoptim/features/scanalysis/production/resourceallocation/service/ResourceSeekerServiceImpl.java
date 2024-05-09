@@ -3,18 +3,16 @@ package org.chainoptim.features.scanalysis.production.resourceallocation.service
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.DeficitResolution;
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.DeficitResolverPlan;
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.ResourceAllocation;
-import org.chainoptim.features.supplier.model.SupplierOrder;
-import org.chainoptim.features.supplier.model.SupplierShipment;
-import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
-import org.chainoptim.features.supplier.service.SupplierShipmentService;
+import org.chainoptim.internalcommunication.in.supplier.model.SupplierOrder;
+import org.chainoptim.internalcommunication.in.supplier.model.SupplierShipment;
+import org.chainoptim.internalcommunication.in.supplier.repository.SupplierOrderRepository;
+import org.chainoptim.internalcommunication.in.supplier.repository.SupplierShipmentRepository;
 import org.chainoptim.features.warehouse.model.Warehouse;
 import org.chainoptim.features.warehouse.model.WarehouseInventoryItem;
 import org.chainoptim.features.warehouse.service.WarehouseInventoryService;
 import org.chainoptim.features.warehouse.service.WarehouseService;
 import org.chainoptim.shared.commonfeatures.location.model.Location;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,20 +24,18 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
     private final WarehouseService warehouseService;
     private final WarehouseInventoryService warehouseInventoryService;
     private final SupplierOrderRepository supplierOrderRepository;
-    private final SupplierShipmentService supplierShipmentService;
-
-    private static final Logger logger = LoggerFactory.getLogger(ResourceSeekerServiceImpl.class);
+    private final SupplierShipmentRepository supplierShipmentRepository;
 
     @Autowired
     public ResourceSeekerServiceImpl(
             WarehouseService warehouseService,
             WarehouseInventoryService warehouseInventoryService,
             SupplierOrderRepository supplierOrderRepository,
-            SupplierShipmentService supplierShipmentService) {
+            SupplierShipmentRepository supplierShipmentRepository) {
         this.warehouseService = warehouseService;
         this.warehouseInventoryService = warehouseInventoryService;
         this.supplierOrderRepository = supplierOrderRepository;
-        this.supplierShipmentService = supplierShipmentService;
+        this.supplierShipmentRepository = supplierShipmentRepository;
     }
 
     public DeficitResolverPlan seekResources(Integer organizationId, List<ResourceAllocation> allocationDeficits, Location factoryLocation) {
@@ -74,22 +70,27 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
                 if (correspondingItem == null) continue;
 
                 System.out.println("Corresponding item " + correspondingItem);
-                Float inventoryComponentQuantity = correspondingItem.getQuantity();
-                Float neededComponentQuantity = resourceAllocation.getRequestedAmount() - resourceAllocation.getAllocatedAmount();
-                float surplusQuantity = inventoryComponentQuantity - neededComponentQuantity;
-
-                Float suppliedQuantity = surplusQuantity > 0 ? neededComponentQuantity : inventoryComponentQuantity;
-
-                // Add deficit resolution
-                DeficitResolution resolution = new DeficitResolution();
-                resolution.setWarehouseId(warehouse.getId());
-                resolution.setNeededComponentId(resourceAllocation.getComponentId());
-                resolution.setNeededQuantity(neededComponentQuantity);
-                resolution.setSuppliedQuantity(suppliedQuantity);
+                DeficitResolution resolution = getDeficitResolution(warehouse, resourceAllocation, correspondingItem);
 
                 resolutions.add(resolution);
             }
         }
+    }
+
+    private static DeficitResolution getDeficitResolution(Warehouse warehouse, ResourceAllocation resourceAllocation, WarehouseInventoryItem correspondingItem) {
+        Float inventoryComponentQuantity = correspondingItem.getQuantity();
+        Float neededComponentQuantity = resourceAllocation.getRequestedAmount() - resourceAllocation.getAllocatedAmount();
+        float surplusQuantity = inventoryComponentQuantity - neededComponentQuantity;
+
+        Float suppliedQuantity = surplusQuantity > 0 ? neededComponentQuantity : inventoryComponentQuantity;
+
+        // Add deficit resolution
+        DeficitResolution resolution = new DeficitResolution();
+        resolution.setWarehouseId(warehouse.getId());
+        resolution.setNeededComponentId(resourceAllocation.getComponentId());
+        resolution.setNeededQuantity(neededComponentQuantity);
+        resolution.setSuppliedQuantity(suppliedQuantity);
+        return resolution;
     }
 
     public void seekSupplyOrderResources(Integer organizationId,
@@ -108,8 +109,13 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
 
             float neededComponentQuantity = resourceAllocation.getRequestedAmount() - resourceAllocation.getAllocatedAmount();
 
+            List<SupplierShipment> potentialShipments = supplierShipmentRepository.findSupplierShipmentsBySupplierOrderIds(
+                    potentialSupplierOrders.stream().map(SupplierOrder::getId).toList()
+            );
+
             for (SupplierOrder potentialOrder : potentialSupplierOrders) {
-                List<SupplierShipment> orderShipments = supplierShipmentService.getSupplierShipmentBySupplierOrderId(potentialOrder.getId());
+                List<SupplierShipment> orderShipments = potentialShipments.stream()
+                        .filter(ss -> Objects.equals(ss.getSupplierOrderId(), potentialOrder.getId())).toList();
 
                 for (SupplierShipment shipment : orderShipments) {
                     if (!areCloseEnough(shipment.getDestinationLocation(), factoryLocation, 80.0f)) continue;

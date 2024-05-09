@@ -2,8 +2,8 @@ package org.chainoptimsupply.supplier.service;
 
 import org.chainoptimsupply.core.supplier.service.SupplierServiceImpl;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
-import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.internal.location.dto.CreateLocationDTO;
+import org.chainoptimsupply.internal.in.tenant.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.internal.in.location.dto.CreateLocationDTO;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierDTO;
 import org.chainoptimsupply.core.supplier.dto.SupplierDTOMapper;

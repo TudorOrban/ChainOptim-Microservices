@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.chainoptim.features.client.model.Client;
-import org.chainoptim.features.client.model.ClientShipment;
 import org.chainoptim.features.factory.model.Factory;
-import org.chainoptim.features.supplier.model.Supplier;
-import org.chainoptim.features.supplier.model.SupplierShipment;
 import org.chainoptim.features.warehouse.model.Warehouse;
 
 import java.util.Set;
@@ -58,25 +55,5 @@ public class Location {
 
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Supplier> suppliers;
-
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Client> clients;
-
-    @OneToMany(mappedBy = "sourceLocation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<SupplierShipment> outgoingSupplierShipments;
-
-    @OneToMany(mappedBy = "destinationLocation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<SupplierShipment> incomingSupplierShipments;
-
-    @OneToMany(mappedBy = "sourceLocation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<ClientShipment> outgoingClientShipments;
-
-    @OneToMany(mappedBy = "destinationLocation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<ClientShipment> incomingClientShipments;
 }

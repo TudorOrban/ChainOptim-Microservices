@@ -3,8 +3,8 @@ package org.chainoptimnotifications.core.notification.service;
 import org.chainoptimnotifications.core.notification.model.KafkaEvent;
 import org.chainoptimnotifications.shared.enums.Feature;
 import org.chainoptimnotifications.core.notification.model.Notification;
-import org.chainoptimnotifications.internal.demand.model.ClientOrderEvent;
-import org.chainoptimnotifications.internal.supply.model.SupplierOrderEvent;
+import org.chainoptimnotifications.internal.in.demand.model.ClientOrderEvent;
+import org.chainoptimnotifications.internal.in.supply.model.SupplierOrderEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

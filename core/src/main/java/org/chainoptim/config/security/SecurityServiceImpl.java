@@ -14,8 +14,8 @@ import org.chainoptim.features.product.repository.ProductRepository;
 import org.chainoptim.features.product.repository.UnitOfMeasurementRepository;
 import org.chainoptim.features.productpipeline.repository.ComponentRepository;
 import org.chainoptim.features.productpipeline.repository.StageRepository;
-import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
-import org.chainoptim.features.supplier.repository.SupplierRepository;
+import org.chainoptim.internalcommunication.in.supplier.repository.SupplierOrderRepository;
+import org.chainoptim.internalcommunication.in.supplier.repository.SupplierRepository;
 import org.chainoptim.features.warehouse.repository.WarehouseRepository;
 import org.chainoptim.shared.commonfeatures.location.repository.LocationRepository;
 

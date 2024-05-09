@@ -2,7 +2,7 @@ package org.chainoptimsupply.shared.kafka;
 
 import lombok.AllArgsConstructor;
 import org.chainoptimsupply.shared.enums.Feature;
-import org.chainoptimsupply.internal.tenant.model.Organization;
+import org.chainoptimsupply.internal.in.tenant.model.Organization;
 
 @AllArgsConstructor
 public class OrganizationEvent extends KafkaEvent<Organization> {

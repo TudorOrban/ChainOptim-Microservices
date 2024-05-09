@@ -1,7 +1,6 @@
 package org.chainoptim.features.client.model;
 
 import org.chainoptim.features.product.model.Product;
-import org.chainoptim.features.supplier.model.SupplierOrder;
 import org.chainoptim.shared.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package org.chainoptimsupply.supplierorder.controller;
 
 import org.chainoptimsupply.exception.ResourceNotFoundException;
-import org.chainoptimsupply.internal.component.repository.ComponentRepository;
-import org.chainoptimsupply.internal.subscriptionplan.model.Component;
-import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.internal.in.goods.repository.ComponentRepository;
+import org.chainoptimsupply.internal.in.goods.model.Component;
+import org.chainoptimsupply.internal.in.tenant.service.SubscriptionPlanLimiterService;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierOrderDTO;

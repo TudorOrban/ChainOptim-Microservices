@@ -5,7 +5,6 @@ import org.chainoptim.features.client.dto.CreateClientOrderDTO;
 import org.chainoptim.features.client.dto.UpdateClientOrderDTO;
 import org.chainoptim.features.client.model.ClientOrder;
 import org.chainoptim.features.client.service.ClientOrderService;
-import org.chainoptim.features.supplier.dto.SuppliersSearchDTO;
 import org.chainoptim.shared.search.model.PaginatedResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

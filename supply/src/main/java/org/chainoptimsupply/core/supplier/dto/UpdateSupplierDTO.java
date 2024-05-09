@@ -3,7 +3,7 @@ package org.chainoptimsupply.core.supplier.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.chainoptimsupply.internal.location.dto.CreateLocationDTO;
+import org.chainoptimsupply.internal.in.location.dto.CreateLocationDTO;
 
 @Data
 @AllArgsConstructor

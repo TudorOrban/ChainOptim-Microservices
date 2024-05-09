@@ -7,10 +7,10 @@ import org.chainoptimsupply.core.supplier.dto.UpdateSupplierShipmentDTO;
 import org.chainoptimsupply.exception.PlanLimitReachedException;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
 import org.chainoptimsupply.exception.ValidationException;
-import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
+import org.chainoptimsupply.internal.in.tenant.service.SubscriptionPlanLimiterService;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.shared.enums.Feature;
-import org.chainoptimsupply.internal.location.service.LocationService;
+import org.chainoptimsupply.internal.in.location.service.LocationService;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
 import org.chainoptimsupply.core.suppliershipment.model.SupplierShipment;
 import org.chainoptimsupply.core.suppliershipment.repository.SupplierShipmentRepository;
@@ -39,8 +39,12 @@ public class SupplierShipmentServiceImpl implements SupplierShipmentService {
         this.entitySanitizerService = entitySanitizerService;
     }
 
-    public List<SupplierShipment> getSupplierShipmentBySupplierOrderId(Integer orderId) {
+    public List<SupplierShipment> getSupplierShipmentsBySupplierOrderId(Integer orderId) {
         return supplierShipmentRepository.findBySupplyOrderId(orderId);
+    }
+
+    public List<SupplierShipment> getSupplierShipmentsBySupplierOrderIds(List<Integer> orderIds) {
+        return supplierShipmentRepository.findBySupplyOrderIds(orderIds);
     }
 
     public PaginatedResults<SupplierShipment> getSupplierShipmentsBySupplierOrderIdAdvanced(Integer supplierOrderId, String searchQuery, String sortBy, boolean ascending, int page, int itemsPerPage) {
@@ -49,6 +53,10 @@ public class SupplierShipmentServiceImpl implements SupplierShipmentService {
 
     public SupplierShipment getSupplierShipmentById(Integer shipmentId) {
         return supplierShipmentRepository.findById(shipmentId).orElseThrow(() -> new ResourceNotFoundException("Supplier shipment with ID: " + shipmentId + " not found."));
+    }
+
+    public long countByOrganizationId(Integer organizationId) {
+        return supplierShipmentRepository.countByOrganizationId(organizationId);
     }
 
     // Create

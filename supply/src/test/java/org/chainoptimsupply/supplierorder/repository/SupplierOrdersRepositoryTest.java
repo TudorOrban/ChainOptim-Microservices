@@ -1,7 +1,7 @@
 package org.chainoptimsupply.supplierorder.repository;
 
 import org.chainoptimsupply.core.supplierorder.repository.SupplierOrderRepository;
-import org.chainoptimsupply.internal.location.dto.Location;
+import org.chainoptimsupply.internal.in.location.dto.Location;
 import org.chainoptimsupply.core.supplier.model.Supplier;
 import org.chainoptimsupply.core.supplierorder.model.OrderStatus;
 import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;
