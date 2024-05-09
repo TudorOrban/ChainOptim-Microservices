@@ -6,17 +6,15 @@ import org.chainoptim.core.user.model.User;
 import org.chainoptim.core.user.model.UserDetailsImpl;
 import org.chainoptim.core.user.repository.UserRepository;
 import org.chainoptim.exception.AuthorizationException;
-import org.chainoptim.exception.ValidationException;
 import org.chainoptim.features.client.repository.ClientOrderRepository;
 import org.chainoptim.features.client.repository.ClientRepository;
-import org.chainoptim.features.factory.controller.FactoryInventoryController;
 import org.chainoptim.features.factory.repository.FactoryInventoryItemRepository;
 import org.chainoptim.features.factory.repository.FactoryRepository;
 import org.chainoptim.features.product.repository.ProductRepository;
 import org.chainoptim.features.product.repository.UnitOfMeasurementRepository;
 import org.chainoptim.features.productpipeline.repository.ComponentRepository;
 import org.chainoptim.features.productpipeline.repository.StageRepository;
-import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
+import org.chainoptim.features.supplier.repository.SupplierOrderRepositoryNew;
 import org.chainoptim.features.supplier.repository.SupplierRepository;
 import org.chainoptim.features.warehouse.repository.WarehouseRepository;
 import org.chainoptim.shared.commonfeatures.location.repository.LocationRepository;
@@ -45,7 +43,7 @@ public class SecurityServiceImpl implements SecurityService {
     private final FactoryInventoryItemRepository factoryInventoryRepository;
     private final WarehouseRepository warehouseRepository;
     private final SupplierRepository supplierRepository;
-    private final SupplierOrderRepository supplierOrderRepository;
+    private final SupplierOrderRepositoryNew supplierOrderRepositoryNew;
     private final ClientRepository clientRepository;
     private final ClientOrderRepository clientOrderRepository;
     private final LocationRepository locationRepository;
@@ -64,7 +62,7 @@ public class SecurityServiceImpl implements SecurityService {
             FactoryInventoryItemRepository factoryInventoryRepository,
             WarehouseRepository warehouseRepository,
             SupplierRepository supplierRepository,
-            SupplierOrderRepository supplierOrderRepository,
+            SupplierOrderRepositoryNew supplierOrderRepositoryNew,
             ClientRepository clientRepository,
             ClientOrderRepository clientOrderRepository,
             LocationRepository locationRepository,
@@ -80,7 +78,7 @@ public class SecurityServiceImpl implements SecurityService {
         this.factoryInventoryRepository = factoryInventoryRepository;
         this.warehouseRepository = warehouseRepository;
         this.supplierRepository = supplierRepository;
-        this.supplierOrderRepository = supplierOrderRepository;
+        this.supplierOrderRepositoryNew = supplierOrderRepositoryNew;
         this.clientRepository = clientRepository;
         this.clientOrderRepository = clientOrderRepository;
         this.locationRepository = locationRepository;
@@ -99,7 +97,7 @@ public class SecurityServiceImpl implements SecurityService {
             case "FactoryInventoryItem" -> factoryInventoryRepository.findOrganizationIdById(entityId);
             case "Warehouse" -> warehouseRepository.findOrganizationIdById(entityId);
             case "Supplier" -> supplierRepository.findOrganizationIdById(entityId);
-            case "SupplierOrder" -> supplierOrderRepository.findOrganizationIdById(entityId);
+            case "SupplierOrder" -> supplierOrderRepositoryNew.findOrganizationIdById(entityId);
             case "Client" -> clientRepository.findOrganizationIdById(entityId);
             case "ClientOrder" -> clientOrderRepository.findOrganizationIdById(entityId);
             case "Location" -> locationRepository.findOrganizationIdById(entityId);

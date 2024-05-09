@@ -12,11 +12,12 @@ import org.chainoptim.features.factory.repository.FactoryStageRepository;
 import org.chainoptim.features.product.repository.ProductRepository;
 import org.chainoptim.features.productpipeline.repository.ComponentRepository;
 import org.chainoptim.features.productpipeline.repository.StageRepository;
-import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
+import org.chainoptim.features.supplier.repository.SupplierOrderRepositoryNew;
 import org.chainoptim.features.supplier.repository.SupplierRepository;
 import org.chainoptim.features.supplier.repository.SupplierShipmentRepository;
 import org.chainoptim.features.warehouse.repository.WarehouseInventoryItemRepository;
 import org.chainoptim.features.warehouse.repository.WarehouseRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class SnapshotFinderServiceImpl implements SnapshotFinderService {
     private final WarehouseRepository warehouseRepository;
     private final WarehouseInventoryItemRepository warehouseInventoryRepository;
     private final SupplierRepository supplierRepository;
-    private final SupplierOrderRepository supplierOrderRepository;
+    private final SupplierOrderRepositoryNew supplierOrderRepositoryNew;
     private final SupplierShipmentRepository supplierShipmentRepository;
     private final ClientRepository clientRepository;
     private final ClientOrderRepository clientOrderRepository;
@@ -53,7 +54,7 @@ public class SnapshotFinderServiceImpl implements SnapshotFinderService {
                                      WarehouseRepository warehouseRepository,
                                      WarehouseInventoryItemRepository warehouseInventoryRepository,
                                      SupplierRepository supplierRepository,
-                                     SupplierOrderRepository supplierOrderRepository,
+                                     SupplierOrderRepositoryNew supplierOrderRepositoryNew,
                                      SupplierShipmentRepository supplierShipmentRepository,
                                      ClientRepository clientRepository,
                                      ClientOrderRepository clientOrderRepository,
@@ -69,7 +70,7 @@ public class SnapshotFinderServiceImpl implements SnapshotFinderService {
         this.warehouseRepository = warehouseRepository;
         this.warehouseInventoryRepository = warehouseInventoryRepository;
         this.supplierRepository = supplierRepository;
-        this.supplierOrderRepository = supplierOrderRepository;
+        this.supplierOrderRepositoryNew = supplierOrderRepositoryNew;
         this.supplierShipmentRepository = supplierShipmentRepository;
         this.clientRepository = clientRepository;
         this.clientOrderRepository = clientOrderRepository;
@@ -88,7 +89,7 @@ public class SnapshotFinderServiceImpl implements SnapshotFinderService {
         long warehouseCount = warehouseRepository.countByOrganizationId(organizationId);
         long warehouseInventoryCount = warehouseInventoryRepository.countByOrganizationId(organizationId);
         long suppliersCount = supplierRepository.countByOrganizationId(organizationId);
-        long supplierOrdersCount = supplierOrderRepository.countByOrganizationId(organizationId);
+        long supplierOrdersCount = supplierOrderRepositoryNew.countByOrganizationId(organizationId);
         long supplierShipmentsCount = supplierShipmentRepository.countByOrganizationId(organizationId);
         long clientsCount = clientRepository.countByOrganizationId(organizationId);
         long clientOrdersCount = clientOrderRepository.countByOrganizationId(organizationId);

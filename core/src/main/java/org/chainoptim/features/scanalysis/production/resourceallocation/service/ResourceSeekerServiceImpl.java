@@ -5,13 +5,14 @@ import org.chainoptim.features.scanalysis.production.resourceallocation.model.De
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.ResourceAllocation;
 import org.chainoptim.features.supplier.model.SupplierOrder;
 import org.chainoptim.features.supplier.model.SupplierShipment;
-import org.chainoptim.features.supplier.service.SupplierOrderService;
+import org.chainoptim.features.supplier.repository.SupplierOrderRepositoryNew;
 import org.chainoptim.features.supplier.service.SupplierShipmentService;
 import org.chainoptim.features.warehouse.model.Warehouse;
 import org.chainoptim.features.warehouse.model.WarehouseInventoryItem;
 import org.chainoptim.features.warehouse.service.WarehouseInventoryService;
 import org.chainoptim.features.warehouse.service.WarehouseService;
 import org.chainoptim.shared.commonfeatures.location.model.Location;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,20 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
 
     private final WarehouseService warehouseService;
     private final WarehouseInventoryService warehouseInventoryService;
-    private final SupplierOrderService supplierOrderService;
+    private final SupplierOrderRepositoryNew supplierOrderRepositoryNew;
     private final SupplierShipmentService supplierShipmentService;
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceSeekerServiceImpl.class);
+
     @Autowired
     public ResourceSeekerServiceImpl(
             WarehouseService warehouseService,
             WarehouseInventoryService warehouseInventoryService,
-            SupplierOrderService supplierOrderService,
+            SupplierOrderRepositoryNew supplierOrderRepositoryNew,
             SupplierShipmentService supplierShipmentService) {
         this.warehouseService = warehouseService;
         this.warehouseInventoryService = warehouseInventoryService;
-        this.supplierOrderService = supplierOrderService;
+        this.supplierOrderRepositoryNew = supplierOrderRepositoryNew;
         this.supplierShipmentService = supplierShipmentService;
     }
 
@@ -94,7 +96,7 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
                                          List<ResourceAllocation> allocationDeficits,
                                          Location factoryLocation,
                                          List<DeficitResolution> resolutions) {
-        List<SupplierOrder> supplierOrders = supplierOrderService.getSupplierOrdersByOrganizationId(organizationId);
+        List<SupplierOrder> supplierOrders = supplierOrderRepositoryNew.findSupplierOrdersByOrganizationId(organizationId);
 
         for (ResourceAllocation resourceAllocation : allocationDeficits) {
             // Find potential resolvers of current needed component

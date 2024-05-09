@@ -24,14 +24,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SupplierOrderServiceImpl implements SupplierOrderService {
@@ -78,6 +76,15 @@ public class SupplierOrderServiceImpl implements SupplierOrderService {
         }
 
         return supplierOrderRepository.findBySupplierIdAdvanced(searchMode, entityId, searchParams);
+    }
+
+    public Integer getOrganizationIdById(Long supplierOrderId) {
+        return supplierOrderRepository.findOrganizationIdById(supplierOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier Order with ID: " + supplierOrderId + " not found."));
+    }
+
+    public long countByOrganizationId(Integer organizationId) {
+        return supplierOrderRepository.countByOrganizationId(organizationId);
     }
 
     // Create
