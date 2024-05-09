@@ -5,7 +5,7 @@ import org.chainoptim.features.scanalysis.production.resourceallocation.model.De
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.ResourceAllocation;
 import org.chainoptim.features.supplier.model.SupplierOrder;
 import org.chainoptim.features.supplier.model.SupplierShipment;
-import org.chainoptim.features.supplier.repository.SupplierOrderRepositoryNew;
+import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
 import org.chainoptim.features.supplier.service.SupplierShipmentService;
 import org.chainoptim.features.warehouse.model.Warehouse;
 import org.chainoptim.features.warehouse.model.WarehouseInventoryItem;
@@ -25,7 +25,7 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
 
     private final WarehouseService warehouseService;
     private final WarehouseInventoryService warehouseInventoryService;
-    private final SupplierOrderRepositoryNew supplierOrderRepositoryNew;
+    private final SupplierOrderRepository supplierOrderRepository;
     private final SupplierShipmentService supplierShipmentService;
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceSeekerServiceImpl.class);
@@ -34,11 +34,11 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
     public ResourceSeekerServiceImpl(
             WarehouseService warehouseService,
             WarehouseInventoryService warehouseInventoryService,
-            SupplierOrderRepositoryNew supplierOrderRepositoryNew,
+            SupplierOrderRepository supplierOrderRepository,
             SupplierShipmentService supplierShipmentService) {
         this.warehouseService = warehouseService;
         this.warehouseInventoryService = warehouseInventoryService;
-        this.supplierOrderRepositoryNew = supplierOrderRepositoryNew;
+        this.supplierOrderRepository = supplierOrderRepository;
         this.supplierShipmentService = supplierShipmentService;
     }
 
@@ -96,7 +96,7 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
                                          List<ResourceAllocation> allocationDeficits,
                                          Location factoryLocation,
                                          List<DeficitResolution> resolutions) {
-        List<SupplierOrder> supplierOrders = supplierOrderRepositoryNew.findSupplierOrdersByOrganizationId(organizationId);
+        List<SupplierOrder> supplierOrders = supplierOrderRepository.findSupplierOrdersByOrganizationId(organizationId);
 
         for (ResourceAllocation resourceAllocation : allocationDeficits) {
             // Find potential resolvers of current needed component

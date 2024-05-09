@@ -1,24 +1,15 @@
 package org.chainoptim.features.supplier.repository;
 
 import org.chainoptim.features.supplier.model.Supplier;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface SupplierRepository extends JpaRepository<Supplier, Integer>, SuppliersSearchRepository {
+public interface SupplierRepository {
 
-    List<Supplier> findByOrganizationId(Integer organizationId);
-
-    @Query("SELECT s.organizationId FROM Supplier s WHERE s.id = :supplierId")
-    Optional<Integer> findOrganizationIdById(@Param("supplierId") Long supplierId);
-
-    @Query("SELECT s FROM Supplier s WHERE s.name = :name")
-    Optional<Supplier> findByName(@Param("name") String name);
-
-    long countByOrganizationId(Integer organizationId);
+    List<Supplier> findSuppliersByOrganizationId(Integer organizationId);
+    Optional<Integer> findOrganizationIdById(Long supplierId);
+    long countByOrganizationId(@Param("organizationId") Integer organizationId);
 }

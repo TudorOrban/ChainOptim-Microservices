@@ -62,6 +62,16 @@ public class SupplierServiceImpl implements SupplierService {
         );
     }
 
+    public Integer getOrganizationIdById(Long supplierId) {
+        return supplierRepository.findOrganizationIdById(supplierId)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier with ID: " + supplierId + " not found."));
+    }
+
+    public long countByOrganizationId(Integer organizationId) {
+        return supplierRepository.countByOrganizationId(organizationId);
+    }
+
+    // Create
     public Supplier createSupplier(CreateSupplierDTO supplierDTO) {
         // Check if plan limit is reached
         if (planLimiterService.isLimitReached(supplierDTO.getOrganizationId(), Feature.SUPPLIER, 1)) {

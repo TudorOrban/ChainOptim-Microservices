@@ -15,6 +15,8 @@ public interface SupplierService {
     Supplier getSupplierById(Integer id);
     List<Supplier> getSuppliersByOrganizationId(Integer organizationId);
     PaginatedResults<SuppliersSearchDTO> getSuppliersByOrganizationIdAdvanced(Integer organizationId, String searchQuery, String sortBy, boolean ascending, int page, int itemsPerPage);
+    Integer getOrganizationIdById(Long supplierId);
+    long countByOrganizationId(Integer organizationId);
 
     // Create
     Supplier createSupplier(CreateSupplierDTO supplierDTO);
