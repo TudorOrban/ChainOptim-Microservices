@@ -1,6 +1,6 @@
 package org.chainoptimsupply.core.performance.controller;
 
-import org.chainoptimsupply.config.security.SecurityService;
+import org.chainoptimsupply.internal.in.security.service.SecurityService;
 import org.chainoptimsupply.core.performance.dto.CreateSupplierPerformanceDTO;
 import org.chainoptimsupply.core.performance.dto.UpdateSupplierPerformanceDTO;
 import org.chainoptimsupply.core.performance.model.SupplierPerformance;

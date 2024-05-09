@@ -1,11 +1,10 @@
-package org.chainoptimsupply.config.security;
+package org.chainoptimsupply.internal.in.security.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.chainoptimsupply.exception.AuthorizationException;
 import org.chainoptimsupply.internal.in.security.dto.SecurityDTO;
 import org.chainoptimsupply.internal.in.tenant.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

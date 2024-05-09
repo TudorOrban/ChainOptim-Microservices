@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainoptim-demand
+  labels:
+    app: chainoptim-demand
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chainoptim-demand
+  template:
+    metadata:
+      labels:
+        app: chainoptim-demand
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/actuator/prometheus'
+        prometheus.io/port: '8083'
+    spec:
+      containers:
+      - name: chainoptim-demand
+        image: tudoraorban/chainoptim-demand:latest
+        ports:
+        - containerPort: 8083
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker-dev
+      automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainoptim-demand
+  labels:
+    app: chainoptim-demand
+spec:
+  type: NodePort
+  ports:
+  - port: 8083
+    targetPort: 8083
+    protocol: TCP
+    nodePort: 31280
+  selector:
+    app: chainoptim-demand

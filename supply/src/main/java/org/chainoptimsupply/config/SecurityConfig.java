@@ -1,4 +1,4 @@
-package org.chainoptimsupply.config.security;
+package org.chainoptimsupply.config;
 
 import org.chainoptimsupply.internal.in.tenant.jwt.JwtAuthenticationFilter;
 import org.chainoptimsupply.internal.in.tenant.service.UserDetailsServiceImpl;

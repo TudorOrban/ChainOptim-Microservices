@@ -12,6 +12,8 @@ Push-Location -Path "../core"
 kubectl create configmap mysql-core-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../supply"
 kubectl create configmap mysql-supply-initdb --from-file=schema.sql=database/schema/schema.sql
+Push-Location -Path "../demand"
+kubectl create configmap mysql-demand-initdb --from-file=schema.sql=database/schema/schema.sql
 
 Push-Location -Path "../notifications/kubernetes"
 kubectl apply -f clusterrole.yaml
@@ -20,6 +22,7 @@ Write-Host "Applying deployments"
 kubectl apply -f mysql-core.yaml
 kubectl apply -f mysql-notifications.yaml
 kubectl apply -f mysql-supply.yaml
+kubectl apply -f mysql-demand.yaml
 
 kubectl apply -f redis.yaml
 kubectl apply -f zookeeper.yaml
@@ -30,6 +33,7 @@ kubectl apply -f gateway.yaml
 kubectl apply -f chainoptim-core.yaml
 kubectl apply -f chainoptim-notifications.yaml
 kubectl apply -f chainoptim-supply.yaml
+kubectl apply -f chainoptim-demand.yaml
 
 kubectl create namespace monitoring
 

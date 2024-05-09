@@ -1,6 +1,6 @@
 package org.chainoptimsupply.core.supplierorder.controller;
 
-import org.chainoptimsupply.config.security.SecurityService;
+import org.chainoptimsupply.internal.in.security.service.SecurityService;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierOrderDTO;
 import org.chainoptimsupply.core.supplier.dto.UpdateSupplierOrderDTO;
 import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;

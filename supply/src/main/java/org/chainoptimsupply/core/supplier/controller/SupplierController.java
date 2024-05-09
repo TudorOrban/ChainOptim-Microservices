@@ -1,6 +1,6 @@
 package org.chainoptimsupply.core.supplier.controller;
 
-import org.chainoptimsupply.config.security.SecurityService;
+import org.chainoptimsupply.internal.in.security.service.SecurityService;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierDTO;
 import org.chainoptimsupply.core.supplier.dto.SuppliersSearchDTO;
 import org.chainoptimsupply.core.supplier.dto.UpdateSupplierDTO;

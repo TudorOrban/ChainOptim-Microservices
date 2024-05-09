@@ -11,7 +11,7 @@ mvn clean package -DskipTests
 Write-Host "Building Supply Image..."
 docker build -t tudoraorban/chainoptim-supply:latest .
 
-Write-Host "Upload Notifications Image to DockerHub..."
+Write-Host "Upload Supply Image to DockerHub..."
 docker push tudoraorban/chainoptim-supply:latest
 
 if ($rd -eq "true") {

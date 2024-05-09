@@ -1,6 +1,6 @@
 package org.chainoptimsupply.core.suppliershipment.controller;
 
-import org.chainoptimsupply.config.security.SecurityService;
+import org.chainoptimsupply.internal.in.security.service.SecurityService;
 import org.chainoptimsupply.shared.PaginatedResults;
 import org.chainoptimsupply.core.supplier.dto.CreateSupplierShipmentDTO;
 import org.chainoptimsupply.core.supplier.dto.UpdateSupplierShipmentDTO;
