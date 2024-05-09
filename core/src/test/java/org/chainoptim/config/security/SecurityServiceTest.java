@@ -1,6 +1,8 @@
 package org.chainoptim.config.security;
 
 import org.chainoptim.core.organization.model.CustomRole;
+import org.chainoptim.core.security.service.CustomRoleSecurityService;
+import org.chainoptim.core.security.service.SecurityServiceImpl;
 import org.chainoptim.core.user.model.User;
 import org.chainoptim.core.user.model.UserDetailsImpl;
 

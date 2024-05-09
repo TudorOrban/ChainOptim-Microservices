@@ -1,7 +1,6 @@
 package org.chainoptim.features.productpipeline.controller;
 
-import org.chainoptim.config.security.SecurityService;
-import org.chainoptim.features.product.dto.ProductsSearchDTO;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.productpipeline.dto.ComponentsSearchDTO;
 import org.chainoptim.features.productpipeline.dto.CreateComponentDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateComponentDTO;

@@ -1,4 +1,4 @@
-package org.chainoptim.config.security;
+package org.chainoptim.config;
 
 import org.chainoptim.core.user.service.UserDetailsServiceImpl;
 import org.chainoptim.core.user.jwt.JwtAuthenticationFilter;

@@ -1,7 +1,8 @@
-package org.chainoptim.config.security;
+package org.chainoptim.core.security.service;
 
 import org.chainoptim.core.organization.model.FeaturePermissions;
 import org.chainoptim.core.organization.model.Permissions;
+import org.chainoptim.core.security.service.CustomRoleSecurityService;
 import org.chainoptim.core.user.model.UserDetailsImpl;
 
 import org.springframework.stereotype.Service;

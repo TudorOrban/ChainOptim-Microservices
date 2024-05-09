@@ -1,6 +1,6 @@
 package org.chainoptim.features.client.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.client.dto.ClientsSearchDTO;
 import org.chainoptim.features.client.dto.CreateClientDTO;
 import org.chainoptim.features.client.dto.UpdateClientDTO;

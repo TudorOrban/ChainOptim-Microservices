@@ -1,6 +1,6 @@
 package org.chainoptim.features.factory.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.factory.dto.CreateFactoryStageDTO;
 import org.chainoptim.features.factory.dto.UpdateFactoryStageDTO;
 import org.chainoptim.features.factory.model.FactoryStage;

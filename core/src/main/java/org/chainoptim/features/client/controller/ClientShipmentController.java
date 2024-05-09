@@ -1,12 +1,10 @@
 package org.chainoptim.features.client.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.client.model.ClientShipment;
 import org.chainoptim.features.client.service.ClientShipmentService;
 import org.chainoptim.features.client.dto.CreateClientShipmentDTO;
 import org.chainoptim.features.client.dto.UpdateClientShipmentDTO;
-import org.chainoptim.features.client.model.ClientShipment;
-import org.chainoptim.features.client.service.ClientShipmentService;
 import org.chainoptim.shared.search.model.PaginatedResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

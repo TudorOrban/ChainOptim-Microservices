@@ -1,6 +1,6 @@
 package org.chainoptim.features.product.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.product.dto.CreateUnitOfMeasurementDTO;
 import org.chainoptim.features.product.dto.UpdateUnitOfMeasurementDTO;
 import org.chainoptim.features.product.model.UnitOfMeasurement;

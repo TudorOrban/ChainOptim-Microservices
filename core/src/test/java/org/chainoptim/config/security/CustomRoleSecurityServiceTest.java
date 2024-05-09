@@ -3,6 +3,7 @@ package org.chainoptim.config.security;
 import org.chainoptim.core.organization.model.CustomRole;
 import org.chainoptim.core.organization.model.FeaturePermissions;
 import org.chainoptim.core.organization.model.Permissions;
+import org.chainoptim.core.security.service.CustomRoleSecurityServiceImpl;
 import org.chainoptim.core.user.model.UserDetailsImpl;
 
 import org.junit.jupiter.api.Test;

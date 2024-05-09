@@ -1,4 +1,4 @@
-package org.chainoptim.config.security;
+package org.chainoptim.core.security.service;
 
 import java.util.Optional;
 

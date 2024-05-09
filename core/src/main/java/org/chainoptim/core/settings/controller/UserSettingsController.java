@@ -1,6 +1,6 @@
 package org.chainoptim.core.settings.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.core.settings.dto.CreateUserSettingsDTO;
 import org.chainoptim.core.settings.dto.DeleteUserSettingsDTO;
 import org.chainoptim.core.settings.dto.UpdateUserSettingsDTO;

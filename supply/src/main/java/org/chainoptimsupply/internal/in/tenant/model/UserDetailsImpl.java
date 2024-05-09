@@ -25,6 +25,9 @@ public class UserDetailsImpl implements UserDetails, Serializable {
     @Getter
     private CustomRole customRole;
 
+    @Getter
+    private String jwtToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

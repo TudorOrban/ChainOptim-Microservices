@@ -1,6 +1,6 @@
 package org.chainoptim.core.organization.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.core.organization.dto.UpdateOrganizationDTO;
 import org.chainoptim.core.organization.model.Organization;
 import org.chainoptim.core.organization.dto.CreateOrganizationDTO;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/organizations")

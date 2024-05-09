@@ -1,6 +1,6 @@
 package org.chainoptim.core.organization.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.core.organization.dto.CreateCustomRoleDTO;
 import org.chainoptim.core.organization.dto.UpdateCustomRoleDTO;
 import org.chainoptim.core.organization.model.CustomRole;

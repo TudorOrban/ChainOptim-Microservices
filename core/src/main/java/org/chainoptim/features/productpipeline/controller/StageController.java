@@ -1,6 +1,6 @@
 package org.chainoptim.features.productpipeline.controller;
 
-import org.chainoptim.config.security.SecurityService;
+import org.chainoptim.core.security.service.SecurityService;
 import org.chainoptim.features.productpipeline.dto.CreateStageDTO;
 import org.chainoptim.features.productpipeline.dto.StagesSearchDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateStageDTO;

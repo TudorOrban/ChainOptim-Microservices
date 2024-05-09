@@ -1,4 +1,4 @@
-package org.chainoptim.config.security;
+package org.chainoptim.core.security.service;
 
 import jakarta.transaction.Transactional;
 import org.chainoptim.core.organization.repository.CustomRoleRepository;
@@ -110,6 +110,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Transactional
     public boolean canAccessOrganizationEntity(Optional<Integer> organizationId, String entityType, String operationType) {
+        logger.info("Checking if user can access entity in core");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails;
         try {
