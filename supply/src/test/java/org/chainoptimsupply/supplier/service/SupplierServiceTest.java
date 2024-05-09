@@ -1,14 +1,15 @@
 package org.chainoptimsupply.supplier.service;
 
+import org.chainoptimsupply.core.supplier.service.SupplierServiceImpl;
 import org.chainoptimsupply.exception.ResourceNotFoundException;
 import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.shared.dto.CreateLocationDTO;
+import org.chainoptimsupply.internal.location.dto.CreateLocationDTO;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
-import org.chainoptimsupply.supplier.dto.CreateSupplierDTO;
-import org.chainoptimsupply.supplier.dto.SupplierDTOMapper;
-import org.chainoptimsupply.supplier.dto.UpdateSupplierDTO;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.supplier.repository.SupplierRepository;
+import org.chainoptimsupply.core.supplier.dto.CreateSupplierDTO;
+import org.chainoptimsupply.core.supplier.dto.SupplierDTOMapper;
+import org.chainoptimsupply.core.supplier.dto.UpdateSupplierDTO;
+import org.chainoptimsupply.core.supplier.model.Supplier;
+import org.chainoptimsupply.core.supplier.repository.SupplierRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

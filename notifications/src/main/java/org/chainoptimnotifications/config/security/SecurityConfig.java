@@ -3,7 +3,7 @@ package org.chainoptimnotifications.config.security;
 //import org.chainoptimnotifications.user.service.UserDetailsServiceImpl;
 //import org.chainoptimnotifications.user.JwtAuthenticationFilter;
 
-import org.chainoptimnotifications.tenant.service.UserDetailsServiceImpl;
+import org.chainoptimnotifications.internal.tenant.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

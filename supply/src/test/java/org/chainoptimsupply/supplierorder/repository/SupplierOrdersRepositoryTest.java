@@ -1,11 +1,10 @@
 package org.chainoptimsupply.supplierorder.repository;
 
-import org.chainoptimsupply.internal.subscriptionplan.model.Component;
-import org.chainoptimsupply.shared.dto.Location;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.supplierorder.model.OrderStatus;
-import org.chainoptimsupply.supplierorder.model.SupplierOrder;
-import org.chainoptimsupply.tenant.model.Organization;
+import org.chainoptimsupply.core.supplierorder.repository.SupplierOrderRepository;
+import org.chainoptimsupply.internal.location.dto.Location;
+import org.chainoptimsupply.core.supplier.model.Supplier;
+import org.chainoptimsupply.core.supplierorder.model.OrderStatus;
+import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

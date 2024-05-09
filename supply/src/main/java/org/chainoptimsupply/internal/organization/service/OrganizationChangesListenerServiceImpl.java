@@ -1,13 +1,13 @@
 package org.chainoptimsupply.internal.organization.service;
 
-import org.chainoptimsupply.kafka.KafkaEvent;
-import org.chainoptimsupply.kafka.OrganizationEvent;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.supplier.repository.SupplierRepository;
-import org.chainoptimsupply.supplierorder.model.SupplierOrder;
-import org.chainoptimsupply.supplierorder.repository.SupplierOrderRepository;
-import org.chainoptimsupply.suppliershipment.model.SupplierShipment;
-import org.chainoptimsupply.suppliershipment.repository.SupplierShipmentRepository;
+import org.chainoptimsupply.shared.kafka.KafkaEvent;
+import org.chainoptimsupply.shared.kafka.OrganizationEvent;
+import org.chainoptimsupply.core.supplier.model.Supplier;
+import org.chainoptimsupply.core.supplier.repository.SupplierRepository;
+import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;
+import org.chainoptimsupply.core.supplierorder.repository.SupplierOrderRepository;
+import org.chainoptimsupply.core.suppliershipment.model.SupplierShipment;
+import org.chainoptimsupply.core.suppliershipment.repository.SupplierShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

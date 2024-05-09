@@ -1,6 +1,6 @@
 package org.chainoptimsupply.shared.sanitization;
 
-import org.chainoptimsupply.supplier.dto.*;
+import org.chainoptimsupply.core.supplier.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

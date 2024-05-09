@@ -1,6 +1,6 @@
 package org.chainoptimsupply.config.security;
 
-import org.chainoptimsupply.tenant.service.UserDetailsServiceImpl;
+import org.chainoptimsupply.internal.tenant.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

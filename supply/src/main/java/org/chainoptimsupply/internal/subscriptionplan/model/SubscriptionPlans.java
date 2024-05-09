@@ -1,7 +1,7 @@
 package org.chainoptimsupply.internal.subscriptionplan.model;
 
 import lombok.Getter;
-import org.chainoptimsupply.tenant.model.Organization;
+import org.chainoptimsupply.internal.tenant.model.Organization;
 
 import java.util.Map;
 

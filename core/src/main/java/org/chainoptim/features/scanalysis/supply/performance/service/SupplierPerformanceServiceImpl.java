@@ -5,6 +5,7 @@ import org.chainoptim.features.scanalysis.supply.performance.model.SupplierPerfo
 import org.chainoptim.features.supplier.model.SupplierOrder;
 import org.chainoptim.features.supplier.model.SupplierShipment;
 import org.chainoptim.features.supplier.repository.SupplierOrderRepository;
+import org.chainoptim.features.supplier.repository.SupplierOrderRepositoryNew;
 import org.chainoptim.features.supplier.repository.SupplierShipmentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

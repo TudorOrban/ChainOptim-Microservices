@@ -4,9 +4,9 @@ import org.chainoptimsupply.exception.ResourceNotFoundException;
 import org.chainoptimsupply.internal.subscriptionplan.model.PlanDetails;
 import org.chainoptimsupply.internal.subscriptionplan.model.SubscriptionPlans;
 import org.chainoptimsupply.shared.enums.Feature;
-import org.chainoptimsupply.supplier.repository.SupplierRepository;
-import org.chainoptimsupply.tenant.OrganizationRepository;
-import org.chainoptimsupply.tenant.model.Organization;
+import org.chainoptimsupply.core.supplier.repository.SupplierRepository;
+import org.chainoptimsupply.internal.tenant.OrganizationRepository;
+import org.chainoptimsupply.internal.tenant.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

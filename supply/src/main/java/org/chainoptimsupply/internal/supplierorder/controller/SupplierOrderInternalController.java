@@ -1,7 +1,7 @@
 package org.chainoptimsupply.internal.supplierorder.controller;
 
-import org.chainoptimsupply.supplierorder.model.SupplierOrder;
-import org.chainoptimsupply.supplierorder.service.SupplierOrderService;
+import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;
+import org.chainoptimsupply.core.supplierorder.service.SupplierOrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

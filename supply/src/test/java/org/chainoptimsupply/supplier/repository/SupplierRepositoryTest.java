@@ -1,8 +1,7 @@
 package org.chainoptimsupply.supplier.repository;
 
-import org.chainoptimsupply.shared.dto.Location;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.tenant.model.Organization;
+import org.chainoptimsupply.core.supplier.repository.SupplierRepository;
+import org.chainoptimsupply.core.supplier.model.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

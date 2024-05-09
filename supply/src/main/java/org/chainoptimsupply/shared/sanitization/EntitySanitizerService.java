@@ -1,6 +1,6 @@
 package org.chainoptimsupply.shared.sanitization;
 
-import org.chainoptimsupply.supplier.dto.*;
+import org.chainoptimsupply.core.supplier.dto.*;
 
 public interface EntitySanitizerService {
 

@@ -1,6 +1,6 @@
 package org.chainoptimsupply.config;
 
-import org.chainoptimsupply.kafka.OrganizationEvent;
+import org.chainoptimsupply.shared.kafka.OrganizationEvent;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

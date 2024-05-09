@@ -1,16 +1,15 @@
 package org.chainoptimsupply.supplier.controller;
 
 import org.chainoptimsupply.internal.subscriptionplan.service.SubscriptionPlanLimiterService;
-import org.chainoptimsupply.shared.dto.CreateLocationDTO;
-import org.chainoptimsupply.shared.dto.Location;
-import org.chainoptimsupply.shared.location.LocationService;
+import org.chainoptimsupply.internal.location.dto.CreateLocationDTO;
+import org.chainoptimsupply.internal.location.service.LocationService;
 import org.chainoptimsupply.shared.sanitization.EntitySanitizerService;
 import org.chainoptimsupply.shared.PaginatedResults;
-import org.chainoptimsupply.supplier.dto.CreateSupplierDTO;
-import org.chainoptimsupply.supplier.dto.SuppliersSearchDTO;
-import org.chainoptimsupply.supplier.dto.UpdateSupplierDTO;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.supplier.repository.SupplierRepository;
+import org.chainoptimsupply.core.supplier.dto.CreateSupplierDTO;
+import org.chainoptimsupply.core.supplier.dto.SuppliersSearchDTO;
+import org.chainoptimsupply.core.supplier.dto.UpdateSupplierDTO;
+import org.chainoptimsupply.core.supplier.model.Supplier;
+import org.chainoptimsupply.core.supplier.repository.SupplierRepository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

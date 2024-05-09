@@ -1,12 +1,12 @@
 package org.chainoptimnotifications.config;
 
 
-import org.chainoptimnotifications.outsidefeatures.model.ClientOrderEvent;
-import org.chainoptimnotifications.outsidefeatures.model.SupplierOrderEvent;
+import org.chainoptimnotifications.internal.demand.model.ClientOrderEvent;
+import org.chainoptimnotifications.internal.supply.model.SupplierOrderEvent;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.chainoptimnotifications.outsidefeatures.model.UserEvent;
+import org.chainoptimnotifications.internal.tenant.model.UserEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;

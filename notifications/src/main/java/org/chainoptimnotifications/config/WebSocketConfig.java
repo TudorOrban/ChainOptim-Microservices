@@ -1,8 +1,8 @@
 package org.chainoptimnotifications.config;
 
-import org.chainoptimnotifications.notification.websocket.SimpleTextWebSocketHandler;
-import org.chainoptimnotifications.notification.websocket.UserHandshakeInterceptor;
-import org.chainoptimnotifications.notification.websocket.WebSocketMessagingService;
+import org.chainoptimnotifications.core.notification.websocket.SimpleTextWebSocketHandler;
+import org.chainoptimnotifications.core.notification.websocket.UserHandshakeInterceptor;
+import org.chainoptimnotifications.core.notification.websocket.WebSocketMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

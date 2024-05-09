@@ -1,12 +1,12 @@
 package org.chainoptimsupply.supplierorder.repository;
 
+import org.chainoptimsupply.core.supplierorder.repository.SupplierOrdersSearchRepositoryImpl;
 import org.chainoptimsupply.shared.PaginatedResults;
-import org.chainoptimsupply.shared.dto.Location;
 import org.chainoptimsupply.shared.enums.SearchMode;
 import org.chainoptimsupply.shared.search.SearchParams;
-import org.chainoptimsupply.supplier.model.Supplier;
-import org.chainoptimsupply.supplierorder.model.OrderStatus;
-import org.chainoptimsupply.supplierorder.model.SupplierOrder;
+import org.chainoptimsupply.core.supplier.model.Supplier;
+import org.chainoptimsupply.core.supplierorder.model.OrderStatus;
+import org.chainoptimsupply.core.supplierorder.model.SupplierOrder;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
