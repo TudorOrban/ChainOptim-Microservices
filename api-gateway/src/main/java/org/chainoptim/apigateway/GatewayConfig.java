@@ -16,6 +16,7 @@ public class GatewayConfig {
 
     private static final String CORE_SERVICE = "lb://chainoptim-core";
     private static final String SUPPLY_SERVICE = "lb://chainoptim-supply";
+    private static final String DEMAND_SERVICE = "lb://chainoptim-demand";
     private static final String NOTIFICATIONS_SERVICE = "lb://chainoptim-notifications";
 
 
@@ -82,13 +83,13 @@ public class GatewayConfig {
                         .uri(SUPPLY_SERVICE))
                 .route("clients-route", r -> r.path("/api/v1/clients/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
+                        .uri(DEMAND_SERVICE))
                 .route("client-orders-route", r -> r.path("/api/v1/client-orders/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
+                        .uri(DEMAND_SERVICE))
                 .route("client-shipments-route", r -> r.path("/api/v1/client-shipments/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
+                        .uri(DEMAND_SERVICE))
                 .route("graphs-route", r -> r.path("/api/v1/graphs/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))

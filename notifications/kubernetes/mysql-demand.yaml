@@ -17,7 +17,7 @@ metadata:
   labels:
     app: mysql-demand
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: mysql-demand
@@ -52,7 +52,7 @@ metadata:
     app: mysql-demand
 spec:
   ports:
-  - port: 3308
+  - port: 3309
     targetPort: 3306
   selector:
     app: mysql-demand
