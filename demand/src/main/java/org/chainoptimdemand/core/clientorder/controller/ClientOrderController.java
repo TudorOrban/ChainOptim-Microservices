@@ -10,6 +10,7 @@ import org.chainoptimdemand.shared.enums.SearchMode;
 import org.chainoptimdemand.shared.search.SearchParams;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,10 @@ public class ClientOrderController {
 
     private final ClientOrderService clientOrderService;
     private final SecurityService securityService;
+
+
+    @Value("${test.value}")
+    private String testValue;
 
     @Autowired
     public ClientOrderController(ClientOrderService clientOrderService,
@@ -73,6 +78,7 @@ public class ClientOrderController {
     @PreAuthorize("@securityService.canAccessOrganizationEntity(#orderDTO.getOrganizationId(), \"ClientOrder\", \"Create\")")
     @PostMapping("/create")
     public ResponseEntity<ClientOrder> createClientOrder(@RequestBody CreateClientOrderDTO orderDTO) {
+        System.out.println("Test value: " + testValue);
         ClientOrder clientOrder = clientOrderService.createClientOrder(orderDTO);
         return ResponseEntity.ok(clientOrder);
     }

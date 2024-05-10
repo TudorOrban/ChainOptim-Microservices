@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/clients/**").permitAll()
                         .requestMatchers("/api/v1/client-orders/**").permitAll()
                         .requestMatchers("/api/v1/client-shipments/**").permitAll()
-                        .requestMatchers("/actuator/prometheus").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
