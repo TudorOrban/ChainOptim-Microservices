@@ -7,15 +7,15 @@ Write-Host "Starting Minikube"
 minikube start --driver=docker
 
 Write-Host "Applying configurations"
-kubectl create configmap mysql-notifications-initdb --from-file=schema.sql=database/schema/schema.sql
-Push-Location -Path "../core"
 kubectl create configmap mysql-core-initdb --from-file=schema.sql=database/schema/schema.sql
+Push-Location -Path "../notifications"
+kubectl create configmap mysql-notifications-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../supply"
 kubectl create configmap mysql-supply-initdb --from-file=schema.sql=database/schema/schema.sql
 Push-Location -Path "../demand"
 kubectl create configmap mysql-demand-initdb --from-file=schema.sql=database/schema/schema.sql
 
-Push-Location -Path "../notifications/kubernetes"
+Push-Location -Path "../core/kubernetes"
 kubectl apply -f clusterrole.yaml
 
 Write-Host "Applying deployments"
@@ -43,4 +43,4 @@ kubectl apply -f prometheus-clusterrolebinding.yaml
 kubectl apply -f prometheus.yaml
 kubectl apply -f grafana.yaml
 
-Push-Location -Path "../notifications/scripts"
+Push-Location -Path "../../scripts"
