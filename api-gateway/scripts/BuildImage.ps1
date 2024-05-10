@@ -15,7 +15,7 @@ Write-Host "Upload Gateway Image to DockerHub..."
 docker push tudoraorban/chainoptim-apigateway:latest
 
 if ($rd -eq "true") {
-    minikube rollout restart deployment chainoptim-apigateway
+    kubectl rollout restart deployment chainoptim-apigateway
 }
 
 Pop-Location

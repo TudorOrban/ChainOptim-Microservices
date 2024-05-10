@@ -15,7 +15,7 @@ Write-Host "Upload Core Image to DockerHub..."
 docker push tudoraorban/chainoptim-core:latest
 
 if ($rd -eq "true") {
-    minikube rollout restart deployment chainoptim-core
+    kubectl rollout restart deployment chainoptim-core
 }
 
 Pop-Location

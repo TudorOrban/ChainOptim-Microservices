@@ -14,33 +14,26 @@ spec:
       labels:
         app: chainoptim-config-server
     spec:
-      initContainers:
-      - name: setup
-        image: alpine:latest
-        command:
-          - /bin/sh
-          - -c
-          - |
-            apk add --no-cache curl && \
-            TOKEN=$(curl -s http://chainoptim-vault:8200/v1/secret/data/config-server | jq -r '.data.data.token') && \
-            echo "spring.cloud.vault.token=$TOKEN" > /etc/config/bootstrap.properties
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config
       containers:
-      - name: chainoptim-config-server
-        image: chainoptim-config-server:latest
-        ports:
-        - containerPort: 8888
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config
-        env:
-        - name: SPRING_CONFIG_ADDITIONAL_LOCATION
-          value: file://config/bootstrap.properties
-      volumes:
-      - name: config-volume
-        emptyDir: {}
+        - name: chainoptim-config-server
+          image: tudoraorban/chainoptim-config-server:latest
+          ports:
+            - containerPort: 8888
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "chainoptim-config-server"
+            - name: SERVER_PORT
+              value: "8888"
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: "https://github.com/TudorOrban/ChainOptim-config"
+            - name: SPRING_CLOUD_VAULT_HOST
+              value: "chainoptim-vault"
+            - name: SPRING_CLOUD_VAULT_PORT
+              value: "8200"
+            - name: SPRING_CLOUD_VAULT_SCHEME
+              value: "http"
+            - name: SPRING_CLOUD_VAULT_TOKEN
+              value: "root"
 ---
 apiVersion: v1
 kind: Service

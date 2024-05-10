@@ -15,7 +15,7 @@ Write-Host "Upload Demand Image to DockerHub..."
 docker push tudoraorban/chainoptim-demand:latest
 
 if ($rd -eq "true") {
-    minikube rollout restart deployment chainoptim-demand
+    kubectl rollout restart deployment chainoptim-demand
 }
 
 Pop-Location
