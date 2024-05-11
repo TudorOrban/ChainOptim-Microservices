@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-production-ml
+  labels:
+    app: mongodb-production-ml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-production-ml
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb-production-ml
+    spec:
+      containers:
+      - image: mongo
+        name: mongodb-production-ml
+        ports:
+        - containerPort: 27017
+          name: mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+      app: mongodb-production-ml

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainoptim-production-ml
+  labels:
+    app: chainoptim-production-ml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chainoptim-production-ml
+  template:
+    metadata:
+      labels:
+        app: chainoptim-production-ml
+    spec:
+      containers:
+      - image: chainoptim-production-ml:latest
+        imagePullPolicy: IfNotPresent
+        name: chainoptim-production-ml
+        ports:
+        - containerPort: 8000
+          name: chainoptim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainoptim-production-ml
+  labels:
+    app: chainoptim-production-ml
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    nodePort: 30000
+  selector:
+    app: chainoptim-production-ml
