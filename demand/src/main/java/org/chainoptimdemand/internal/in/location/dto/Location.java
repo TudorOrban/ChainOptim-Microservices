@@ -1,10 +1,10 @@
 package org.chainoptimdemand.internal.in.location.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Location {
 
     private Integer id;
@@ -12,8 +12,8 @@ public class Location {
     private String city;
     private String state;
     private String country;
+    private String zipCode;
     private Double latitude;
     private Double longitude;
-    private String zipCode;
     private Integer organizationId;
 }

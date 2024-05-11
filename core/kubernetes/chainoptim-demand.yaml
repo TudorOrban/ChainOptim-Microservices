@@ -27,6 +27,10 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: docker-dev
+        - name: GRPC_SERVICE_HOST
+          value: "chainoptim-core-grpc"
+        - name: GRPC_SERVICE_PORT
+          value: "50051"
       automountServiceAccountToken: false
 ---
 apiVersion: v1

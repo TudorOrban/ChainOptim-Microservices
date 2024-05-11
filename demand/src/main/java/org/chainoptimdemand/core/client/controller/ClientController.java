@@ -1,5 +1,7 @@
 package org.chainoptimdemand.core.client.controller;
 
+import org.chainoptimdemand.grpc.LocationClient;
+import org.chainoptimdemand.internal.in.location.dto.Location;
 import org.chainoptimdemand.internal.in.security.service.SecurityService;
 import org.chainoptimdemand.core.client.dto.CreateClientDTO;
 import org.chainoptimdemand.core.client.dto.ClientsSearchDTO;
@@ -20,6 +22,7 @@ public class ClientController {
 
     private final ClientService clientService;
     private final SecurityService securityService;
+    private final LocationClient locationClient = new LocationClient();
 
     @Autowired
     public ClientController(
@@ -33,12 +36,15 @@ public class ClientController {
     // Fetch
     @PreAuthorize("@securityService.canAccessOrganizationEntity(#organizationId, \"Client\", \"Read\")")
     @GetMapping("/organization/{organizationId}")
-    public ResponseEntity<List<Client>> getClientsByOrganizationId(@PathVariable Integer organizationId) {
+    public ResponseEntity<List<Location>> getClientsByOrganizationId(@PathVariable Integer organizationId) {
         List<Client> clients = clientService.getClientsByOrganizationId(organizationId);
         if (clients.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(clients);
+        List<Location> locations = locationClient.getLocationsByOrganizationId(organizationId);
+        System.out.println("Locations: " + locations);
+
+        return ResponseEntity.ok(locations);
     }
 
     @PreAuthorize("@securityService.canAccessOrganizationEntity(#organizationId, \"Client\", \"Read\")")

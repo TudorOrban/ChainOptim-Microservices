@@ -23,7 +23,8 @@ spec:
       - name: chainoptim-core
         image: tudoraorban/chainoptim-core:latest
         ports:
-        - containerPort: 8080
+          - containerPort: 8080  # HTTP port
+          - containerPort: 50051 # gRPC port
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: docker-dev
@@ -48,5 +49,18 @@ spec:
     targetPort: 8080
     protocol: TCP
     nodePort: 31234
+  selector:
+    app: chainoptim-core
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainoptim-core-grpc
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50051
+      targetPort: 50051
+      protocol: TCP
   selector:
     app: chainoptim-core
