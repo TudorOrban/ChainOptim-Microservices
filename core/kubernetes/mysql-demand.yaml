@@ -17,7 +17,7 @@ metadata:
   labels:
     app: mysql-demand
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: mysql-demand
