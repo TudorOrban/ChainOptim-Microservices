@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Any, List, Dict, Optional
 
+from app.types.factory_inventory import FactoryInventoryItem
 from app.utils.common import to_camel
 
 class FactoryProductionHistory(BaseModel):
@@ -23,6 +24,7 @@ class ProductionHistory(BaseModel):
 class DailyProductionRecord(BaseModel):
     allocations: List['ResourceAllocation'] = Field(..., alias=to_camel('allocations'))
     results: List['AllocationResult'] = Field(..., alias=to_camel('results'))
+    inventory: List['FactoryInventoryItem'] = Field(..., alias=to_camel('inventory'))
     duration_days: Optional[float] = Field(default=None, alias=to_camel('duration_days'))
 
 class ResourceAllocation(BaseModel):

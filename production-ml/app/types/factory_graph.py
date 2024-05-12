@@ -21,7 +21,7 @@ class StageNode(BaseModel):
     number_of_steps_capacity: Optional[float] = Field(default=None, alias=to_camel('number_of_steps_capacity'))
     per_duration: Optional[float] = Field(default=None, alias=to_camel('per_duration'))
     minimum_required_capacity: Optional[float] = Field(default=None, alias=to_camel('minimum_required_capacity'))
-    priority: Optional[int] = Field(default=None, alias=to_camel('priority'))
+    priority: Optional[float] = Field(default=None, alias=to_camel('priority'))
     allocation_capacity_ratio: Optional[float] = Field(default=None, alias=to_camel('allocation_capacity_ratio'))
 
 class Edge(BaseModel):
@@ -46,8 +46,10 @@ class SmallStageInput(BaseModel):
 
 class SmallStageOutput(BaseModel):
     id: int = Field(..., alias=to_camel('id'))
-    component_id: int = Field(..., alias=to_camel('component_id'))
-    component_name: str = Field(..., alias=to_camel('component_name'))
+    component_id: Optional[int] = Field(..., alias=to_camel('component_id'))
+    component_name: Optional[str] = Field(..., alias=to_camel('component_name'))
+    product_id: Optional[int] = Field(..., alias=to_camel('product_id'))
+    product_name: Optional[str] = Field(..., alias=to_camel('product_name'))
     quantity_per_stage: Optional[float] = Field(default=None, alias=to_camel('quantity_per_stage'))
     expected_output_per_allocation: Optional[float] = Field(default=None, alias=to_camel('expected_output_per_allocation'))
     output_per_request: Optional[float] = Field(default=None, alias=to_camel('output_per_request'))
