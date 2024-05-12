@@ -93,7 +93,7 @@ public class GatewayConfig {
                 .route("client-shipments-route", r -> r.path("/api/v1/client-shipments/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(DEMAND_SERVICE))
-                .route("graphs-route", r -> r.path("/api/v1/graphs/**")
+                .route("factory-graphs-route", r -> r.path("/api/v1/factory-graphs/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))
                 .route("product-graphs-route", r -> r.path("/api/v1/product-graphs/**")

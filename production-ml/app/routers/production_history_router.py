@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.services.production_history_service import create_production_history, get_production_history
-from app.types import FactoryProductionHistory
+from app.types.production_history_model import FactoryProductionHistory
 
 
 router = APIRouter()
