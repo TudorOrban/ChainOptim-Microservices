@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Any, List, Dict, Optional
+from typing import List, Dict, Optional
 
 from app.types.factory_inventory import FactoryInventoryItem
 from app.utils.common import to_camel
