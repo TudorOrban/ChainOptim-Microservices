@@ -5,51 +5,101 @@ from datetime import datetime
 from app.utils.common import to_camel
 
 class FactoryProductionGraph(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    factory_id: int = Field(..., alias=to_camel('factory_id'))
-    created_at: datetime = Field(..., alias=to_camel('created_at'))
-    updated_at: datetime = Field(..., alias=to_camel('updated_at'))
-    factory_graph: 'FactoryGraph' = Field(..., alias=to_camel('factory_graph'))
+    id: int
+    factory_id: int
+    created_at: datetime
+    updated_at: datetime
+    factory_graph: 'FactoryGraph'
 
 class FactoryGraph(BaseModel):
-    nodes: Dict[int, 'StageNode'] = Field(..., alias=to_camel('nodes'))
-    adj_list: Dict[int, List['Edge']] = Field(..., alias=to_camel('adj_list'))
-    pipeline_priority: Optional[float] = Field(default=None, alias=to_camel('pipeline_priority'))
+    nodes: Dict[int, 'StageNode']
+    adj_list: Dict[int, List['Edge']]
 
 class StageNode(BaseModel):
-    small_stage: 'SmallStage' = Field(..., alias=to_camel('small_stage'))
-    number_of_steps_capacity: Optional[float] = Field(default=None, alias=to_camel('number_of_steps_capacity'))
-    per_duration: Optional[float] = Field(default=None, alias=to_camel('per_duration'))
-    minimum_required_capacity: Optional[float] = Field(default=None, alias=to_camel('minimum_required_capacity'))
-    priority: Optional[float] = Field(default=None, alias=to_camel('priority'))
-    allocation_capacity_ratio: Optional[float] = Field(default=None, alias=to_camel('allocation_capacity_ratio'))
+    small_stage: 'SmallStage'
+    number_of_steps_capacity: Optional[float] = None
+    per_duration: Optional[float] = None
+    minimum_required_capacity: Optional[float] = None
+    priority: Optional[float] = None
+    allocation_capacity_ratio: Optional[float] = None
 
 class Edge(BaseModel):
-    incoming_factory_stage_id: int = Field(..., alias=to_camel('incoming_factory_stage_id'))
-    incoming_stage_output_id: int = Field(..., alias=to_camel('incoming_stage_output_id'))
-    outgoing_factory_stage_id: int = Field(..., alias=to_camel('outgoing_factory_stage_id'))
-    outgoing_stage_input_id: int = Field(..., alias=to_camel('outgoing_stage_input_id'))
+    incoming_factory_stage_id: int
+    incoming_stage_output_id: int
+    outgoing_factory_stage_id: int
+    outgoing_stage_input_id: int
 
 class SmallStage(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    stage_name: str = Field(..., alias=to_camel('stage_name'))
-    stage_inputs: List['SmallStageInput'] = Field(..., alias=to_camel('stage_inputs'))
-    stage_outputs: List['SmallStageOutput'] = Field(..., alias=to_camel('stage_outputs'))
+    id: int
+    stage_name: str
+    stage_inputs: List['SmallStageInput']
+    stage_outputs: List['SmallStageOutput']
 
 class SmallStageInput(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    component_id: int = Field(default=None, alias=to_camel('component_id'))
-    component_name: str = Field(default=None, alias=to_camel('component_name'))
-    quantity_per_stage: Optional[float] = Field(default=None, alias=to_camel('quantity_per_stage'))
-    allocated_quantity: Optional[float] = Field(default=None, alias=to_camel('allocated_quantity'))
-    requested_quantity: Optional[float] = Field(default=None, alias=to_camel('requested_quantity'))
+    id: int
+    component_id: int
+    component_name: str 
+    quantity_per_stage: Optional[float] = None
+    allocated_quantity: Optional[float] = None
+    requested_quantity: Optional[float] = None
 
 class SmallStageOutput(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    component_id: Optional[int] = Field(default=None, alias=to_camel('component_id'))
-    component_name: Optional[str] = Field(default=None, alias=to_camel('component_name'))
-    product_id: Optional[int] = Field(default=None, alias=to_camel('product_id'))
-    product_name: Optional[str] = Field(default=None, alias=to_camel('product_name'))
-    quantity_per_stage: Optional[float] = Field(default=None, alias=to_camel('quantity_per_stage'))
-    expected_output_per_allocation: Optional[float] = Field(default=None, alias=to_camel('expected_output_per_allocation'))
-    output_per_request: Optional[float] = Field(default=None, alias=to_camel('output_per_request'))
+    id: int
+    component_id: Optional[int] = None
+    component_name: Optional[str] = None
+    product_id: Optional[int] = None
+    product_name: Optional[str] = None
+    quantity_per_stage: Optional[float] = None
+    expected_output_per_allocation: Optional[float] = None
+    output_per_request: Optional[float] = None
+
+
+## Camel case types
+class CamelCaseFactoryProductionGraph(BaseModel):
+    id: int
+    factoryId: int
+    createdAt: datetime
+    updatedAt: datetime
+    factoryGraph: 'CamelCaseFactoryGraph'
+
+class CamelCaseFactoryGraph(BaseModel):
+    nodes: Dict[int, 'CamelCaseStageNode']
+    adjList: Dict[int, List['CamelCaseEdge']]
+
+class CamelCaseStageNode(BaseModel):
+    smallStage: 'CamelCaseSmallStage'
+    numberOfStepsCapacity: Optional[float] = None
+    perDuration: Optional[float] = None
+    minimumRequiredCapacity: Optional[float] = None
+    priority: Optional[float] = None
+    allocationCapacityRatio: Optional[float] = None
+
+class CamelCaseEdge(BaseModel):
+    incomingFactoryStageId: int
+    incomingStageOutputId: int
+    outgoingFactoryStageId: int
+    outgoingStageInputId: int
+
+class CamelCaseSmallStage(BaseModel):
+    id: int
+    stageName: str
+    stageInputs: List['CamelCaseSmallStageInput']
+    stageOutputs: List['CamelCaseSmallStageOutput']
+
+class CamelCaseSmallStageInput(BaseModel):
+    id: int
+    componentId: int
+    componentName: str 
+    quantityPerStage: Optional[float] = None
+    allocatedQuantity: Optional[float] = None
+    requestedQuantity: Optional[float] = None
+
+class CamelCaseSmallStageOutput(BaseModel):
+    id: int
+    componentId: Optional[int] = None
+    componentName: Optional[str] = None
+    productId: Optional[int] = None
+    productName: Optional[str] = None
+    quantityPerStage: Optional[float] = None
+    expectedOutputPerAllocation: Optional[float] = None
+    outputPerRequest: Optional[float] = None

@@ -11,14 +11,15 @@ logger = logging.getLogger(__name__)
 
 def create_factory_graph(production_graph: FactoryProductionGraph):
     db = get_db() # type: ignore
-    graph_data = serialize_factory_graph(production_graph)
-    graph_data['factoryGraph']['nodes'] = convert_keys_to_strings(
-        graph_data['factoryGraph']['nodes']
+    graph_data = production_graph.model_dump(by_alias=True)
+    graph_data['factory_graph']['nodes'] = convert_keys_to_strings(
+        graph_data['factory_graph']['nodes']
     )
-    graph_data['factoryGraph']['adjList'] = convert_keys_to_strings(
-        graph_data['factoryGraph']['adjList']
+    graph_data['factory_graph']['adj_list'] = convert_keys_to_strings(
+        graph_data['factory_graph']['adj_list']
     )
     logger.info("Serialized data to insert: %s", graph_data)
+
 
     graph_data['_id'] = graph_data['id']
     logger.info("Inserting with ID: %s", graph_data['_id'])
@@ -29,7 +30,7 @@ def create_factory_graph(production_graph: FactoryProductionGraph):
 def get_factory_graph(id: str) -> dict:
     numeric_id = int(id)
 
-    db = get_db() # type: ignore
+    db = get_db()
     graph_data = db.factory_production_graphs.find_one({"_id": numeric_id})
     if not graph_data:
         logger.error(f"No graph found for ID: {numeric_id}")

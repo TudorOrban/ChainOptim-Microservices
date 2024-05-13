@@ -19,17 +19,12 @@ async def read_classic_optimization(id: str):
     numeric_id = int(id)
     db = get_db()
     document = db.factory_production_graphs.find_one({"_id": numeric_id})
+    logger.info(f"Retrieved document: {document}")
     if document is None:
         logger.error(f"No graph found for ID: {numeric_id}")
         raise HTTPException(status_code=404, detail="Graph not found")
     
     try:
-        document['factoryGraph']['nodes'] = convert_string_keys_to_floats(
-            document['factoryGraph']['nodes']
-        )
-        document['factoryGraph']['adjList'] = convert_string_keys_to_floats(
-            document['factoryGraph']['adjList']
-        )
         graph_data = FactoryProductionGraph(**document)
         inventory, priorities = generate_data(graph_data.factory_graph)
         optimal_distribution = determine_optimal_distribution(graph_data.factory_graph, inventory, priorities)
