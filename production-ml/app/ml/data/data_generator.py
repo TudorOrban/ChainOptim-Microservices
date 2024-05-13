@@ -6,34 +6,34 @@ from datetime import datetime
 from app.types.factory_graph import FactoryGraph
 from app.types.factory_inventory import Component, FactoryInventoryItem, UnitOfMeasurement
 
-def gen_data(factory_graph: FactoryGraph):
-    componentIds = find_component_ids(factory_graph)
-    inventory = generate_inventory_items(componentIds)
+def generate_data(factory_graph: FactoryGraph):
+    component_ids = find_component_ids(factory_graph)
+    inventory = generate_inventory_items(component_ids)
 
-    stageIds = list(factory_graph.nodes.keys())
-    priorities = generate_priorities(stageIds)
+    stage_ids = list(factory_graph.nodes.keys())
+    priorities = generate_priorities(stage_ids)
 
     return inventory, priorities
 
 
 def find_component_ids(factory_graph: FactoryGraph) -> List[int]:
-    componentIds: List[int] = []
+    component_ids: List[int] = []
     for node in factory_graph.nodes.values():
         stage = node.small_stage
         for input in stage.stage_inputs:
-            componentIds.append(input.component_id)
+            component_ids.append(input.component_id)
         for output in stage.stage_outputs:
-            if output.component_id not in componentIds and output.component_id != None:
-                componentIds.append(output.component_id)
-    return componentIds
+            if output.component_id not in component_ids and output.component_id != None:
+                component_ids.append(output.component_id)
+    return component_ids
 
-def generate_inventory_items(componentIds: List[int]):
+def generate_inventory_items(component_ids: List[int]):
     inventory: List[FactoryInventoryItem] = []
 
-    for componentId in componentIds:
+    for component_id in component_ids:
         component = Component(
-            id=componentId,
-            name=f"Component {componentId}",
+            id=component_id,
+            name=f"Component {component_id}",
             unit=UnitOfMeasurement(
                 id=1,
                 name="kg"
@@ -52,15 +52,15 @@ def generate_inventory_items(componentIds: List[int]):
     
     return inventory
 
-def generate_priorities(stageIds: List[int]) -> dict[int, float]:
+def generate_priorities(stage_ids: List[int]) -> dict[int, float]:
     priorities: dict[int, float] = {}
-    for stageId in stageIds:
-        priorities[stageId] = random.random()
+    for stage_id in stage_ids:
+        priorities[stage_id] = random.random()
     
     priorities_sum = sum(priorities.values())
     if priorities_sum == 0:
         return priorities
-    for stageId in stageIds:
-        priorities[stageId] = priorities[stageId] / priorities_sum # Normalize
+    for stage_id in stage_ids:
+        priorities[stage_id] = priorities[stage_id] / priorities_sum # Normalize
 
     return priorities

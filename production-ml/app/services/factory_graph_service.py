@@ -10,7 +10,7 @@ from app.utils.utils import convert_keys_to_strings, convert_string_keys_to_floa
 logger = logging.getLogger(__name__)
 
 def create_factory_graph(production_graph: FactoryProductionGraph):
-    db = get_db()
+    db = get_db() # type: ignore
     graph_data = serialize_factory_graph(production_graph)
     graph_data['factoryGraph']['nodes'] = convert_keys_to_strings(
         graph_data['factoryGraph']['nodes']
@@ -26,10 +26,10 @@ def create_factory_graph(production_graph: FactoryProductionGraph):
     db.factory_production_graphs.insert_one(graph_data)
     return {"message": "Factory graph added"}
 
-def get_factory_graph(id: str):
+def get_factory_graph(id: str) -> dict:
     numeric_id = int(id)
 
-    db = get_db()
+    db = get_db() # type: ignore
     graph_data = db.factory_production_graphs.find_one({"_id": numeric_id})
     if not graph_data:
         logger.error(f"No graph found for ID: {numeric_id}")
@@ -44,6 +44,7 @@ def get_factory_graph(id: str):
 
     model_data = deserialize_to_model(graph_data, FactoryProductionGraph)
     return model_data.model_dump()
+
 
 
 def serialize_factory_graph(production_graph: FactoryProductionGraph):

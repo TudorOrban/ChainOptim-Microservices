@@ -38,18 +38,18 @@ class SmallStage(BaseModel):
 
 class SmallStageInput(BaseModel):
     id: int = Field(..., alias=to_camel('id'))
-    component_id: int = Field(..., alias=to_camel('component_id'))
-    component_name: str = Field(..., alias=to_camel('component_name'))
+    component_id: int = Field(default=None, alias=to_camel('component_id'))
+    component_name: str = Field(default=None, alias=to_camel('component_name'))
     quantity_per_stage: Optional[float] = Field(default=None, alias=to_camel('quantity_per_stage'))
     allocated_quantity: Optional[float] = Field(default=None, alias=to_camel('allocated_quantity'))
     requested_quantity: Optional[float] = Field(default=None, alias=to_camel('requested_quantity'))
 
 class SmallStageOutput(BaseModel):
     id: int = Field(..., alias=to_camel('id'))
-    component_id: Optional[int] = Field(..., alias=to_camel('component_id'))
-    component_name: Optional[str] = Field(..., alias=to_camel('component_name'))
-    product_id: Optional[int] = Field(..., alias=to_camel('product_id'))
-    product_name: Optional[str] = Field(..., alias=to_camel('product_name'))
+    component_id: Optional[int] = Field(default=None, alias=to_camel('component_id'))
+    component_name: Optional[str] = Field(default=None, alias=to_camel('component_name'))
+    product_id: Optional[int] = Field(default=None, alias=to_camel('product_id'))
+    product_name: Optional[str] = Field(default=None, alias=to_camel('product_name'))
     quantity_per_stage: Optional[float] = Field(default=None, alias=to_camel('quantity_per_stage'))
     expected_output_per_allocation: Optional[float] = Field(default=None, alias=to_camel('expected_output_per_allocation'))
     output_per_request: Optional[float] = Field(default=None, alias=to_camel('output_per_request'))

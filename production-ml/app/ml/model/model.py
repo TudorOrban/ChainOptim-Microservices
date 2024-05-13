@@ -1,6 +1,6 @@
 import torch.nn as nn
-import dgl.nn as dglnn
 import dgl
+import dgl.nn.pytorch as dglnn
 import torch
 
 
