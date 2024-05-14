@@ -1,9 +1,9 @@
+torch==2.1.1 -f https://download.pytorch.org/whl/torch_stable.html
+dgl
 fastapi
 uvicorn[standard]
 pymongo
 pydantic
-dgl
-torch
 pandas
 numpy
 matplotlib

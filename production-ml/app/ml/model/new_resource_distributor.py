@@ -2,7 +2,7 @@
 import logging
 from typing import List
 from app.ml.model.resource_distributor import determine_dependency_subtree, find_stage_output_ids, topological_sort
-from app.types.factory_graph import FactoryGraph
+from app.types.factory_graph import FactoryGraph, SmallStage
 from app.types.factory_inventory import FactoryInventoryItem
 
 logger = logging.getLogger(__name__)
@@ -65,3 +65,19 @@ def compute_max_output_new(factory_graph: FactoryGraph, inventory: dict[int, flo
 
     logger.info(f"Max outputs: {max_outputs}")
     return max_outputs
+
+
+def determine_min_input_ratio(stage: SmallStage, inventory: dict[int, float]):
+    min_input_ratio = float("inf")
+
+    # Determine max possible input ratio
+    for stage_input in stage.stage_inputs:
+        input_component_id = stage_input.component_id
+        required_quantity = stage_input.quantity_per_stage or 0
+        available_quantity = inventory.get(input_component_id, 0) or 0
+        input_ratio = available_quantity / required_quantity if required_quantity > 0 else float("inf")
+
+        if input_ratio < min_input_ratio:
+            min_input_ratio = input_ratio
+
+    return min_input_ratio
