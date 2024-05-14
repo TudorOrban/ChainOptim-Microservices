@@ -82,17 +82,32 @@ def determine_dependency_subtree(factory_graph: FactoryGraph, stage_id: int, sta
 
 
 
-# def topological_sort(factory_graph: FactoryGraph) -> List[int]:
-#     # Step 1: Compute in-degrees
-#     in_degree = {node_id: 0 for node_id in factory_graph.nodes}
-#     for node in factory_graph.nodes:
-#         for edge in factory_graph.adj_list.get(node, []):
-#             in_degree[edge.outgoing_factory_stage_id] += 1
+def topological_sort(factory_graph: FactoryGraph) -> List[int]:
+    # Step 1: Compute in-degrees
+    in_degree = {node_id: 0 for node_id in factory_graph.nodes}
+    for node in factory_graph.nodes:
+        for edge in factory_graph.adj_list.get(node, []):
+            in_degree[edge.outgoing_factory_stage_id] += 1
 
-#     # Step 2: Initialize queue
-#     zero_in_degree_queue = deque([node for node in factory_graph.nodes if in_degree[node] == 0])
+    # Step 2: Initialize queue
+    zero_in_degree_queue = deque([node for node in factory_graph.nodes if in_degree[node] == 0])
 
-#     # Step 3: Topological sort
-#     topological_order = []
+    # Step 3: Topological sort
+    topological_order = []
 
-#     while zero_in_degree_queue:
+    while zero_in_degree_queue:
+        node = zero_in_degree_queue.popleft()
+        topological_order.append(node)
+
+        # Update in-degrees
+        for edge in factory_graph.adj_list.get(node, []):
+            neighbor = edge.outgoing_factory_stage_id
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                zero_in_degree_queue.append(neighbor)
+
+    # Make sure there is no cycle
+    if len(topological_order) != len(factory_graph.nodes):
+        raise ValueError("Cycle detected in the graph")
+    
+    return topological_order
