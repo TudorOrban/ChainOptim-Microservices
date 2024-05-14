@@ -10,6 +10,9 @@ class FactoryProductionGraph(BaseModel):
     created_at: datetime
     updated_at: datetime
     factory_graph: 'FactoryGraph'
+    
+    class Config:
+        orm_mode = True
 
 class FactoryGraph(BaseModel):
     nodes: Dict[int, 'StageNode']

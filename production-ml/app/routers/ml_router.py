@@ -27,6 +27,7 @@ async def read_classic_optimization(id: str):
     try:
         graph_data = FactoryProductionGraph(**document)
         inventory, priorities = generate_data(graph_data.factory_graph)
+        logger.info(f"Generated data: {inventory}, {priorities}")
         optimal_distribution = determine_optimal_distribution(graph_data.factory_graph, inventory, priorities)
 
         return optimal_distribution

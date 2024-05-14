@@ -7,25 +7,25 @@ from app.utils.common import to_camel
 
 
 class FactoryInventoryItem(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    factory_id: int = Field(..., alias=to_camel('factory_id'))
-    product: Optional['Product'] = Field(..., alias=to_camel('product'))
-    component: Optional['Component'] = Field(..., alias=to_camel('component'))
-    quantity: float = Field(..., alias=to_camel('quantity'))
-    created_at: datetime = Field(..., alias=to_camel('created_at'))
-    updated_at: datetime = Field(..., alias=to_camel('updated_at'))
+    id: int
+    factory_id: int
+    product: Optional['Product'] = None
+    component: Optional['Component'] = None
+    quantity: float
+    created_at: datetime
+    updated_at: datetime
 
 
 class Product(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    name: str = Field(..., alias=to_camel('name'))
-    unit: 'UnitOfMeasurement' = Field(..., alias=to_camel('unit'))
+    id: int
+    name: str
+    unit: 'UnitOfMeasurement'
 
 class Component(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    name: str = Field(..., alias=to_camel('name'))
-    unit: 'UnitOfMeasurement' = Field(..., alias=to_camel('unit'))
+    id: int
+    name: str
+    unit: 'UnitOfMeasurement'
 
 class UnitOfMeasurement(BaseModel):
-    id: int = Field(..., alias=to_camel('id'))
-    name: str = Field(..., alias=to_camel('name'))
+    id: int
+    name: str

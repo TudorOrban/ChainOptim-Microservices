@@ -44,7 +44,7 @@ def generate_inventory_items(component_ids: List[int]):
             factory_id=1,
             component=component,
             product=None,
-            quantity=1000,
+            quantity=max(0, random.gauss(50, 5)),
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
