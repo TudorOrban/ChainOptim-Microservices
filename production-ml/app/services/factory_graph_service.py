@@ -2,8 +2,11 @@
 import logging
 
 from fastapi import HTTPException
+from pydantic import ValidationError
 from app.config.database_connection import get_db
 
+from app.ml.data.data_generator import generate_data
+from app.ml.model.classic_optimizer import determine_optimal_distribution
 from app.types.factory_graph import FactoryProductionGraph
 from app.utils.utils import convert_keys_to_strings, convert_string_keys_to_floats, deserialize_to_model
 
@@ -27,25 +30,20 @@ def create_factory_graph(production_graph: FactoryProductionGraph):
     db.factory_production_graphs.insert_one(graph_data)
     return {"message": "Factory graph added"}
 
-def get_factory_graph(id: str) -> dict:
-    numeric_id = int(id)
 
+def get_factory_graph_by_id(id: int) -> FactoryProductionGraph:
     db = get_db()
-    graph_data = db.factory_production_graphs.find_one({"_id": numeric_id})
-    if not graph_data:
-        logger.error(f"No graph found for ID: {numeric_id}")
+    document = db.factory_production_graphs.find_one({"_id": id})
+    if document is None:
+        logger.error(f"No graph found for ID: {id}")
         raise HTTPException(status_code=404, detail="Graph not found")
-
-    graph_data['factoryGraph']['nodes'] = convert_string_keys_to_floats(
-        graph_data['factoryGraph']['nodes']
-    )
-    graph_data['factoryGraph']['adjList'] = convert_string_keys_to_floats(
-        graph_data['factoryGraph']['adjList']
-    )
-
-    model_data = deserialize_to_model(graph_data, FactoryProductionGraph)
-    return model_data.model_dump()
-
+    
+    try:
+        graph_data = FactoryProductionGraph(**document)
+        return graph_data
+    except ValidationError as e:
+        logger.error(f"Validation error for the document with ID {id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Data validation error")
 
 
 def serialize_factory_graph(production_graph: FactoryProductionGraph):

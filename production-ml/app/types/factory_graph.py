@@ -10,13 +10,13 @@ class FactoryProductionGraph(BaseModel):
     created_at: datetime
     updated_at: datetime
     factory_graph: 'FactoryGraph'
-    
+
     class Config:
         orm_mode = True
 
 class FactoryGraph(BaseModel):
-    nodes: Dict[int, 'StageNode']
-    adj_list: Dict[int, List['Edge']]
+    nodes: Dict[int, 'StageNode'] # stage_id -> StageNode
+    adj_list: Dict[int, List['Edge']] # stage_id -> List[Edge]
 
 class StageNode(BaseModel):
     small_stage: 'SmallStage'
@@ -31,6 +31,18 @@ class Edge(BaseModel):
     incoming_stage_output_id: int
     outgoing_factory_stage_id: int
     outgoing_stage_input_id: int
+    
+    def __hash__(self):
+        return hash((self.incoming_factory_stage_id, self.incoming_stage_output_id,
+                     self.outgoing_factory_stage_id, self.outgoing_stage_input_id))
+
+    def __eq__(self, other):
+        if isinstance(other, Edge):
+            return (self.incoming_factory_stage_id == other.incoming_factory_stage_id and
+                    self.incoming_stage_output_id == other.incoming_stage_output_id and
+                    self.outgoing_factory_stage_id == other.outgoing_factory_stage_id and
+                    self.outgoing_stage_input_id == other.outgoing_stage_input_id)
+        return False
 
 class SmallStage(BaseModel):
     id: int
