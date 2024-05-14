@@ -12,7 +12,7 @@ class FactoryProductionGraph(BaseModel):
     factory_graph: 'FactoryGraph'
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class FactoryGraph(BaseModel):
     nodes: Dict[int, 'StageNode'] # stage_id -> StageNode

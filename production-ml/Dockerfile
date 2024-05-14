@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set the working directory to /code
 WORKDIR /code
@@ -6,6 +6,9 @@ WORKDIR /code
 # Copy the requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Set DGL backend to PyTorch
+ENV DGLBACKEND=pytorch
 
 # Copy the entire app directory (which contains main.py and database_connection.py) into the working directory
 COPY ./app /code/app
