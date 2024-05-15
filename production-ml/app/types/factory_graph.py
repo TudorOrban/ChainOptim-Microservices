@@ -67,7 +67,7 @@ class SmallStageOutput(BaseModel):
     output_per_request: Optional[float] = None
 
 
-## Camel case types
+## Camel case types for interfacing with the chainoptim-core microservice
 class CamelCaseFactoryProductionGraph(BaseModel):
     id: int
     factoryId: int

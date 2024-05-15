@@ -1,7 +1,7 @@
 import dgl
 import torch
 
-from app.types.factory_graph import FactoryGraph
+from app.types.factory_graph import FactoryGraph, StageNode
 
 def build_heterogeneous_graph(factory_graph: FactoryGraph):
     graph_data = {
@@ -59,56 +59,16 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
             graph_data[('stage', 'has_output', 'output')][1].append(output.id)
             graph_data[('output', 'output_from', 'stage')][0].append(output.id)
             graph_data[('output', 'output_from', 'stage')][1].append(stage_id)
-
-    print("Total nodes by type:")
-    for ntype in node_data:
-        print(f"{ntype}: {len(node_data[ntype]['ids'])} nodes")
-
-    print("Total features by type:")
-    for ntype in node_data:
-        print(f"{ntype}: {len(node_data[ntype]['features'])} feature sets")
-
-    print("Graph edges detail:")
-    for edge_type, edges in graph_data.items():
-        print(f"{edge_type}: {len(edges[0])} edges")
         
     num_nodes_dict = {
         'stage': max(node_data['stage']['ids']) + 1,
         'input': max(node_data['input']['ids']) + 1,
         'output': max(node_data['output']['ids']) + 1
     }
-    # Inspect graph_data
-    print("Graph data structure:")
-    for edge_type, edges in graph_data.items():
-        print(f"{edge_type}: {len(edges[0])} edges")
-        print(f"Source nodes: {edges[0]}")
-        print(f"Destination nodes: {edges[1]}")
-    
+    # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore
 
-    print(f"Graph node types: {g.ntypes}")
-
-    print(f"num_nodes_dict: {num_nodes_dict}")
-
     for ntype in node_counts:
-        print(f"Assigning features for node type: {ntype}")
-        num_nodes = node_counts[ntype]
-        feature_list = node_data[ntype]['features']
-        print(f"Debug Info - {ntype}: Expected {num_nodes}, got {len(feature_list)} features")
-        print(f"Feature List: {feature_list}")
-        print(f"IDs in last loop: {node_data[ntype]['ids']}")
-        # Validate the node type and inspect ntypes
-        print(f"Graph node types: {g.ntypes}")
-        if ntype not in g.ntypes:
-            print(f"Error: Node type {ntype} not found in graph node types {g.ntypes}")
-        else:
-            print(f"Node type {ntype} is valid")
-
-        # Inspect feature_list
-        print(f"Feature list for {ntype}: {feature_list}")
-
-        print(g)
-        
         try:
             g.nodes[ntype].data['features'] = torch.tensor(node_data[ntype]['features'], dtype=torch.float32)
             print("Successfully assigned features to 'output'.")

@@ -1,10 +1,7 @@
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, Field
-
-from app.utils.common import to_camel
-
+from pydantic import BaseModel
 
 class FactoryInventoryItem(BaseModel):
     id: int

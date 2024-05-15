@@ -27,11 +27,11 @@ async def read_factory_graph(id: str):
     return get_factory_graph_by_id(int(id))
 
 
+# Testing endpoints
 @router.get("/dependency-graphs/{id}/stage_output/{stage_id}")
 async def read_dependency_graph_stage_output(id: int, stage_id: int):
     graph_data = get_factory_graph_by_id(int(id))
-    return determine_dependency_subtree(graph_data.factory_graph, stage_id, 0)
-
+    return determine_dependency_subtree(graph_data.factory_graph, stage_id)
 
 
 @router.get("/topological-order/{id}")

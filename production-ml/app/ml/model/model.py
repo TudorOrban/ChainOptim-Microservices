@@ -1,5 +1,4 @@
 import logging
-from typing import List
 import torch.nn as nn
 import dgl
 import dgl.nn as dglnn
@@ -7,10 +6,10 @@ import torch
 from torch import Tensor
 
 from app.ml.data.data_generator import generate_data
-from app.ml.model.graph import build_heterogeneous_graph
+from app.ml.model.graph_builder import build_heterogeneous_graph
 from app.ml.model.resource_distributor import compute_max_outputs
+from app.ml.pipeline.input_pipeline import inventory_to_tensor, priorities_to_tensor
 from app.types.factory_graph import FactoryGraph
-from app.types.factory_inventory import FactoryInventoryItem
 
 logger = logging.getLogger(__name__)
 
@@ -31,17 +30,21 @@ class GNNModel(nn.Module):
         for etype in g.canonical_etypes:
             local_g = g[etype]
             srctype, _, _ = etype
+            if 'features' not in local_g.ndata[srctype]:
+                continue
+            
+            src_features = local_g.ndata['features'][srctype]
+            in_degrees = local_g.in_degrees().numpy()
+            mask = in_degrees > 0
+            if src_features.shape[0] != mask.size:
+                continue
 
-            if 'features' in local_g.ndata[srctype]:
-                src_features = local_g.ndata['features'][srctype]
-                in_degrees = local_g.in_degrees().numpy()
-                mask = in_degrees > 0
+            filtered_features = src_features[mask]
+            if filtered_features.shape[0] <= 0:
+                continue
 
-                if src_features.shape[0] == mask.size:
-                    filtered_features = src_features[mask]
-                    if filtered_features.shape[0] > 0:
-                        filtered_features = torch.relu(self.conv1(local_g, filtered_features))
-                        results.append(self.conv2(local_g, filtered_features))
+            filtered_features = torch.relu(self.conv1(local_g, filtered_features))
+            results.append(self.conv2(local_g, filtered_features))
 
         if results:
             x = torch.mean(torch.stack(results), dim=0)
@@ -49,15 +52,6 @@ class GNNModel(nn.Module):
             x = torch.zeros((self.num_classes,), dtype=torch.float32)
 
         return x
-
-
-def inventory_to_tensor(inventory: List[FactoryInventoryItem]) -> Tensor:
-    quantities = [item.quantity for item in inventory]
-    return torch.tensor(quantities, dtype=torch.float32).unsqueeze(1)
-
-def priorities_to_tensor(priorities: dict[int, float]) -> Tensor:
-    priority_values = list(priorities.values())
-    return torch.tensor(priority_values, dtype=torch.float32).unsqueeze(1)
 
 
 class FactoryEnvironment:

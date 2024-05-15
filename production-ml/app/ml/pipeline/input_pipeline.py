@@ -1,7 +1,11 @@
 
 
 from typing import Any, Dict, List
+
+from torch import Tensor
+import torch
 from app.types.factory_graph import Edge, FactoryGraph
+from app.types.factory_inventory import FactoryInventoryItem
 
 
 def apply_unified_id_mapping(factory_graph: FactoryGraph, id_map: Dict[str, Dict[int, int]]) -> FactoryGraph:
@@ -59,3 +63,12 @@ def unify_ids(factory_graph: FactoryGraph) -> Dict[str, Dict[int, int]]:
                 output_id_counter += 1
 
     return id_map
+
+
+def inventory_to_tensor(inventory: List[FactoryInventoryItem]) -> Tensor:
+    quantities = [item.quantity for item in inventory]
+    return torch.tensor(quantities, dtype=torch.float32).unsqueeze(1)
+
+def priorities_to_tensor(priorities: dict[int, float]) -> Tensor:
+    priority_values = list(priorities.values())
+    return torch.tensor(priority_values, dtype=torch.float32).unsqueeze(1)

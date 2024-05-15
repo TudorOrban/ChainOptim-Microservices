@@ -38,7 +38,7 @@ def get_production_history(id: str):
         history_data['productionHistory']['dailyProductionRecords']
     )
     
-    model_data = deserialize_to_model(history_data, FactoryProductionHistory)
+    model_data = deserialize_to_model(history_data, FactoryProductionHistory) # type: ignore
     return model_data.model_dump()
 
 
