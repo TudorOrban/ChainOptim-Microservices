@@ -30,9 +30,9 @@ async def train_model(id: str):
     numeric_id = int(id)
     graph_data = get_factory_graph_by_id(numeric_id)
 
-    in_feats = 10
+    in_feats = 2
     hidden_size = 20
-    num_classes = 1
+    num_classes = 20
 
     model = GNNModel(in_feats, hidden_size, num_classes)
 

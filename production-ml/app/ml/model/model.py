@@ -2,7 +2,7 @@ import logging
 from typing import List
 import torch.nn as nn
 import dgl
-import dgl.nn.pytorch as dglnn
+import dgl.nn as dglnn
 import torch
 from torch import Tensor
 
@@ -13,28 +13,47 @@ from app.types.factory_graph import FactoryGraph
 from app.types.factory_inventory import FactoryInventoryItem
 
 logger = logging.getLogger(__name__)
-
 class GNNModel(nn.Module):
     def __init__(self, in_feats: int, hidden_size: int, num_classes: int):
         super(GNNModel, self).__init__()
-        self.conv1 = dglnn.GraphConv(in_feats, hidden_size)
-        self.conv2 = dglnn.GraphConv(hidden_size, num_classes)
+        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True)
+        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True)
 
     def forward(self, g: dgl.DGLGraph) -> Tensor:
-        x = g.ndata['features']
-        
-        if g.canonical_etypes is None:
+        # First, check if the graph has features and canonical edge types
+        if 'features' not in g.ndata:
+            raise ValueError("Graph must have node features under 'features'")
+        if not g.canonical_etypes:
             raise ValueError("Graph must have canonical edge types")
-        
-        for etype in g.canonical_etypes:
-            if 'conv1' in self.__dict__ and isinstance(self.conv1, dglnn.GraphConv):
-                x = torch.relu(self.conv1(g[etype], x))
-            if 'conv2' in self.__dict__ and isinstance(self.conv2, dglnn.GraphConv):
-                x = self.conv2(g[etype], x)
 
-        print("Output from model's forward method:", type(x), x.shape if isinstance(x, Tensor) else "Not a tensor")
+        # Initialize tensor to accumulate results
+        results = []
+        print("Graph before LOOP:", g)
+        print("Global graph ndata:", g.ndata)
+
+        # Process each edge type
+        for etype in g.canonical_etypes:
+            local_g = g[etype]
+            print("Local graph:", local_g)
+            srctype, _, dsttype = etype
+            node_type = srctype if srctype in local_g.ntypes else dsttype
+            print(f"Processing node type: {node_type}")
+
+            h = local_g.ndata['features'][node_type]
+            print(f"Node features for node type {node_type}: {h.shape}")
+
+            h = torch.relu(self.conv1(local_g, h))  # Apply first convolution
+            print(f"After first conv for {node_type}: {h.shape}")
+
+            h = self.conv2(local_g, h)  # Apply second convolution
+            results.append(h)
+
+        # Aggregate results from all edge types, assuming result tensors are of the same shape
+        x = torch.mean(torch.stack(results), dim=0) if results else torch.tensor([])
+
+        print("Output from model's forward method:", type(x), x.shape)
         return x
-    
+
 def inventory_to_tensor(inventory: List[FactoryInventoryItem]) -> Tensor:
     quantities = [item.quantity for item in inventory]
     return torch.tensor(quantities, dtype=torch.float32).unsqueeze(1)

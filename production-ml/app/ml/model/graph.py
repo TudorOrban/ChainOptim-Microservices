@@ -127,11 +127,9 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
         print(f"Feature list for {ntype}: {feature_list}")
 
         print(g)
-
-        output_features_tensor = torch.tensor(node_data[ntype]['features'], dtype=torch.float32)
         
         try:
-            g.nodes['output'].data['features'] = output_features_tensor
+            g.nodes[ntype].data['features'] = torch.tensor(node_data[ntype]['features'], dtype=torch.float32)
             print("Successfully assigned features to 'output'.")
         except Exception as e:
             print("Failed to assign features to 'output':", e)
