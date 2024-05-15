@@ -1,8 +1,6 @@
 from typing import Dict, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime
-
-from app.utils.common import to_camel
 
 class FactoryProductionGraph(BaseModel):
     id: int
