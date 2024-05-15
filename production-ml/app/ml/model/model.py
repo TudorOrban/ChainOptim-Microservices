@@ -19,6 +19,7 @@ class GNNModel(nn.Module):
         super(GNNModel, self).__init__()
         self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True)
         self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True)
+        self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
         if 'features' not in g.ndata:
@@ -27,33 +28,27 @@ class GNNModel(nn.Module):
             raise ValueError("Graph must have canonical edge types")
 
         results = []
-        print("Graph before LOOP:", g)
-        print("Global graph ndata:", g.ndata)
-
         for etype in g.canonical_etypes:
             local_g = g[etype]
             srctype, _, dsttype = etype
-            print("Local graph ndata:", local_g.ndata)
-            node_type = srctype if srctype in local_g.ntypes else dsttype
 
-            print(f"Processing node type: {node_type}")
+            if 'features' in local_g.ndata[srctype]:
+                src_features = local_g.ndata['features'][srctype]
+                in_degrees = local_g.in_degrees().numpy()
+                mask = in_degrees > 0
 
-            if 'features' in local_g.ndata and node_type in local_g.ndata['features']:
-                h = local_g.ndata['features'][node_type]
-                print(f"Node features for node type {node_type}: {h.shape}")
+                if src_features.shape[0] == mask.size:
+                    # Apply the mask only if sizes match
+                    filtered_features = src_features[mask]
+                    if filtered_features.shape[0] > 0:  # Ensure there are still nodes left after filtering
+                        filtered_features = torch.relu(self.conv1(local_g, filtered_features))
+                        results.append(self.conv2(local_g, filtered_features))
 
-                print(f"Before conv1 for {node_type}, features shape: {h.shape}")
-                h = torch.relu(self.conv1(local_g, h))
-                print(f"After conv1 for {node_type}, features shape: {h.shape}")
-                h = self.conv2(local_g, h)
-                print(f"After conv2 for {node_type}, features shape: {h.shape}")
+        if results:
+            x = torch.mean(torch.stack(results), dim=0)
+        else:
+            x = torch.zeros((self.num_classes,), dtype=torch.float32)
 
-                results.append(h)
-            else:
-                print(f"No features available for {node_type} in local graph {etype}")
-
-        x = torch.mean(torch.stack(results), dim=0) if results else torch.tensor([])
-        print("Output from model's forward method:", type(x), x.shape)
         return x
 
 
