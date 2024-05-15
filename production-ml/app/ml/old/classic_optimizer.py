@@ -8,7 +8,7 @@ from app.types.factory_inventory import FactoryInventoryItem
 
 logger = logging.getLogger(__name__)
 
-def determine_optimal_distribution(
+def determine_optimal_distribution_old(
     factory_graph: FactoryGraph, 
     inventory: List[FactoryInventoryItem], 
     priorities: dict[int, float]
@@ -38,11 +38,11 @@ def determine_optimal_distribution(
 
         current_total_needed_quantity = total_needed_quantity
 
-        allocate_resource(current_total_needed_quantity, available_quantity, priorities, corresponding_stage_inputs, optimal_distribution, 0)
+        allocate_resource_old(current_total_needed_quantity, available_quantity, priorities, corresponding_stage_inputs, optimal_distribution, 0)
 
     return optimal_distribution
 
-def allocate_resource(
+def allocate_resource_old(
     current_total_needed_quantity: float, 
     available_quantity: float, 
     priorities: dict[int, float], 
@@ -75,7 +75,7 @@ def allocate_resource(
     operation_count += 1
 
     if current_total_needed_quantity > 0 and available_quantity > 0:
-        allocate_resource(current_total_needed_quantity, available_quantity, priorities, corresponding_stage_inputs, optimal_distribution, operation_count)
+        allocate_resource_old(current_total_needed_quantity, available_quantity, priorities, corresponding_stage_inputs, optimal_distribution, operation_count)
 
 
 

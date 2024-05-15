@@ -8,7 +8,7 @@ from torch import Tensor
 
 from app.ml.data.data_generator import generate_data
 from app.ml.model.graph import build_heterogeneous_graph
-from app.ml.model.new_resource_distributor import compute_max_outputs_new
+from app.ml.model.resource_distributor import compute_max_outputs
 from app.types.factory_graph import FactoryGraph
 from app.types.factory_inventory import FactoryInventoryItem
 
@@ -17,8 +17,8 @@ logger = logging.getLogger(__name__)
 class GNNModel(nn.Module):
     def __init__(self, in_feats: int, hidden_size: int, num_classes: int):
         super(GNNModel, self).__init__()
-        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True)
-        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True)
+        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True) # type: ignore
+        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True) # type: ignore
         self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
@@ -30,7 +30,7 @@ class GNNModel(nn.Module):
         results = []
         for etype in g.canonical_etypes:
             local_g = g[etype]
-            srctype, _, dsttype = etype
+            srctype, _, _ = etype
 
             if 'features' in local_g.ndata[srctype]:
                 src_features = local_g.ndata['features'][srctype]
@@ -38,9 +38,8 @@ class GNNModel(nn.Module):
                 mask = in_degrees > 0
 
                 if src_features.shape[0] == mask.size:
-                    # Apply the mask only if sizes match
                     filtered_features = src_features[mask]
-                    if filtered_features.shape[0] > 0:  # Ensure there are still nodes left after filtering
+                    if filtered_features.shape[0] > 0:
                         filtered_features = torch.relu(self.conv1(local_g, filtered_features))
                         results.append(self.conv2(local_g, filtered_features))
 
@@ -68,12 +67,10 @@ class FactoryEnvironment:
         self.inventory, self.priorities = generate_data(self.factory_graph)
         self.inventory_tensor = inventory_to_tensor(self.inventory)
         self.priorities_tensor = priorities_to_tensor(self.priorities)
-        logger.info(f"Inventory tensor: {self.inventory_tensor}")
         self.graph = build_heterogeneous_graph(factory_graph)
-        logger.info(f"Graph: {self.graph}")
     
     def compute_reward(self, action: Tensor) -> float:
-        optimal_distribution = compute_max_outputs_new(self.factory_graph, self.inventory, self.priorities)
+        optimal_distribution = compute_max_outputs(self.factory_graph, self.inventory, self.priorities)
         reward = -torch.mean((action - torch.tensor(list(optimal_distribution.values()))).pow(2)).item()
         return reward
 

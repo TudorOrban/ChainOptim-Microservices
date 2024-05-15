@@ -5,11 +5,9 @@ from fastapi import HTTPException
 from pydantic import ValidationError
 from app.config.database_connection import get_db
 
-from app.ml.data.data_generator import generate_data
-from app.ml.model.classic_optimizer import determine_optimal_distribution
 from app.ml.pipeline.input_pipeline import apply_unified_id_mapping, unify_ids
 from app.types.factory_graph import FactoryProductionGraph
-from app.utils.utils import convert_keys_to_strings, convert_string_keys_to_floats, deserialize_to_model
+from app.utils.utils import convert_keys_to_strings
 
 logger = logging.getLogger(__name__)
 

@@ -4,8 +4,7 @@ import logging
 from fastapi import APIRouter
 
 from app.ml.data.data_generator import generate_data
-from app.ml.model.new_resource_distributor import compute_max_outputs_new
-from app.ml.model.resource_distributor import determine_dependency_subtree, topological_sort
+from app.ml.model.resource_distributor import compute_max_outputs, determine_dependency_subtree, topological_sort
 from app.services.factory_graph_service import create_factory_graph, get_factory_graph_by_id
 from app.types.factory_graph import CamelCaseFactoryProductionGraph, FactoryProductionGraph
 from app.utils.utils import deep_convert_model_to_snake
@@ -46,6 +45,6 @@ async def read_classic_optimization(id: str):
     graph_data = get_factory_graph_by_id(numeric_id)
     inventory, priorities = generate_data(graph_data.factory_graph)
 
-    max_outputs = compute_max_outputs_new(graph_data.factory_graph, inventory, priorities)
+    max_outputs = compute_max_outputs(graph_data.factory_graph, inventory, priorities)
 
     return max_outputs

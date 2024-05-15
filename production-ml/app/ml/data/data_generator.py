@@ -6,8 +6,9 @@ from datetime import datetime
 from app.types.factory_graph import FactoryGraph
 from app.types.factory_inventory import Component, FactoryInventoryItem, UnitOfMeasurement
 
-def generate_data(factory_graph: FactoryGraph):
+def generate_data(factory_graph: FactoryGraph) -> tuple[List[FactoryInventoryItem], dict[int, float]]:
     component_ids = find_component_ids(factory_graph)
+    
     inventory = generate_inventory_items(component_ids)
 
     stage_ids = list(factory_graph.nodes.keys())
@@ -15,19 +16,22 @@ def generate_data(factory_graph: FactoryGraph):
 
     return inventory, priorities
 
-
 def find_component_ids(factory_graph: FactoryGraph) -> List[int]:
     component_ids: List[int] = []
+
     for node in factory_graph.nodes.values():
         stage = node.small_stage
+
         for input in stage.stage_inputs:
             component_ids.append(input.component_id)
+
         for output in stage.stage_outputs:
             if output.component_id not in component_ids and output.component_id != None:
                 component_ids.append(output.component_id)
+
     return component_ids
 
-def generate_inventory_items(component_ids: List[int]):
+def generate_inventory_items(component_ids: List[int]) -> List[FactoryInventoryItem]:
     inventory: List[FactoryInventoryItem] = []
 
     for component_id in component_ids:
@@ -60,6 +64,7 @@ def generate_priorities(stage_ids: List[int]) -> dict[int, float]:
     priorities_sum = sum(priorities.values())
     if priorities_sum == 0:
         return priorities
+    
     for stage_id in stage_ids:
         priorities[stage_id] = priorities[stage_id] / priorities_sum # Normalize
 

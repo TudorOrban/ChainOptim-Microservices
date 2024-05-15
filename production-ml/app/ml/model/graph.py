@@ -3,25 +3,6 @@ import torch
 
 from app.types.factory_graph import FactoryGraph
 
-
-def build_graph(factory_graph: FactoryGraph):
-    g = dgl.DGLGraph()
-    g.add_nodes(len(factory_graph.nodes))
-
-    for src, edges in factory_graph.adj_list.items():
-        for edge in edges:
-            g.add_edges(src, edge.outgoing_factory_stage_id)
-
-    num_feats = 5
-    features = torch.zeros((len(factory_graph.nodes), num_feats))
-
-    for idx, (stage_id, stage_node) in enumerate(factory_graph.nodes.items()):
-        features[idx, 0] = stage_node.number_of_steps_capacity or 0
-        features[idx, 1] = stage_node.per_duration or 0
-
-    return g, features
-
-
 def build_heterogeneous_graph(factory_graph: FactoryGraph):
     graph_data = {
         ('stage', 'has_input', 'input'): ([], []), # (src_nodes, dst_nodes)
