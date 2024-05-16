@@ -70,7 +70,6 @@ class GNNModel(nn.Module):
 
 
 
-
 class FactoryEnvironment:
     def __init__(self, factory_graph: FactoryGraph, model: GNNModel):
         self.factory_graph = factory_graph
@@ -82,8 +81,23 @@ class FactoryEnvironment:
     
     def compute_reward(self, action: Tensor) -> float:
         optimal_distribution = compute_max_outputs(self.factory_graph, self.inventory, self.priorities)
-        reward = -torch.mean((action - torch.tensor(list(optimal_distribution.values()))).pow(2)).item()
+        optimal_values_tensor = torch.tensor(list(optimal_distribution.values()), dtype=torch.float32).to(action.device)
+
+        logger.info(f"Action tensor shape: {action.shape}")
+        logger.info(f"Optimal values tensor shape: {optimal_values_tensor.shape}")
+
+        # Assuming optimal_values_tensor needs to match the first dimension of action
+        if action.shape[0] != optimal_values_tensor.shape[0]:
+            logger.error("Mismatch in action and optimal values tensor sizes.")
+            return -float('inf')  # Handle error or adjust sizes
+
+        # Reduce action tensor dimensions if necessary
+        if action.dim() > 1:
+            action = action.mean(dim=1)  # Or use another reduction method like sum or max
+
+        reward = -torch.mean((action - optimal_values_tensor).pow(2)).item()
         return reward
+
 
     def reset(self):
         self.inventory, self.priorities = generate_data(self.factory_graph)
