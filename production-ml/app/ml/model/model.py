@@ -16,42 +16,59 @@ logger = logging.getLogger(__name__)
 class GNNModel(nn.Module):
     def __init__(self, in_feats: int, hidden_size: int, num_classes: int):
         super(GNNModel, self).__init__()
-        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True) # type: ignore
-        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True) # type: ignore
+        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True)
+        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True)
         self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
         if 'features' not in g.ndata:
+            logger.error("Graph does not contain 'features'.")
             raise ValueError("Graph must have node features under 'features'")
         if not g.canonical_etypes:
+            logger.error("Graph does not contain any canonical edge types.")
             raise ValueError("Graph must have canonical edge types")
 
         results = []
         for etype in g.canonical_etypes:
             local_g = g[etype]
             srctype, _, _ = etype
-            if 'features' not in local_g.ndata[srctype]:
+
+            if srctype not in local_g.ndata['features']:
+                logger.error(f"No features found for source type '{srctype}'.")
                 continue
-            
+
             src_features = local_g.ndata['features'][srctype]
-            in_degrees = local_g.in_degrees().numpy()
-            mask = in_degrees > 0
-            if src_features.shape[0] != mask.size:
+            if src_features.nelement() == 0:
+                logger.error(f"No elements in features for {srctype}.")
                 continue
 
-            filtered_features = src_features[mask]
-            if filtered_features.shape[0] <= 0:
+            # Calculate normalization factor for nodes with edges
+            in_degrees = local_g.in_degrees().float().clamp(min=1)
+            norm = torch.pow(in_degrees, -0.5).to(src_features.device)
+            norm = norm.unsqueeze(1)  # Ensure it is [number of nodes, 1]
+
+            # Apply norm before passing to convolutions
+            if norm.shape[0] != src_features.shape[0]:
+                logger.error("Mismatch in normalization and feature shapes.")
                 continue
 
-            filtered_features = torch.relu(self.conv1(local_g, filtered_features))
-            results.append(self.conv2(local_g, filtered_features))
+            normalized_features = src_features * norm
+
+            # First convolution operation
+            src_features = torch.relu(self.conv1(local_g, normalized_features))
+            # Apply normalization before the second convolution
+            src_features *= norm.expand_as(src_features)
+            results.append(self.conv2(local_g, src_features))
 
         if results:
             x = torch.mean(torch.stack(results), dim=0)
         else:
+            logger.warning("No results aggregated; returning zero tensor.")
             x = torch.zeros((self.num_classes,), dtype=torch.float32)
 
         return x
+
+
 
 
 class FactoryEnvironment:

@@ -68,12 +68,14 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
     # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore
 
-    for ntype in node_counts:
+    for ntype in node_data:
         try:
-            g.nodes[ntype].data['features'] = torch.tensor(node_data[ntype]['features'], dtype=torch.float32)
-            print("Successfully assigned features to 'output'.")
+            if node_data[ntype]['features']:
+                g.nodes[ntype].data['features'] = torch.tensor(node_data[ntype]['features'], dtype=torch.float32)
+                print(f"Successfully assigned features to '{ntype}'.")
+            else:
+                print(f"No features to assign for '{ntype}'.")
         except Exception as e:
-            print("Failed to assign features to 'output':", e)
-
+            print(f"Failed to assign features to '{ntype}': {e}")
 
     return g

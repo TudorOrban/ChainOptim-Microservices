@@ -32,7 +32,7 @@ async def train_model(id: str):
 
     in_feats = 2
     hidden_size = 50
-    num_classes = 5
+    num_classes = 6
 
     model = GNNModel(in_feats, hidden_size, num_classes)
 
