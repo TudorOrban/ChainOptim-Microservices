@@ -16,16 +16,16 @@ logger = logging.getLogger(__name__)
 class GNNModel(nn.Module):
     def __init__(self, in_feats: int, hidden_size: int, num_classes: int):
         super(GNNModel, self).__init__()
-        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True)
-        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True)
+        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True) # type: ignore
+        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True) # type: ignore
         self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
         if 'features' not in g.ndata:
-            logger.error("Graph does not contain 'features'.")
+            logger.info("Graph does not contain 'features'.")
             raise ValueError("Graph must have node features under 'features'")
         if not g.canonical_etypes:
-            logger.error("Graph does not contain any canonical edge types.")
+            logger.info("Graph does not contain any canonical edge types.")
             raise ValueError("Graph must have canonical edge types")
 
         results = []
@@ -34,36 +34,37 @@ class GNNModel(nn.Module):
             srctype, _, _ = etype
 
             if srctype not in local_g.ndata['features']:
-                logger.error(f"No features found for source type '{srctype}'.")
+                logger.info(f"No features found for source type '{srctype}'.")
                 continue
 
-            src_features = local_g.ndata['features'][srctype]
+            src_features: Tensor = local_g.ndata['features'][srctype]
             if src_features.nelement() == 0:
-                logger.error(f"No elements in features for {srctype}.")
+                logger.info(f"No elements in features for {srctype}.")
                 continue
 
-            # Calculate normalization factor for nodes with edges
-            in_degrees = local_g.in_degrees().float().clamp(min=1)
-            norm = torch.pow(in_degrees, -0.5).to(src_features.device)
-            norm = norm.unsqueeze(1)  # Ensure it is [number of nodes, 1]
+            print("Src features before conv1:", src_features.shape)
+            src_features = torch.relu(self.conv1(local_g, src_features))
+            print("Src features after conv1:", src_features.shape)
+            
+            num_nodes = local_g.number_of_nodes(srctype)
+            if src_features.shape[0] < num_nodes:
+                padded_features = torch.zeros((num_nodes, src_features.shape[1]),
+                                             device=src_features.device, dtype=src_features.dtype)
+                in_degrees = local_g.in_degrees()
+                nodes_with_edges = (in_degrees > 0).nonzero(as_tuple=True)[0]
+                padded_features[nodes_with_edges] = src_features
+                src_features = padded_features
 
-            # Apply norm before passing to convolutions
-            if norm.shape[0] != src_features.shape[0]:
-                logger.error("Mismatch in normalization and feature shapes.")
-                continue
-
-            normalized_features = src_features * norm
-
-            # First convolution operation
-            src_features = torch.relu(self.conv1(local_g, normalized_features))
-            # Apply normalization before the second convolution
-            src_features *= norm.expand_as(src_features)
-            results.append(self.conv2(local_g, src_features))
+            print("Src features after padding:", src_features.shape)
+            
+            src_features = self.conv2(local_g, src_features)
+            print("Src features after conv2:", src_features.shape)
+            results.append(src_features)
 
         if results:
             x = torch.mean(torch.stack(results), dim=0)
         else:
-            logger.warning("No results aggregated; returning zero tensor.")
+            logger.info("No results aggregated; returning zero tensor.")
             x = torch.zeros((self.num_classes,), dtype=torch.float32)
 
         return x
@@ -88,7 +89,7 @@ class FactoryEnvironment:
 
         # Assuming optimal_values_tensor needs to match the first dimension of action
         if action.shape[0] != optimal_values_tensor.shape[0]:
-            logger.error("Mismatch in action and optimal values tensor sizes.")
+            logger.info("Mismatch in action and optimal values tensor sizes.")
             return -float('inf')  # Handle error or adjust sizes
 
         # Reduce action tensor dimensions if necessary
