@@ -50,7 +50,7 @@ class GNNModel(nn.Module):
             if src_features.shape[0] < num_nodes:
                 padded_features = torch.zeros((num_nodes, src_features.shape[1]),
                                              device=src_features.device, dtype=src_features.dtype)
-                in_degrees = local_g.in_degrees()
+                in_degrees = local_g.in_degrees(etype=etype)
                 nodes_with_edges = (in_degrees > 0).nonzero(as_tuple=True)[0]
                 padded_features[nodes_with_edges] = src_features
                 src_features = padded_features
