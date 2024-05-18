@@ -87,16 +87,18 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
     num_nodes_dict = {k: v + 1 for k, v in dummy_ids.items()}  # Correct calculation to +1
     print("num_nodes_dict:", num_nodes_dict)
 
+    print("Before Graph Construction:")
     for etype, (srcs, dsts) in graph_data.items():
-        print(f"Edge type: {etype}")
-        print(f"Src nodes: {srcs}")
-        print(f"Dst nodes: {dsts}")
+        print(f"Edge type {etype}:")
+        print("Source nodes:", srcs)
+        print("Destination nodes:", dsts)
+        if any(src >= num_nodes_dict[etype[0]] for src in srcs) or any(dst >= num_nodes_dict[etype[2]] for dst in dsts):
+            print(f"Error: Edge in {etype} points to non-existent node.")
 
     for ntype in node_data:
         print(f"Node type: {ntype}")
         print(f"Node IDs: {node_data[ntype]['ids']}")
         print(f"Node features: {node_data[ntype]['features']}")
-
 
     # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore

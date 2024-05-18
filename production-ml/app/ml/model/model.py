@@ -1,9 +1,11 @@
 import logging
+from typing import Dict
 import torch.nn as nn
 import dgl
 import dgl.nn as dglnn
 import torch
 from torch import Tensor
+import dgl.function as fn
 
 from app.ml.data.data_generator import generate_data
 from app.ml.model.graph_builder import build_heterogeneous_graph
@@ -13,85 +15,46 @@ from app.types.factory_graph import FactoryGraph
 
 logger = logging.getLogger(__name__)
 
-class GNNModel(nn.Module):
-    def __init__(self, in_feats: int, hidden_size: int, num_classes: int):
+# class CustomGraphConv(nn.Module):
+#     def __init__(self, in_feats, out_feats):
+#         super(CustomGraphConv, self).__init__()
+#         self.weight = nn.Parameter(torch.Tensor(in_feats, out_feats))
+#         nn.init.xavier_uniform_(self.weight)
+
+#     def forward(self, graph, feature):
+#         with graph.local_scope():
+#             graph.ndata['h'] = torch.matmul(feature, self.weight)
+#             graph.update_all(fn.copy_u('h', 'm'), fn.sum('m', 'h'))
+#             return graph.ndata['h']
+
+
+
+
+class GNNModel(torch.nn.Module):
+    def __init__(self, in_feats: Dict[str, int], hidden_size: Dict[str, int], num_classes: Dict[str, int]):
         super(GNNModel, self).__init__()
-        self.conv1 = dglnn.GraphConv(in_feats, hidden_size, allow_zero_in_degree=True) # type: ignore
-        self.conv2 = dglnn.GraphConv(hidden_size, num_classes, allow_zero_in_degree=True) # type: ignore
-        self.num_classes = num_classes
+        # Initialize GraphConv layers for each node type separately
+        self.convs = {ntype: dglnn.GraphConv(in_feats[ntype], hidden_size[ntype], allow_zero_in_degree=True) for ntype in in_feats}
+        self.convs2 = {ntype: dglnn.GraphConv(hidden_size[ntype], num_classes[ntype], allow_zero_in_degree=True) for ntype in hidden_size}
 
-    def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
-        print("Graph:", g)
-        print("Ntypes:", g.ntypes)
-        for ntype in g.ntypes:
-            print(f"Checking isolated nodes for type '{ntype}':")
-            num_nodes = g.num_nodes(ntype)
-            for node_id in range(num_nodes):
-                if node_id == num_nodes:
-                    break
-                in_edges = {}
-                out_edges = {}
-                for etype in g.etypes:
-                    try:
-                        in_edges[etype] = g.in_edges(node_id, etype=etype)
-                        out_edges[etype] = g.out_edges(node_id, etype=etype)
-                    except Exception as e:
-                        print(f"Error accessing edges for node {node_id} of type {ntype} and edge type {etype}: {e}")
-                print(f"Node ID: {node_id}, In-edges: {in_edges}, Out-edges: {out_edges}")
-
-        if 'features' not in g.ndata:
-            logger.info("Graph does not contain 'features'.")
-            raise ValueError("Graph must have node features under 'features'")
+    def forward(self, g: dgl.DGLGraph) -> Dict[str, torch.Tensor]:
+        if not g.ntypes:
+            raise ValueError("Graph must have node types")
+        
         if not g.canonical_etypes:
-            logger.info("Graph does not contain any canonical edge types.")
-            raise ValueError("Graph must have canonical edge types")
-        print("Features:", g.ndata['features'])
+            raise ValueError("Graph does not contain any canonical edge types")
+        
+        h_dict = {}
+        for ntype in g.ntypes:
+            if ntype in g.ndata['features']:
+                h = torch.relu(self.convs[ntype](g, g.ndata['features'][ntype]))
+                h = self.convs2[ntype](g, h)
+                h_dict[ntype] = h
 
-        results = []
-        for etype in g.canonical_etypes:
-            local_g = g[etype]
-            srctype, _, _ = etype
+        if not h_dict:
+            raise RuntimeError("No features processed, check node types and features data")
 
-            if srctype not in local_g.ndata['features']:
-                logger.info(f"No features found for source type '{srctype}'.")
-                continue
-
-            src_features: Tensor = local_g.ndata['features'][srctype]
-            if src_features.nelement() == 0:
-                logger.info(f"No elements in features for {srctype}.")
-                continue
-
-            print("Src features before conv1:", src_features.shape)
-            src_features = torch.relu(self.conv1(local_g, src_features))
-            print("Src features after conv1:", src_features.shape)
-            
-            num_nodes = local_g.number_of_nodes(ntype=srctype)
-            if src_features.shape[0] < num_nodes:
-                padded_features = torch.zeros((num_nodes, src_features.shape[1]),
-                                             device=src_features.device, dtype=src_features.dtype)
-                in_degrees = local_g.in_degrees(etype=etype)
-                nodes_with_edges = (in_degrees > 0).nonzero(as_tuple=True)[0]
-                padded_features[nodes_with_edges] = src_features
-                src_features = padded_features
-
-            print("Src features after padding:", src_features.shape)
-            
-            # try:
-            src_features = self.conv2(local_g, src_features)
-            print(f"Src features after conv2 for {etype}: {src_features.shape}")
-            results.append(src_features)
-            # except RuntimeError as e:
-            #     print(f"Error during conv2 for {etype}: {e}")
-            #     continue
-
-        if results:
-            x = torch.mean(torch.stack(results), dim=0)
-        else:
-            logger.info("No results aggregated; returning zero tensor.")
-            x = torch.zeros((self.num_classes,), dtype=torch.float32)
-
-        return x
-
+        return h_dict
 
 
 class FactoryEnvironment:
@@ -110,7 +73,6 @@ class FactoryEnvironment:
         logger.info(f"Action tensor shape: {action.shape}")
         logger.info(f"Optimal values tensor shape: {optimal_values_tensor.shape}")
 
-        # Assuming optimal_values_tensor needs to match the first dimension of action
         if action.shape[0] != optimal_values_tensor.shape[0]:
             logger.info("Mismatch in action and optimal values tensor sizes.")
             
@@ -125,7 +87,7 @@ class FactoryEnvironment:
 
         # Reduce action tensor dimensions if necessary
         if action.dim() > 1:
-            action = action.mean(dim=1)  # Or use another reduction method like sum or max
+            action = action.mean(dim=1) 
             logger.info(f"Reduced action tensor shape: {action.shape}")
 
         reward = -torch.mean((action - optimal_values_tensor).pow(2)).item()
@@ -143,18 +105,18 @@ class FactoryEnvironment:
     def step(self, action: Tensor, update_data=False):
         reward = self.compute_reward(action)
         if update_data:
-            self.reset_environment(new_data=False)  # Re-use current inventory and priorities
-        done = False  # Adjust based on your criteria for ending an episode
+            self.reset_environment(new_data=False)
+        done = False
         return {'graph': self.graph, 'inventory': self.inventory_tensor, 'priorities': self.priorities_tensor}, reward, done
 
 def train(model: GNNModel, env: FactoryEnvironment, episodes: int, steps_per_episode: int):
     for episode in range(episodes):
-        env.reset_environment(new_data=True)  # Start with new data each episode
+        env.reset_environment(new_data=True) # Start with new data each episode
         total_reward = 0
-        for step in range(steps_per_episode):
+        for _ in range(steps_per_episode):
             state = {'graph': env.graph, 'inventory': env.inventory_tensor, 'priorities': env.priorities_tensor}
             action = model(state['graph'])
-            next_state, reward, done = env.step(action, update_data=True)
+            _, reward, done = env.step(action, update_data=True)
             total_reward += reward
             if done:
                 break
