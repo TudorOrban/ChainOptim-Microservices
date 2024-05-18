@@ -46,7 +46,7 @@ class GNNModel(nn.Module):
             src_features = torch.relu(self.conv1(local_g, src_features))
             print("Src features after conv1:", src_features.shape)
             
-            num_nodes = local_g.number_of_nodes(srctype)
+            num_nodes = local_g.number_of_nodes(ntype=srctype)
             if src_features.shape[0] < num_nodes:
                 padded_features = torch.zeros((num_nodes, src_features.shape[1]),
                                              device=src_features.device, dtype=src_features.dtype)
@@ -57,9 +57,13 @@ class GNNModel(nn.Module):
 
             print("Src features after padding:", src_features.shape)
             
+            # try:
             src_features = self.conv2(local_g, src_features)
-            print("Src features after conv2:", src_features.shape)
+            print(f"Src features after conv2 for {etype}: {src_features.shape}")
             results.append(src_features)
+            # except RuntimeError as e:
+            #     print(f"Error during conv2 for {etype}: {e}")
+            #     continue
 
         if results:
             x = torch.mean(torch.stack(results), dim=0)
@@ -90,39 +94,49 @@ class FactoryEnvironment:
         # Assuming optimal_values_tensor needs to match the first dimension of action
         if action.shape[0] != optimal_values_tensor.shape[0]:
             logger.info("Mismatch in action and optimal values tensor sizes.")
-            return -float('inf')  # Handle error or adjust sizes
+            
+            # Align the sizes by trimming or padding the optimal values tensor
+            if action.shape[0] < optimal_values_tensor.shape[0]:
+                optimal_values_tensor = optimal_values_tensor[:action.shape[0]]
+            else:
+                padding = torch.zeros(action.shape[0] - optimal_values_tensor.shape[0], device=optimal_values_tensor.device)
+                optimal_values_tensor = torch.cat((optimal_values_tensor, padding), dim=0)
+
+            logger.info(f"Aligned optimal values tensor shape: {optimal_values_tensor.shape}")
 
         # Reduce action tensor dimensions if necessary
         if action.dim() > 1:
             action = action.mean(dim=1)  # Or use another reduction method like sum or max
+            logger.info(f"Reduced action tensor shape: {action.shape}")
 
         reward = -torch.mean((action - optimal_values_tensor).pow(2)).item()
         return reward
 
 
-    def reset(self):
-        self.inventory, self.priorities = generate_data(self.factory_graph)
+    def reset_environment(self, new_data=True):
+        if new_data:
+            self.inventory, self.priorities = generate_data(self.factory_graph)
         self.inventory_tensor = inventory_to_tensor(self.inventory)
         self.priorities_tensor = priorities_to_tensor(self.priorities)
         return {'graph': self.graph, 'inventory': self.inventory_tensor, 'priorities': self.priorities_tensor}
 
-    def step(self, action: Tensor):
-        reward = self.compute_reward(action)
-        done = True  
-        return {'graph': self.graph, 'inventory': self.inventory_tensor, 'priorities': self.priorities_tensor}, reward, done
     
+    def step(self, action: Tensor, update_data=False):
+        reward = self.compute_reward(action)
+        if update_data:
+            self.reset_environment(new_data=False)  # Re-use current inventory and priorities
+        done = False  # Adjust based on your criteria for ending an episode
+        return {'graph': self.graph, 'inventory': self.inventory_tensor, 'priorities': self.priorities_tensor}, reward, done
 
-def train(model: GNNModel, env: FactoryEnvironment, episodes: int):
+def train(model: GNNModel, env: FactoryEnvironment, episodes: int, steps_per_episode: int):
     for episode in range(episodes):
-        state = env.reset()
-        total_reward: float = 0
-        done: bool = False
-        while not done:
-            graph = state['graph']
-            action = model(graph)
-            print("Action shape:", action.shape)
-            print("Action sample:", action[:5])
-            next_state, reward, done = env.step(action)
-            state = next_state
+        env.reset_environment(new_data=True)  # Start with new data each episode
+        total_reward = 0
+        for step in range(steps_per_episode):
+            state = {'graph': env.graph, 'inventory': env.inventory_tensor, 'priorities': env.priorities_tensor}
+            action = model(state['graph'])
+            next_state, reward, done = env.step(action, update_data=True)
             total_reward += reward
+            if done:
+                break
         print(f"Episode: {episode}, Total reward: {total_reward}")

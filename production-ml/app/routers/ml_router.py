@@ -38,4 +38,4 @@ async def train_model(id: str):
 
     env = FactoryEnvironment(graph_data.factory_graph, model)
 
-    train(model, env, 50)
+    train(model, env, 100, 1)

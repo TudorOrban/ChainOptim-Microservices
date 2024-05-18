@@ -3,7 +3,7 @@ import torch
 
 from app.types.factory_graph import FactoryGraph, StageNode
 
-def build_heterogeneous_graph(factory_graph: FactoryGraph): 
+def build_heterogeneous_graph(factory_graph: FactoryGraph):
     graph_data = {
         ('stage', 'has_input', 'input'): ([], []), # (src_nodes, dst_nodes)
         ('stage', 'has_output', 'output'): ([], []),
