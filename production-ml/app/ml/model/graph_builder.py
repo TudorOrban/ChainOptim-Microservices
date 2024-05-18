@@ -17,53 +17,78 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
         'output': {'features': [], 'ids': []}
     }
 
+    # Track the maximum ID encountered for each node type
+    max_ids = {'stage': -1, 'input': -1, 'output': -1}
+
     for stage_id, stage_node in factory_graph.nodes.items():
-        stage_features = [
+        max_ids['stage'] = max(max_ids['stage'], stage_id)
+        node_data['stage']['features'].append([
             stage_node.number_of_steps_capacity or 0,
             stage_node.per_duration or 0
-        ]
-        node_data['stage']['features'].append(stage_features)
+        ])
         node_data['stage']['ids'].append(stage_id)
-        # Directly integrating self-loops in each edge list
+
+        # Self-loop for stage nodes in their primary interaction contexts
         graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
-        graph_data[('stage', 'has_input', 'input')][1].append(stage_id)  # self-loop for 'stage'
+        graph_data[('stage', 'has_input', 'input')][1].append(stage_id)
+        graph_data[('stage', 'has_output', 'output')][0].append(stage_id)
+        graph_data[('stage', 'has_output', 'output')][1].append(stage_id)
 
         for input in stage_node.small_stage.stage_inputs:
-            input_features = [
+            input_id = input.id
+            max_ids['input'] = max(max_ids['input'], input_id)
+            node_data['input']['features'].append([
                 input.component_id or 0,
                 input.quantity_per_stage or 0
-            ]
-            node_data['input']['features'].append(input_features)
-            node_data['input']['ids'].append(input.id)
-            
+            ])
+            node_data['input']['ids'].append(input_id)
+
+            # Normal edges and self-loop for input nodes
+
+            print(f"Adding edge from stage {stage_id} to input {input_id}")
             graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
-            graph_data[('stage', 'has_input', 'input')][1].append(input.id)
-            graph_data[('input', 'input_to', 'stage')][0].append(input.id)
+            graph_data[('stage', 'has_input', 'input')][1].append(input_id)
+            print(f"Adding edge from input {input_id} to stage {stage_id}")
+            graph_data[('input', 'input_to', 'stage')][0].append(input_id)
             graph_data[('input', 'input_to', 'stage')][1].append(stage_id)
-            graph_data[('input', 'input_to', 'stage')][0].append(input.id)
-            graph_data[('input', 'input_to', 'stage')][1].append(input.id)  # self-loop for 'input'
+            print(f"Adding self-loop edge for input {input_id}")
+            graph_data[('input', 'input_to', 'stage')][0].append(input_id)
+            graph_data[('input', 'input_to', 'stage')][1].append(input_id)
 
         for output in stage_node.small_stage.stage_outputs:
-            output_features = [
+            output_id = output.id
+            max_ids['output'] = max(max_ids['output'], output_id)
+            node_data['output']['features'].append([
                 output.component_id or 0,
                 output.quantity_per_stage or 0
-            ]
-            node_data['output']['features'].append(output_features)
-            node_data['output']['ids'].append(output.id)
+            ])
+            node_data['output']['ids'].append(output_id)
 
+            # Normal edges and self-loop for output nodes
+            print(f"Adding edge from stage {stage_id} to output {output_id}")
             graph_data[('stage', 'has_output', 'output')][0].append(stage_id)
-            graph_data[('stage', 'has_output', 'output')][1].append(output.id)
-            graph_data[('output', 'output_from', 'stage')][0].append(output.id)
+            graph_data[('stage', 'has_output', 'output')][1].append(output_id)
+            print(f"Adding edge from output {output_id} to stage {stage_id}")
+            graph_data[('output', 'output_from', 'stage')][0].append(output_id)
             graph_data[('output', 'output_from', 'stage')][1].append(stage_id)
-            graph_data[('output', 'output_from', 'stage')][0].append(output.id)
-            graph_data[('output', 'output_from', 'stage')][1].append(output.id)  # self-loop for 'output'
-        
-        
-    num_nodes_dict = {
-        'stage': max(node_data['stage']['ids']) + 1,
-        'input': max(node_data['input']['ids']) + 1,
-        'output': max(node_data['output']['ids']) + 1
-    }
+            print(f"Adding self-loop edge for output {output_id}")
+            graph_data[('output', 'output_from', 'stage')][0].append(output_id)
+            graph_data[('output', 'output_from', 'stage')][1].append(output_id)
+
+
+    print("Max IDs:", max_ids)
+    # Calculate the number of nodes for each type as the max ID encountered plus one
+    num_nodes_dict = {k: v + 1 for k, v in max_ids.items()}
+    print("Node Data:", node_data)
+    print("Edge Data:", graph_data)
+
+    for etype, edges in graph_data.items():
+        srcs, dsts = edges
+        if 'stage' in etype:
+            invalid_srcs = [src for src in srcs if src >= num_nodes_dict['stage']]
+            invalid_dsts = [dst for dst in dsts if dst >= num_nodes_dict[etype[2]]]  # etype[2] is the destination type
+            if invalid_srcs or invalid_dsts:
+                print(f"Invalid edge in {etype}: Sources {invalid_srcs}, Destinations {invalid_dsts}")
 
     # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore
