@@ -17,12 +17,6 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
         'output': {'features': [], 'ids': []}
     }
 
-    node_counts = {
-        'stage': 0,
-        'input': 0,
-        'output': 0
-    }
-
     for stage_id, stage_node in factory_graph.nodes.items():
         stage_features = [
             stage_node.number_of_steps_capacity or 0,
@@ -30,7 +24,9 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
         ]
         node_data['stage']['features'].append(stage_features)
         node_data['stage']['ids'].append(stage_id)
-        node_counts['stage'] += 1
+        # Directly integrating self-loops in each edge list
+        graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
+        graph_data[('stage', 'has_input', 'input')][1].append(stage_id)  # self-loop for 'stage'
 
         for input in stage_node.small_stage.stage_inputs:
             input_features = [
@@ -39,12 +35,13 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
             ]
             node_data['input']['features'].append(input_features)
             node_data['input']['ids'].append(input.id)
-            node_counts['input'] += 1
             
             graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
             graph_data[('stage', 'has_input', 'input')][1].append(input.id)
             graph_data[('input', 'input_to', 'stage')][0].append(input.id)
             graph_data[('input', 'input_to', 'stage')][1].append(stage_id)
+            graph_data[('input', 'input_to', 'stage')][0].append(input.id)
+            graph_data[('input', 'input_to', 'stage')][1].append(input.id)  # self-loop for 'input'
 
         for output in stage_node.small_stage.stage_outputs:
             output_features = [
@@ -53,18 +50,21 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
             ]
             node_data['output']['features'].append(output_features)
             node_data['output']['ids'].append(output.id)
-            node_counts['output'] += 1
 
             graph_data[('stage', 'has_output', 'output')][0].append(stage_id)
             graph_data[('stage', 'has_output', 'output')][1].append(output.id)
             graph_data[('output', 'output_from', 'stage')][0].append(output.id)
             graph_data[('output', 'output_from', 'stage')][1].append(stage_id)
+            graph_data[('output', 'output_from', 'stage')][0].append(output.id)
+            graph_data[('output', 'output_from', 'stage')][1].append(output.id)  # self-loop for 'output'
+        
         
     num_nodes_dict = {
         'stage': max(node_data['stage']['ids']) + 1,
         'input': max(node_data['input']['ids']) + 1,
         'output': max(node_data['output']['ids']) + 1
     }
+
     # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore
 
@@ -77,5 +77,5 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
                 print(f"No features to assign for '{ntype}'.")
         except Exception as e:
             print(f"Failed to assign features to '{ntype}': {e}")
-
+            
     return g

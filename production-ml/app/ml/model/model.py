@@ -33,6 +33,10 @@ class GNNModel(nn.Module):
             local_g = g[etype]
             srctype, _, _ = etype
 
+            # Skip for self-loops
+            if etype[0] == etype[2]:
+                continue
+
             if srctype not in local_g.ndata['features']:
                 logger.info(f"No features found for source type '{srctype}'.")
                 continue
