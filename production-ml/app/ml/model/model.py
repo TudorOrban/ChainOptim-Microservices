@@ -21,21 +21,36 @@ class GNNModel(nn.Module):
         self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> torch.Tensor:
+        print("Graph:", g)
+        print("Ntypes:", g.ntypes)
+        for ntype in g.ntypes:
+            print(f"Checking isolated nodes for type '{ntype}':")
+            num_nodes = g.num_nodes(ntype)
+            for node_id in range(num_nodes):
+                if node_id == num_nodes:
+                    break
+                in_edges = {}
+                out_edges = {}
+                for etype in g.etypes:
+                    try:
+                        in_edges[etype] = g.in_edges(node_id, etype=etype)
+                        out_edges[etype] = g.out_edges(node_id, etype=etype)
+                    except Exception as e:
+                        print(f"Error accessing edges for node {node_id} of type {ntype} and edge type {etype}: {e}")
+                print(f"Node ID: {node_id}, In-edges: {in_edges}, Out-edges: {out_edges}")
+
         if 'features' not in g.ndata:
             logger.info("Graph does not contain 'features'.")
             raise ValueError("Graph must have node features under 'features'")
         if not g.canonical_etypes:
             logger.info("Graph does not contain any canonical edge types.")
             raise ValueError("Graph must have canonical edge types")
+        print("Features:", g.ndata['features'])
 
         results = []
         for etype in g.canonical_etypes:
             local_g = g[etype]
             srctype, _, _ = etype
-
-            # Skip for self-loops
-            if etype[0] == etype[2]:
-                continue
 
             if srctype not in local_g.ndata['features']:
                 logger.info(f"No features found for source type '{srctype}'.")

@@ -28,12 +28,6 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
         ])
         node_data['stage']['ids'].append(stage_id)
 
-        # Self-loop for stage nodes in their primary interaction contexts
-        graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
-        graph_data[('stage', 'has_input', 'input')][1].append(stage_id)
-        graph_data[('stage', 'has_output', 'output')][0].append(stage_id)
-        graph_data[('stage', 'has_output', 'output')][1].append(stage_id)
-
         for input in stage_node.small_stage.stage_inputs:
             input_id = input.id
             max_ids['input'] = max(max_ids['input'], input_id)
@@ -43,18 +37,11 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
             ])
             node_data['input']['ids'].append(input_id)
 
-            # Normal edges and self-loop for input nodes
-
-            print(f"Adding edge from stage {stage_id} to input {input_id}")
             graph_data[('stage', 'has_input', 'input')][0].append(stage_id)
             graph_data[('stage', 'has_input', 'input')][1].append(input_id)
-            print(f"Adding edge from input {input_id} to stage {stage_id}")
             graph_data[('input', 'input_to', 'stage')][0].append(input_id)
             graph_data[('input', 'input_to', 'stage')][1].append(stage_id)
-            print(f"Adding self-loop edge for input {input_id}")
-            graph_data[('input', 'input_to', 'stage')][0].append(input_id)
-            graph_data[('input', 'input_to', 'stage')][1].append(input_id)
-
+            
         for output in stage_node.small_stage.stage_outputs:
             output_id = output.id
             max_ids['output'] = max(max_ids['output'], output_id)
@@ -64,31 +51,52 @@ def build_heterogeneous_graph(factory_graph: FactoryGraph):
             ])
             node_data['output']['ids'].append(output_id)
 
-            # Normal edges and self-loop for output nodes
-            print(f"Adding edge from stage {stage_id} to output {output_id}")
             graph_data[('stage', 'has_output', 'output')][0].append(stage_id)
             graph_data[('stage', 'has_output', 'output')][1].append(output_id)
-            print(f"Adding edge from output {output_id} to stage {stage_id}")
             graph_data[('output', 'output_from', 'stage')][0].append(output_id)
             graph_data[('output', 'output_from', 'stage')][1].append(stage_id)
-            print(f"Adding self-loop edge for output {output_id}")
-            graph_data[('output', 'output_from', 'stage')][0].append(output_id)
-            graph_data[('output', 'output_from', 'stage')][1].append(output_id)
+        
+    dummy_ids = {'stage': max_ids['stage'] + 1, 'input': max_ids['input'] + 1, 'output': max_ids['output'] + 1}
+    
+    # Add dummy nodes with their respective features
+    for ntype in ['stage', 'input', 'output']:
+        dummy_feature = [0] * len(node_data[ntype]['features'][0])
+        node_data[ntype]['features'].append(dummy_feature)
+        node_data[ntype]['ids'].append(dummy_ids[ntype])
 
+    # Connect nodes to the appropriate dummy nodes
+    for ntype in ['stage', 'input', 'output']:
+        for node_id in node_data[ntype]['ids']:
+            if ntype == 'stage':
+                dummy_input_id = dummy_ids['input']
+                dummy_output_id = dummy_ids['output']
+                graph_data[('stage', 'has_input', 'input')][0].append(node_id)
+                graph_data[('stage', 'has_input', 'input')][1].append(dummy_input_id)
+                graph_data[('stage', 'has_output', 'output')][0].append(node_id)
+                graph_data[('stage', 'has_output', 'output')][1].append(dummy_output_id)
+            elif ntype == 'input':
+                dummy_stage_id = dummy_ids['stage']
+                graph_data[('input', 'input_to', 'stage')][0].append(node_id)
+                graph_data[('input', 'input_to', 'stage')][1].append(dummy_stage_id)
+            elif ntype == 'output':
+                dummy_stage_id = dummy_ids['stage']
+                graph_data[('output', 'output_from', 'stage')][0].append(node_id)
+                graph_data[('output', 'output_from', 'stage')][1].append(dummy_stage_id)
 
-    print("Max IDs:", max_ids)
-    # Calculate the number of nodes for each type as the max ID encountered plus one
-    num_nodes_dict = {k: v + 1 for k, v in max_ids.items()}
-    print("Node Data:", node_data)
-    print("Edge Data:", graph_data)
+    print("max_ids:", max_ids)
+    num_nodes_dict = {k: v + 1 for k, v in dummy_ids.items()}  # Correct calculation to +1
+    print("num_nodes_dict:", num_nodes_dict)
 
-    for etype, edges in graph_data.items():
-        srcs, dsts = edges
-        if 'stage' in etype:
-            invalid_srcs = [src for src in srcs if src >= num_nodes_dict['stage']]
-            invalid_dsts = [dst for dst in dsts if dst >= num_nodes_dict[etype[2]]]  # etype[2] is the destination type
-            if invalid_srcs or invalid_dsts:
-                print(f"Invalid edge in {etype}: Sources {invalid_srcs}, Destinations {invalid_dsts}")
+    for etype, (srcs, dsts) in graph_data.items():
+        print(f"Edge type: {etype}")
+        print(f"Src nodes: {srcs}")
+        print(f"Dst nodes: {dsts}")
+
+    for ntype in node_data:
+        print(f"Node type: {ntype}")
+        print(f"Node IDs: {node_data[ntype]['ids']}")
+        print(f"Node features: {node_data[ntype]['features']}")
+
 
     # Create a DGL graph
     g = dgl.heterograph(graph_data, num_nodes_dict=num_nodes_dict) # type: ignore
