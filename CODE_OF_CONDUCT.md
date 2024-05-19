@@ -1,4 +1,4 @@
-[# Code of Conduct for ChainOptim
+# Code of Conduct for ChainOptim
 
 ## Our Pledge
 
