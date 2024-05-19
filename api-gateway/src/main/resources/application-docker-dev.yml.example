@@ -1,0 +1,94 @@
+spring:
+  application:
+    name: ChainOptimizer
+  main:
+    web-application-type: reactive
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: true
+      reload:
+        enabled: true
+      client:
+        namespace: default
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+    loadbalancer:
+      ribbon:
+        enabled: false
+  redis:
+    host: redis
+    port: 6379
+
+server:
+  port: 8082
+
+app:
+  environment: ${APP_ENV:dev}
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        security: DEBUG
+        cloud:
+          loadbalancer: DEBUG
+          gateway: DEBUG
+        data:
+          redis: DEBUG
+      chainoptim: DEBUG
+      hibernate:
+        SQL: DEBUG
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+  appender:
+    logstash:
+      type: LogstashTcpSocketAppender
+      name: LOGSTASH
+      host: logstash:5000
+      encoder:
+        type: net.logstash.logback.encoder.LogstashEncoder
+
+jwt:
+  secret: 'eXc1UMm99SWU2RmBYZXHcrXHhU10g5VQyNrZjfYhwJEhjNdTA0jSFDZ6Q0doZDY2hQAy0UjRJsJDdqK31aY0Gc2LXpldXnVPckj+d2lNGeXxklMsdUQDEi=='
+
+# Resilience4j Circuit Breaker Configuration
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 100
+      minimumNumberOfCalls: 20
+      permittedNumberOfCallsInHalfOpenState: 10
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 20s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+    critical:
+      slidingWindowSize: 100
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 5
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 60
+      eventConsumerBufferSize: 10
+  enable-actuator-endpoints: true
+
+# Expose actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus,health,info'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      show-details: always
+  resilience4j:
+    circuitbreaker:
+      enable-actuator-endpoints: true
