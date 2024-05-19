@@ -6,6 +6,7 @@ from datetime import datetime
 from app.types.factory_graph import FactoryGraph
 from app.types.factory_inventory import Component, FactoryInventoryItem, UnitOfMeasurement
 
+# Generate random inventory and priorities
 def generate_data(factory_graph: FactoryGraph) -> tuple[List[FactoryInventoryItem], dict[int, float]]:
     component_ids = find_component_ids(factory_graph)
     

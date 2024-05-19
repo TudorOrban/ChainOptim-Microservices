@@ -1,11 +1,9 @@
 import logging
 from typing import Dict
-import torch.nn as nn
 import dgl
 import dgl.nn as dglnn
 import torch
 from torch import Tensor
-import dgl.function as fn
 
 from app.ml.data.data_generator import generate_data
 from app.ml.model.graph_builder import build_heterogeneous_graph
@@ -15,46 +13,67 @@ from app.types.factory_graph import FactoryGraph
 
 logger = logging.getLogger(__name__)
 
-# class CustomGraphConv(nn.Module):
-#     def __init__(self, in_feats, out_feats):
-#         super(CustomGraphConv, self).__init__()
-#         self.weight = nn.Parameter(torch.Tensor(in_feats, out_feats))
-#         nn.init.xavier_uniform_(self.weight)
-
-#     def forward(self, graph, feature):
-#         with graph.local_scope():
-#             graph.ndata['h'] = torch.matmul(feature, self.weight)
-#             graph.update_all(fn.copy_u('h', 'm'), fn.sum('m', 'h'))
-#             return graph.ndata['h']
-
-
-
 
 class GNNModel(torch.nn.Module):
     def __init__(self, in_feats: Dict[str, int], hidden_size: Dict[str, int], num_classes: Dict[str, int]):
         super(GNNModel, self).__init__()
-        # Initialize GraphConv layers for each node type separately
-        self.convs = {ntype: dglnn.GraphConv(in_feats[ntype], hidden_size[ntype], allow_zero_in_degree=True) for ntype in in_feats}
-        self.convs2 = {ntype: dglnn.GraphConv(hidden_size[ntype], num_classes[ntype], allow_zero_in_degree=True) for ntype in hidden_size}
+        self.convs = torch.nn.ModuleDict({
+            key: dglnn.GraphConv(in_feats[key], hidden_size[key], allow_zero_in_degree=True) # type: ignore
+            for key in in_feats.keys()
+        })
+        self.convs2 = torch.nn.ModuleDict({
+            key: dglnn.GraphConv(hidden_size[key], num_classes[key], allow_zero_in_degree=True) # type: ignore
+            for key in hidden_size.keys()
+        })
+        self.num_classes = num_classes
 
     def forward(self, g: dgl.DGLGraph) -> Dict[str, torch.Tensor]:
-        if not g.ntypes:
-            raise ValueError("Graph must have node types")
-        
+        if 'features' not in g.ndata:
+            raise ValueError("Graph must have node features under 'features'")
         if not g.canonical_etypes:
-            raise ValueError("Graph does not contain any canonical edge types")
-        
-        h_dict = {}
-        for ntype in g.ntypes:
-            if ntype in g.ndata['features']:
-                h = torch.relu(self.convs[ntype](g, g.ndata['features'][ntype]))
-                h = self.convs2[ntype](g, h)
-                h_dict[ntype] = h
+            raise ValueError("Graph must have canonical edge types")
 
-        if not h_dict:
-            raise RuntimeError("No features processed, check node types and features data")
+        results = {}
+        for etype in g.canonical_etypes:
+            src_type, _, _ = etype
 
-        return h_dict
+            # Create subgraph for the current edge type
+            edge_subgraph = dgl.edge_type_subgraph(g, [etype])
+
+            if src_type not in edge_subgraph.ndata['features']:
+                continue
+
+            src_features: torch.Tensor = edge_subgraph.nodes[src_type].data['features']
+            if src_features.nelement() == 0:
+                continue
+
+            print("Src features before conv1:", src_features.shape)
+            src_features = torch.relu(self.convs[src_type](edge_subgraph, src_features))
+            print("Src features after conv1:", src_features.shape)
+
+            # Pad to ensure feature tensor shape matches the number of nodes
+            num_nodes = edge_subgraph.num_nodes(src_type)
+            if src_features.shape[0] < num_nodes:
+                padded_features = torch.zeros((num_nodes, src_features.shape[1]),
+                                              device=src_features.device, dtype=src_features.dtype)
+                in_degrees = edge_subgraph.in_degrees(etype=etype)
+                nodes_with_edges = (in_degrees > 0).nonzero(as_tuple=True)[0]
+                padded_features[nodes_with_edges] = src_features
+                src_features = padded_features
+
+            print("Src features after padding:", src_features.shape)
+            
+            try:
+                src_features = self.convs2[src_type](edge_subgraph, src_features)
+            except RuntimeError as e:
+                print("Error during graph convolution:")
+                print(f"Local graph structure: Nodes={edge_subgraph.number_of_nodes()}, Edges={edge_subgraph.number_of_edges()}")
+                print(f"src_features size: {src_features.size()}")
+                raise RuntimeError("Failed during convolution operation") from e
+
+            results[src_type] = src_features
+
+        return results if results else {ntype: torch.zeros((self.num_classes[ntype],), dtype=torch.float32) for ntype in self.num_classes}
 
 
 class FactoryEnvironment:
@@ -70,13 +89,10 @@ class FactoryEnvironment:
         optimal_distribution = compute_max_outputs(self.factory_graph, self.inventory, self.priorities)
         optimal_values_tensor = torch.tensor(list(optimal_distribution.values()), dtype=torch.float32).to(action.device)
 
-        logger.info(f"Action tensor shape: {action.shape}")
-        logger.info(f"Optimal values tensor shape: {optimal_values_tensor.shape}")
-
+        # Align the sizes by trimming or padding the optimal values tensor
         if action.shape[0] != optimal_values_tensor.shape[0]:
             logger.info("Mismatch in action and optimal values tensor sizes.")
             
-            # Align the sizes by trimming or padding the optimal values tensor
             if action.shape[0] < optimal_values_tensor.shape[0]:
                 optimal_values_tensor = optimal_values_tensor[:action.shape[0]]
             else:
@@ -93,14 +109,12 @@ class FactoryEnvironment:
         reward = -torch.mean((action - optimal_values_tensor).pow(2)).item()
         return reward
 
-
     def reset_environment(self, new_data=True):
         if new_data:
             self.inventory, self.priorities = generate_data(self.factory_graph)
         self.inventory_tensor = inventory_to_tensor(self.inventory)
         self.priorities_tensor = priorities_to_tensor(self.priorities)
         return {'graph': self.graph, 'inventory': self.inventory_tensor, 'priorities': self.priorities_tensor}
-
     
     def step(self, action: Tensor, update_data=False):
         reward = self.compute_reward(action)

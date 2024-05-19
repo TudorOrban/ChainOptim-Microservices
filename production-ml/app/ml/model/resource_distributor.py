@@ -7,6 +7,11 @@ from app.types.factory_inventory import FactoryInventoryItem
 
 logger = logging.getLogger(__name__)
 
+"""
+This function finds for each stage output the maximum quantity that can be produced given the current inventory and priorities.
+It first determines the dependency subtree of the stage output, then sorts it topologically and traverses it allocating resources to each stage.
+It is used for training the GNN model to simultaneously predict the optimal distribution of resources for each stage output.
+"""
 def compute_max_outputs(factory_graph: FactoryGraph, inventory: List[FactoryInventoryItem], priorities: dict[int, float]) -> dict[int, float]:
     max_outputs: dict[int, float] = {} # stage_output_id -> quantity
     stage_output_ids = find_stage_output_ids(factory_graph)
@@ -74,7 +79,7 @@ def determine_max_output_quantity(stage: SmallStage, inventory: dict[int, float]
     for stage_output in stage.stage_outputs:
         output_quantity = min_input_ratio * (stage_output.quantity_per_stage or 0)
         max_outputs[stage_output.id] = output_quantity
-        
+
         output_component_id = stage_output.component_id
         if output_component_id in inventory:
             inventory[output_component_id] += output_quantity

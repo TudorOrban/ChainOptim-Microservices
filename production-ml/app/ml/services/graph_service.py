@@ -3,7 +3,9 @@ from collections import deque
 from typing import List
 from app.types.factory_graph import FactoryGraph
 
-
+"""
+Graph utils used to (classically) determine the optimal distribution of resources.
+"""
 def determine_dependency_subtree(factory_graph: FactoryGraph, stage_id: int) -> FactoryGraph:
     relevant_nodes = set()
     relevant_edges = set()

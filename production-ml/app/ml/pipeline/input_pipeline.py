@@ -7,7 +7,10 @@ import torch
 from app.types.factory_graph import Edge, FactoryGraph
 from app.types.factory_inventory import FactoryInventoryItem
 
-
+"""
+This function serves as an input pipeline for the model. It transforms the factory_graph received from the Spring Boot backend
+and relabels the IDs of the stages, inputs and outputs to be continuous integers starting from 0, as necessary for DGL.
+"""
 def apply_unified_id_mapping(factory_graph: FactoryGraph, id_map: Dict[str, Dict[int, int]]) -> FactoryGraph:
     new_nodes = {}
     new_adj_list = {}

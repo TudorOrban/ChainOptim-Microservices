@@ -33,7 +33,6 @@ async def read_dependency_graph_stage_output(id: int, stage_id: int):
     graph_data = get_factory_graph_by_id(int(id))
     return determine_dependency_subtree(graph_data.factory_graph, stage_id)
 
-
 @router.get("/topological-order/{id}")
 async def topological_order_graph_stage_output(id: int):
     graph_data = get_factory_graph_by_id(int(id))
