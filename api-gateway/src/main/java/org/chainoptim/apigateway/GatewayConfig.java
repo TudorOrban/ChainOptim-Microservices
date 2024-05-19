@@ -18,7 +18,7 @@ public class GatewayConfig {
     private static final String SUPPLY_SERVICE = "lb://chainoptim-supply";
     private static final String DEMAND_SERVICE = "lb://chainoptim-demand";
     private static final String NOTIFICATIONS_SERVICE = "lb://chainoptim-notifications";
-
+    private static final String PRODUCTION_ML_SERVICE = "lb://chainoptim-production-ml";
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, RedisRateLimiter redisRateLimiter) {
@@ -69,9 +69,19 @@ public class GatewayConfig {
                 .route("factory-production-histories-route", r -> r.path("/api/v1/factory-production-histories/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))
+                .route("factory-graphs-route", r -> r.path("/api/v1/factory-graphs/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(CORE_SERVICE))
+                .route("product-graphs-route", r -> r.path("/api/v1/product-graphs/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(CORE_SERVICE))
+                .route("locations-route", r -> r.path("/api/v1/locations/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(CORE_SERVICE))
                 .route("warehouses-route", r -> r.path("/api/v1/warehouses/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))
+                // Supply
                 .route("suppliers-route", r -> r.path("/api/v1/suppliers/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(SUPPLY_SERVICE))
@@ -84,6 +94,7 @@ public class GatewayConfig {
                 .route("supplier-performance-route", r -> r.path("/api/v1/supplier-performance/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(SUPPLY_SERVICE))
+                // Demand
                 .route("clients-route", r -> r.path("/api/v1/clients/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(DEMAND_SERVICE))
@@ -93,33 +104,24 @@ public class GatewayConfig {
                 .route("client-shipments-route", r -> r.path("/api/v1/client-shipments/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(DEMAND_SERVICE))
-                .route("factory-graphs-route", r -> r.path("/api/v1/factory-graphs/**")
-                        .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
-                .route("product-graphs-route", r -> r.path("/api/v1/product-graphs/**")
-                        .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
-                .route("locations-route", r -> r.path("/api/v1/locations/**")
-                        .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
                 .route("actuator-route", r -> r.path("/api/v1/actuator/prometheus/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))
-                .route("products-route", r -> r.path("/api/v1/products/**")
-                        .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
-
-                // Internal
-                .route("internal-organization-route", r -> r.path("/api/v1/internal/organizations/**")
-                        .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
-
                 // Notifications
                 .route("notifications-route", r -> r.path("/api/v1/notifications/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(NOTIFICATIONS_SERVICE))
                 .route("websocket-route", r -> r.path("/ws/**")
                         .uri(NOTIFICATIONS_SERVICE))
+                // ML
+                .route("production-ml-route", r -> r.path("/api/v1/ml/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(PRODUCTION_ML_SERVICE))
+                // Internal
+                .route("internal-organization-route", r -> r.path("/api/v1/internal/organizations/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(CORE_SERVICE))
+
                 .build();
     }
 

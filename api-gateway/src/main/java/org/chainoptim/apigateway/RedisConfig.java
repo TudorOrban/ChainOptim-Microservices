@@ -12,7 +12,6 @@ public class RedisConfig {
     /*
      * Configure Redis to use the redis service defined in docker-compose.prod.yml
      */
-
     @Value("${spring.redis.host}")
     private String redisHost;
 

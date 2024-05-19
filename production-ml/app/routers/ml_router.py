@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-@router.get("/train-model/{id}")
+@router.get("/api/v1/ml/train-model/{id}")
 async def train_model(id: str):
     numeric_id = int(id)
     graph_data = get_factory_graph_by_id(numeric_id)
