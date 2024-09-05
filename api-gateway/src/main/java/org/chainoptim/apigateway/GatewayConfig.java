@@ -15,6 +15,7 @@ import java.util.Objects;
 public class GatewayConfig {
 
     private static final String CORE_SERVICE = "lb://chainoptim-core";
+    private static final String STORAGE_SERVICE = "lb://chainoptim-storage";
     private static final String SUPPLY_SERVICE = "lb://chainoptim-supply";
     private static final String DEMAND_SERVICE = "lb://chainoptim-demand";
     private static final String NOTIFICATIONS_SERVICE = "lb://chainoptim-notifications";
@@ -78,9 +79,21 @@ public class GatewayConfig {
                 .route("locations-route", r -> r.path("/api/v1/locations/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(CORE_SERVICE))
+
+                // Storage
                 .route("warehouses-route", r -> r.path("/api/v1/warehouses/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
-                        .uri(CORE_SERVICE))
+                        .uri(STORAGE_SERVICE))
+                .route("warehouse-inventory-route, ", r -> r.path("/api/v1/warehouse-inventory-items/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(STORAGE_SERVICE))
+                .route("compartments-route", r -> r.path("/api/v1/compartments/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(STORAGE_SERVICE))
+                .route("crates-route", r -> r.path("/api/v1/crates/**")
+                        .filters(f -> customFilter(f, redisRateLimiter))
+                        .uri(STORAGE_SERVICE))
+
                 // Supply
                 .route("suppliers-route", r -> r.path("/api/v1/suppliers/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
@@ -94,6 +107,7 @@ public class GatewayConfig {
                 .route("supplier-performance-route", r -> r.path("/api/v1/supplier-performance/**")
                         .filters(f -> customFilter(f, redisRateLimiter))
                         .uri(SUPPLY_SERVICE))
+
                 // Demand
                 .route("clients-route", r -> r.path("/api/v1/clients/**")
                         .filters(f -> customFilter(f, redisRateLimiter))

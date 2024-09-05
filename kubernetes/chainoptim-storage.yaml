@@ -1,50 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chainoptim-demand
+  name: chainoptim-storage
   labels:
-    app: chainoptim-demand
+    app: chainoptim-storage
 
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app: chainoptim-demand
+      app: chainoptim-storage
   template:
     metadata:
       labels:
-        app: chainoptim-demand
+        app: chainoptim-storage
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/path: '/actuator/prometheus'
         prometheus.io/port: '8083'
     spec:
       containers:
-      - name: chainoptim-demand
-        image: tudoraorban/chainoptim-demand:latest
+      - name: chainoptim-storage
+        image: tudoraorban/chainoptim-storage:latest
         ports:
         - containerPort: 8083
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: docker-dev
-        - name: GRPC_SERVICE_HOST
-          value: "chainoptim-core-grpc"
-        - name: GRPC_SERVICE_PORT
-          value: "50051"
       automountServiceAccountToken: false
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: chainoptim-demand
+  name: chainoptim-storage
   labels:
-    app: chainoptim-demand
+    app: chainoptim-storage
 spec:
   type: NodePort
   ports:
-  - port: 8085
-    targetPort: 8085
+  - port: 8084
+    targetPort: 8084
     protocol: TCP
-    nodePort: 31281
+    nodePort: 31280
   selector:
-    app: chainoptim-demand
+    app: chainoptim-storage
