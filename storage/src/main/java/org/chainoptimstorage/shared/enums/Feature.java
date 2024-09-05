@@ -24,7 +24,8 @@ public enum Feature {
     // Warehouses
     WAREHOUSE,
     WAREHOUSE_INVENTORY,
-
+    COMPARTMENT,
+    CRATE,
 
     // Suppliers
     SUPPLIER,
@@ -56,6 +57,8 @@ public enum Feature {
             case FACTORY_PERFORMANCE -> "Factory Performance";
             case WAREHOUSE -> "Warehouse";
             case WAREHOUSE_INVENTORY -> "Warehouse Inventory";
+            case COMPARTMENT -> "Compartment";
+            case CRATE -> "Crate";
             case SUPPLIER -> "Supplier";
             case SUPPLIER_ORDER -> "Supplier Order";
             case SUPPLIER_SHIPMENT -> "Supplier Shipment";

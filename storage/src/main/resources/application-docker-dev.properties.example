@@ -21,7 +21,7 @@ spring.datasource.hikari.idle-timeout=300000
 # Logging (ELK)
 logging.level.root=INFO
 logging.level.org.springframework.security=DEBUG
-logging.level.org.chainoptim=DEBUG
+logging.level.org.chainoptimstorage=DEBUG
 logging.level.org.hibernate.SQL=DEBUG
 logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n
 logging.appender.logstash.type=LogstashTcpSocketAppender

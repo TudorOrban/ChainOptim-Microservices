@@ -4,161 +4,148 @@
 -- ------------------------------------------------------
 -- Server version	8.2.0
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 
 --
--- Table structure for table `supplier_orders`
+-- Table structure for table `compartments`
 --
 
-DROP TABLE IF EXISTS `supplier_orders`;
+DROP TABLE IF EXISTS `compartments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `supplier_orders` (
+CREATE TABLE `compartments` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `supplier_id` int NOT NULL,
-  `raw_material_id` int DEFAULT NULL,
-  `component_id` int DEFAULT NULL,
-  `quantity` double DEFAULT NULL,
-  `order_date` timestamp NULL DEFAULT NULL,
-  `estimated_delivery_date` timestamp NULL DEFAULT NULL,
-  `delivery_date` timestamp NULL DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `warehouse_id` int NOT NULL,
   `organization_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `delivery_warehouse_id` int DEFAULT NULL,
-  `delivery_factory_id` int DEFAULT NULL,
-  `company_id` varchar(255) DEFAULT NULL,
-  `delivered_quantity` double DEFAULT NULL,
-  `status` enum('INITIATED','NEGOTIATED','PLACED','DELIVERED','CANCELED') DEFAULT NULL,
+  `data_json` json DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `supplier_id` (`supplier_id`),
-  KEY `raw_material_id` (`raw_material_id`),
-  KEY `component_id` (`component_id`),
+  KEY `warehouse_id` (`warehouse_id`),
   KEY `organization_id` (`organization_id`),
-  KEY `supplier_warehouse_id` (`delivery_warehouse_id`),
-  KEY `supplier_delively_factory_id` (`delivery_factory_id`),
-  CONSTRAINT `supplier_orders_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `supplier_orders`
---
-
-LOCK TABLES `supplier_orders` WRITE;
-/*!40000 ALTER TABLE `supplier_orders` DISABLE KEYS */;
-INSERT INTO `supplier_orders` VALUES (1,1,NULL,1,NULL,NULL,NULL,NULL,1,'2024-03-06 20:03:10','2024-04-26 14:09:39',NULL,NULL,'13251',NULL,'DELIVERED'),(2,3,NULL,1,1123,'2022-03-12 08:05:53','2022-03-18 08:05:51','2022-03-19 08:05:53',1,'2024-03-27 14:04:55','2024-04-17 18:40:32',NULL,NULL,'#5323',1123,'DELIVERED'),(3,4,NULL,3,5315,'2022-04-12 08:05:53','2022-03-23 08:05:53','2022-03-24 13:31:21',1,'2024-03-27 14:12:45','2024-04-17 18:40:32',NULL,NULL,'#123',5300,'DELIVERED'),(4,3,NULL,4,233,'2022-05-12 08:05:53','2022-05-13 08:05:53','2022-05-13 08:30:33',1,'2024-03-27 13:58:51','2024-04-17 18:40:32',NULL,NULL,'#142',23,'DELIVERED'),(5,3,NULL,3,2312225,'2022-06-01 08:05:53','2022-06-28 08:05:54','2022-07-02 08:05:53',1,'2024-03-27 13:58:52','2024-04-17 18:40:32',NULL,NULL,'#123',51000,'DELIVERED'),(6,3,NULL,4,3434,NULL,NULL,NULL,1,'2024-04-03 11:56:48','2024-04-17 18:40:32',NULL,NULL,NULL,NULL,'DELIVERED'),(7,3,NULL,5,3,NULL,NULL,NULL,1,'2024-04-03 11:57:08','2024-04-06 12:06:47',NULL,NULL,NULL,NULL,NULL),(8,3,NULL,1,153,NULL,NULL,NULL,1,'2024-04-03 14:14:20','2024-04-17 18:40:32',NULL,NULL,NULL,NULL,'CANCELED'),(9,3,NULL,1,352.012,'2022-07-01 08:05:53','2022-07-09 08:05:53','2022-07-10 08:05:53',1,'2024-04-03 14:14:20','2024-04-17 18:40:32',NULL,NULL,NULL,351,'DELIVERED'),(10,3,NULL,1,32,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-06 12:01:52',NULL,NULL,NULL,NULL,NULL),(11,3,NULL,1,1536,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-06 12:01:52',NULL,NULL,NULL,NULL,NULL),(12,3,NULL,1,463,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-17 18:40:32',NULL,NULL,NULL,NULL,'CANCELED'),(13,3,NULL,1,643,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-06 12:01:52',NULL,NULL,NULL,NULL,NULL),(14,3,NULL,1,3464,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-06 12:01:52',NULL,NULL,NULL,NULL,NULL),(15,3,NULL,1,4,NULL,NULL,NULL,1,'2024-04-04 12:43:55','2024-04-17 18:40:56',NULL,NULL,NULL,NULL,'DELIVERED'),(16,3,NULL,1,326,'2022-11-12 08:05:53','2022-11-16 08:05:53','2022-11-19 08:05:53',1,'2024-04-04 12:43:55','2024-04-17 18:40:56',NULL,NULL,NULL,325,'DELIVERED'),(17,3,NULL,1,124,NULL,NULL,NULL,1,'2024-04-04 14:34:49','2024-04-17 18:40:32',NULL,NULL,NULL,325,'DELIVERED'),(18,3,NULL,1,644,'2023-02-12 08:05:53','2023-03-01 08:05:53','2023-02-27 08:05:53',1,'2024-04-04 14:34:49','2024-04-17 18:40:32',NULL,NULL,NULL,640,'DELIVERED'),(19,3,NULL,2,352,NULL,NULL,NULL,1,'2024-04-04 14:34:49','2024-04-17 18:40:32',NULL,NULL,NULL,NULL,'DELIVERED'),(23,3,NULL,4,64,'2023-01-12 08:05:53','2023-01-15 08:05:53','2023-01-14 08:05:53',1,'2024-04-04 14:34:49','2024-04-17 18:40:32',NULL,NULL,NULL,54,'NEGOTIATED'),(24,3,NULL,1,12,NULL,NULL,NULL,1,'2024-04-04 14:36:09','2024-04-06 12:01:13',NULL,NULL,NULL,NULL,NULL),(25,3,NULL,7,1235,'2023-07-19 08:05:53','2023-08-01 08:05:53','2023-08-01 05:03:43',1,'2024-04-04 14:36:10','2024-04-06 12:22:12',NULL,NULL,NULL,1235,NULL),(26,3,NULL,2,24,NULL,NULL,NULL,1,'2024-04-04 14:36:10','2024-04-06 12:22:12',NULL,NULL,NULL,1235,NULL),(27,3,NULL,5,153,NULL,NULL,NULL,1,'2024-04-04 14:36:10','2024-04-06 12:01:13',NULL,NULL,NULL,NULL,NULL),(28,3,NULL,1,64,NULL,NULL,NULL,1,'2024-04-04 14:36:10','2024-04-06 12:01:13',NULL,NULL,NULL,NULL,NULL),(29,3,NULL,1,365,NULL,NULL,NULL,1,'2024-04-04 14:36:10','2024-04-06 12:01:13',NULL,NULL,NULL,NULL,NULL),(30,3,NULL,1,214,NULL,NULL,NULL,1,'2024-04-04 14:36:10','2024-04-06 12:01:13',NULL,NULL,NULL,NULL,NULL),(31,3,NULL,1,NULL,NULL,NULL,NULL,1,'2024-04-16 15:58:25','2024-04-16 15:58:25',NULL,NULL,NULL,NULL,NULL),(32,3,NULL,1,NULL,NULL,NULL,NULL,1,'2024-04-16 18:59:40','2024-04-16 18:59:40',NULL,NULL,NULL,NULL,NULL),(33,3,NULL,1,NULL,NULL,NULL,NULL,1,'2024-04-17 08:52:46','2024-04-17 08:52:46',NULL,NULL,NULL,NULL,NULL),(34,4,NULL,1,NULL,NULL,NULL,NULL,1,'2024-04-17 12:33:10','2024-04-17 12:33:10',NULL,NULL,NULL,NULL,NULL),(35,3,NULL,4,13213,NULL,NULL,NULL,1,'2024-04-17 12:38:03','2024-04-17 12:38:03',NULL,NULL,'#132',NULL,NULL),(36,3,NULL,4,124,NULL,NULL,NULL,1,'2024-04-17 13:10:32','2024-04-26 14:11:09',NULL,NULL,'12215121',NULL,'PLACED'),(37,4,NULL,1,NULL,NULL,NULL,NULL,1,'2024-04-17 15:19:31','2024-04-17 15:19:31',NULL,NULL,NULL,NULL,NULL),(38,4,NULL,1,4031,NULL,'2024-04-17 21:04:54',NULL,1,'2024-04-17 16:04:54','2024-04-17 19:51:30',NULL,NULL,NULL,NULL,'CANCELED'),(39,3,NULL,2,NULL,NULL,NULL,NULL,1,'2024-04-26 08:23:10','2024-04-26 08:35:43',NULL,NULL,'1321',NULL,'PLACED'),(40,3,NULL,3,NULL,NULL,NULL,NULL,1,'2024-04-26 08:23:10','2024-04-26 08:23:10',NULL,NULL,'N/',NULL,'PLACED'),(41,3,NULL,3,NULL,NULL,NULL,NULL,1,'2024-04-26 08:40:16','2024-04-26 08:40:16',NULL,NULL,'123',NULL,'NEGOTIATED');
-/*!40000 ALTER TABLE `supplier_orders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `supplier_performances`
---
-
-DROP TABLE IF EXISTS `supplier_performances`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `supplier_performances` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `supplier_id` int NOT NULL,
-  `supplier_performance_report` json DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `supplier_id` (`supplier_id`),
-  CONSTRAINT `supplier_performances_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `supplier_performances`
---
-
-LOCK TABLES `supplier_performances` WRITE;
-/*!40000 ALTER TABLE `supplier_performances` DISABLE KEYS */;
-INSERT INTO `supplier_performances` VALUES (4,3,'{\"totalDelays\": 6.0, \"averageDelayPerOrder\": 0.75, \"totalDeliveredOrders\": 8, \"componentPerformances\": {\"1\": {\"componentId\": 1, \"componentName\": \"Chip\", \"firstDeliveryDate\": [2022, 3, 19, 8, 5, 53], \"averageOrderQuantity\": 493.6, \"totalDeliveredOrders\": 5.0, \"totalDeliveredQuantity\": 2468.0, \"averageShipmentQuantity\": 0.0, \"averageDeliveredQuantity\": 492.4, \"deliveredPerOrderedRatio\": 492.4, \"deliveredQuantityOverTime\": {\"0.0\": 1123.0, \"55.0\": 23.0, \"113.0\": 351.0, \"245.0\": 325.0, \"345.0\": 640.0}}, \"2\": {\"componentId\": 2, \"componentName\": \"Test Component 2\", \"firstDeliveryDate\": [2022, 7, 2, 8, 5, 53], \"averageOrderQuantity\": 51235.0, \"totalDeliveredOrders\": 1.0, \"totalDeliveredQuantity\": 51235.0, \"averageShipmentQuantity\": 0.0, \"averageDeliveredQuantity\": 51000.0, \"deliveredPerOrderedRatio\": 51000.0, \"deliveredQuantityOverTime\": {\"0.0\": 51000.0}}, \"4\": {\"componentId\": 4, \"componentName\": \"Camera\", \"firstDeliveryDate\": [2023, 1, 14, 8, 5, 53], \"averageOrderQuantity\": 64.0, \"totalDeliveredOrders\": 1.0, \"totalDeliveredQuantity\": 64.0, \"averageShipmentQuantity\": 0.0, \"averageDeliveredQuantity\": 54.0, \"deliveredPerOrderedRatio\": 54.0, \"deliveredQuantityOverTime\": {\"0.0\": 54.0}}, \"7\": {\"componentId\": 7, \"componentName\": \"New Component\", \"firstDeliveryDate\": [2023, 8, 1, 5, 3, 43], \"averageOrderQuantity\": 1235.0, \"totalDeliveredOrders\": 1.0, \"totalDeliveredQuantity\": 1235.0, \"averageShipmentQuantity\": 0.0, \"averageDeliveredQuantity\": 1235.0, \"deliveredPerOrderedRatio\": 1235.0, \"deliveredQuantityOverTime\": {\"0.0\": 1235.0}}}, \"averageTimeToShipOrder\": 10.5, \"averageDelayPerShipment\": 0.75, \"averageShipmentsPerOrder\": 0.0, \"ratioOfOnTimeOrderDeliveries\": 0.25, \"ratioOfOnTimeShipmentDeliveries\": 0.0}','2024-04-06 13:52:35','2024-04-06 21:05:21');
-/*!40000 ALTER TABLE `supplier_performances` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `supplier_shipments`
---
-
-DROP TABLE IF EXISTS `supplier_shipments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `supplier_shipments` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `supplier_order_id` int NOT NULL,
-  `quantity` float DEFAULT NULL,
-  `shipment_starting_date` timestamp NULL DEFAULT NULL,
-  `estimated_arrival_date` timestamp NULL DEFAULT NULL,
-  `arrival_date` timestamp NULL DEFAULT NULL,
-  `transporter_type` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `source_location_id` int DEFAULT NULL,
-  `destination_location_id` int DEFAULT NULL,
-  `destination_location_type` varchar(255) DEFAULT NULL,
-  `current_location_latitude` float DEFAULT NULL,
-  `current_location_longitude` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `source_location_id` (`source_location_id`),
-  KEY `destination_location_id` (`destination_location_id`),
-  KEY `supplier_order_id` (`supplier_order_id`),
-  CONSTRAINT `supplier_shipments_ibfk_1` FOREIGN KEY (`supplier_order_id`) REFERENCES `supplier_orders` (`id`)
+  CONSTRAINT `compartments_ibfk_1` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`),
+  CONSTRAINT `compartments_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `supplier_shipments`
+-- Dumping data for table `compartments`
 --
 
-LOCK TABLES `supplier_shipments` WRITE;
-/*!40000 ALTER TABLE `supplier_shipments` DISABLE KEYS */;
-INSERT INTO `supplier_shipments` VALUES (1,1,120,NULL,NULL,NULL,'Ship','Initiated',1,6,NULL,NULL,NULL),(2,1,12000,NULL,NULL,NULL,'Ship','Initiated',1,6,NULL,NULL,NULL),(5,32,31321,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,32,31321,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,32,313212000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,32,31321,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,32,313212000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,32,31321,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,32,313212000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `supplier_shipments` ENABLE KEYS */;
+LOCK TABLES `compartments` WRITE;
+/*!40000 ALTER TABLE `compartments` DISABLE KEYS */;
+INSERT INTO `compartments` VALUES (1,'Comp 1',1,1,'{}'),(2,'Compr 21',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 16.0, \"componentId\": 1}, {\"crateId\": 2, \"maxCrates\": 100.0, \"componentId\": 2}], \"currentCrates\": [{\"crateId\": 1, \"numberOfCrates\": 10}]}'),(3,'Compr 21',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 12.0, \"componentId\": 1}, {\"crateId\": 2, \"maxCrates\": 60.0, \"componentId\": 2}], \"currentCrates\": [{\"crateId\": 1, \"numberOfCrates\": 8}, {\"crateId\": 2, \"numberOfCrates\": 58}]}'),(4,'C 14',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 129.0, \"componentId\": 1}, {\"crateId\": 2, \"maxCrates\": 41.0, \"componentId\": 2}], \"currentCrates\": [{\"crateId\": 1, \"numberOfCrates\": 20}, {\"crateId\": 2, \"numberOfCrates\": 40}]}'),(5,'NewComp',1,1,'null'),(6,'NC2',1,1,'null'),(7,'weqw',1,1,'null'),(8,'NCC@!',1,1,'null'),(9,'NC12',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 2132.0, \"componentId\": null}, {\"crateId\": 2, \"maxCrates\": 21.23, \"componentId\": null}], \"currentCrates\": null}'),(10,'BDSA1',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 121.0, \"componentId\": null}, {\"crateId\": 2, \"maxCrates\": 213.21, \"componentId\": null}], \"currentCrates\": null}'),(11,'New!',1,1,'{\"crateSpecs\": [{\"crateId\": 1, \"maxCrates\": 231.0, \"componentId\": null}, {\"crateId\": 2, \"maxCrates\": 21421.0, \"componentId\": null}, {\"crateId\": 1, \"maxCrates\": 1231.0, \"componentId\": null}, {\"crateId\": 2, \"maxCrates\": 1535.0, \"componentId\": null}], \"currentCrates\": null}');
+/*!40000 ALTER TABLE `compartments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `suppliers`
+-- Table structure for table `crates`
 --
 
-DROP TABLE IF EXISTS `suppliers`;
+DROP TABLE IF EXISTS `crates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `suppliers` (
+CREATE TABLE `crates` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `organization_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `location_id` int DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `component_id` int NOT NULL,
+  `quantity` decimal(10,0) NOT NULL,
+  `volume_m3` decimal(10,0) DEFAULT NULL,
+  `stackable` tinyint(1) DEFAULT NULL,
+  `height_m` decimal(10,0) DEFAULT NULL,
+  `organization_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKcdasbtce0ulnp7hhdryn3mo5s` (`organization_id`),
-  KEY `FK62w6tt0p4ti7f1ofonportcsg` (`location_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `component_id` (`component_id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `crates_ibfk_1` FOREIGN KEY (`component_id`) REFERENCES `components` (`id`),
+  CONSTRAINT `crates_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `suppliers`
+-- Dumping data for table `crates`
 --
 
-LOCK TABLES `suppliers` WRITE;
-/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'LA Supplier 1',2,'2024-03-04 21:07:43','2024-03-04 23:07:43',NULL),(2,'Motors Internationals',1,'2024-03-06 09:34:45','2024-03-23 16:20:45',13),(3,'AKio Motors',1,'2024-03-06 09:35:10','2024-03-06 11:35:10',6),(4,'Lu bu Co.',1,'2024-03-06 09:35:35','2024-03-06 11:35:35',5),(7,'Ford',1,'2024-03-21 18:49:38','2024-03-21 20:49:38',3),(8,'Ford',1,'2024-03-21 18:50:17','2024-03-21 20:50:17',10);
-/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
+LOCK TABLES `crates` WRITE;
+/*!40000 ALTER TABLE `crates` DISABLE KEYS */;
+INSERT INTO `crates` VALUES (1,'CRate 1',1,1,123,1,3,1),(2,'Cargo Crate',2,4,19,1,2,1);
+/*!40000 ALTER TABLE `crates` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `warehouse_inventory_items`
+--
+
+DROP TABLE IF EXISTS `warehouse_inventory_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `warehouse_inventory_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `warehouse_id` int NOT NULL,
+  `raw_material_id` int DEFAULT NULL,
+  `component_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `quantity` float DEFAULT NULL,
+  `minimum_required_quantity` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `organization_id` int DEFAULT NULL,
+  `company_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `raw_material_id` (`raw_material_id`),
+  KEY `component_id` (`component_id`),
+  KEY `product_id` (`product_id`),
+  KEY `warehouse_id` (`warehouse_id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_1` FOREIGN KEY (`warehouse_id`) REFERENCES `factories` (`id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_2` FOREIGN KEY (`raw_material_id`) REFERENCES `raw_materials` (`id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_3` FOREIGN KEY (`component_id`) REFERENCES `components` (`id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_4` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_5` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`),
+  CONSTRAINT `warehouse_inventory_items_ibfk_6` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `warehouse_inventory_items`
+--
+
+LOCK TABLES `warehouse_inventory_items` WRITE;
+/*!40000 ALTER TABLE `warehouse_inventory_items` DISABLE KEYS */;
+INSERT INTO `warehouse_inventory_items` VALUES (1,6,NULL,1,1,341,240,'2024-03-12 16:38:07','2024-04-30 09:40:51',1,NULL),(2,6,NULL,4,1,30,240,'2024-03-12 16:38:07','2024-04-30 09:40:51',1,NULL),(3,6,NULL,1,1,214,NULL,'2024-04-03 14:37:44','2024-08-09 19:35:30',1,NULL),(4,6,NULL,1,1,400,NULL,'2024-04-03 14:37:44','2024-08-09 19:35:30',1,NULL),(5,6,NULL,1,1,214,NULL,'2024-04-03 14:38:51','2024-08-02 11:42:12',1,NULL),(6,6,NULL,1,1,400,NULL,'2024-04-03 14:38:51','2024-08-02 11:42:12',1,NULL),(7,6,NULL,1,1,214,NULL,'2024-04-03 14:39:24','2024-08-02 11:42:12',1,NULL),(8,2,NULL,1,1,400,NULL,'2024-04-03 14:39:24','2024-08-09 19:29:48',1,NULL),(9,6,NULL,1,1,214,NULL,'2024-04-03 14:39:26','2024-08-02 11:42:12',1,NULL),(10,6,NULL,1,1,400,NULL,'2024-04-03 14:39:26','2024-08-02 11:42:12',1,NULL),(11,6,NULL,1,1,330,NULL,'2024-04-03 14:39:28','2024-08-02 11:42:12',1,NULL),(12,6,NULL,1,21,400,NULL,'2024-04-03 14:39:28','2024-08-02 11:42:12',1,NULL),(13,6,NULL,1,1,350,200,'2024-04-03 14:39:29','2024-08-02 11:42:12',1,NULL),(14,6,NULL,1,21,400,NULL,'2024-04-03 14:39:29','2024-08-02 11:42:12',1,NULL),(15,6,NULL,2,3,200,300,'2024-04-30 03:48:12','2024-08-02 11:42:12',1,NULL),(16,4,NULL,5,11,3112,NULL,'2024-08-09 13:30:08','2024-08-09 19:35:30',1,NULL),(17,5,NULL,8,14,123,NULL,'2024-08-09 13:33:59','2024-08-09 19:35:30',1,NULL);
+/*!40000 ALTER TABLE `warehouse_inventory_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `warehouses`
+--
+
+DROP TABLE IF EXISTS `warehouses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `warehouses` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `location_id` int DEFAULT NULL,
+  `organization_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `location_id` (`location_id`),
+  KEY `FKs5ri0quwqfiti3scdftfij40q` (`organization_id`),
+  CONSTRAINT `FKs5ri0quwqfiti3scdftfij40q` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`),
+  CONSTRAINT `warehouses_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `warehouses`
+--
+
+LOCK TABLES `warehouses` WRITE;
+/*!40000 ALTER TABLE `warehouses` DISABLE KEYS */;
+INSERT INTO `warehouses` VALUES (1,'NJ Warehouse',1,1,'2024-03-04 21:07:37','2024-08-03 11:45:06'),(2,'Chicago warehouse 2',14,1,'2024-03-06 09:34:29','2024-03-23 16:40:53'),(4,'Shenzen Warehouse',22,1,'2024-03-06 09:51:05','2024-08-05 11:16:28'),(5,'Kyoto Warehouse',6,1,'2024-03-06 09:51:15','2024-03-06 11:51:15'),(6,'LA Warehouse',3,1,'2024-03-06 09:51:24','2024-03-06 11:51:24'),(9,'Warehouse S.E.A.',5,1,'2024-03-21 17:56:30','2024-04-22 21:26:16'),(10,'QWwq',5,1,'2024-08-08 10:31:09','2024-08-08 13:31:09'),(12,'Warehouse S.E.A.',38,1,'2024-08-08 11:03:22','2024-08-08 14:03:22');
+/*!40000 ALTER TABLE `warehouses` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -169,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-01 15:35:46
+-- Dump completed on 2024-08-27 22:56:30
