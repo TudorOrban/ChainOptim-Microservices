@@ -3,14 +3,14 @@ package org.chainoptim.features.scanalysis.production.resourceallocation.service
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.DeficitResolution;
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.DeficitResolverPlan;
 import org.chainoptim.features.scanalysis.production.resourceallocation.model.ResourceAllocation;
+import org.chainoptim.internalcommunication.in.storage.model.Warehouse;
+import org.chainoptim.internalcommunication.in.storage.model.WarehouseInventoryItem;
+import org.chainoptim.internalcommunication.in.storage.repository.WarehouseInventoryItemRepository;
+import org.chainoptim.internalcommunication.in.storage.repository.WarehouseRepository;
 import org.chainoptim.internalcommunication.in.supplier.model.SupplierOrder;
 import org.chainoptim.internalcommunication.in.supplier.model.SupplierShipment;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierOrderRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierShipmentRepository;
-import org.chainoptim.features.warehouse.model.Warehouse;
-import org.chainoptim.features.warehouse.model.WarehouseInventoryItem;
-import org.chainoptim.features.warehouse.service.WarehouseInventoryService;
-import org.chainoptim.features.warehouse.service.WarehouseService;
 import org.chainoptim.shared.commonfeatures.location.model.Location;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +21,19 @@ import java.util.*;
 @Service
 public class ResourceSeekerServiceImpl implements ResourceSeekerService {
 
-    private final WarehouseService warehouseService;
-    private final WarehouseInventoryService warehouseInventoryService;
+    private final WarehouseRepository warehouseRepository;
+    private final WarehouseInventoryItemRepository warehouseInventoryItemRepository;
     private final SupplierOrderRepository supplierOrderRepository;
     private final SupplierShipmentRepository supplierShipmentRepository;
 
     @Autowired
     public ResourceSeekerServiceImpl(
-            WarehouseService warehouseService,
-            WarehouseInventoryService warehouseInventoryService,
+            WarehouseRepository warehouseRepository,
+            WarehouseInventoryItemRepository warehouseInventoryItemRepository,
             SupplierOrderRepository supplierOrderRepository,
             SupplierShipmentRepository supplierShipmentRepository) {
-        this.warehouseService = warehouseService;
-        this.warehouseInventoryService = warehouseInventoryService;
+        this.warehouseRepository = warehouseRepository;
+        this.warehouseInventoryItemRepository = warehouseInventoryItemRepository;
         this.supplierOrderRepository = supplierOrderRepository;
         this.supplierShipmentRepository = supplierShipmentRepository;
     }
@@ -54,14 +54,14 @@ public class ResourceSeekerServiceImpl implements ResourceSeekerService {
                                         List<ResourceAllocation> allocationDeficits,
                                         Location factoryLocation,
                                         List<DeficitResolution> resolutions) {
-        List<Warehouse> warehouses = warehouseService.getWarehousesByOrganizationId(organizationId);
+        List<Warehouse> warehouses = warehouseRepository.findWarehousesByOrganizationId(organizationId);
 
         for (Warehouse warehouse : warehouses) {
             // Skip if too far
-            if (!areCloseEnough(warehouse.getLocation(), factoryLocation, 40.0f)) continue;
+//            if (!areCloseEnough(warehouse.getLocationId(), factoryLocation, 40.0f)) continue;
 
             // Get warehouse inventory
-            List<WarehouseInventoryItem> inventory = warehouseInventoryService.getWarehouseInventoryItemsByWarehouseId(warehouse.getId());
+            List<WarehouseInventoryItem> inventory = warehouseInventoryItemRepository.findWarehouseInventoryItemsByOrganizationId(warehouse.getId()); // TODO: Fix this
 
             for (ResourceAllocation resourceAllocation : allocationDeficits) {
                 // Determine resource availability

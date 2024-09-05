@@ -10,7 +10,6 @@ import org.chainoptimstorage.internal.in.tenant.service.SubscriptionPlanLimiterS
 import org.chainoptimstorage.shared.PaginatedResults;
 import org.chainoptimstorage.shared.sanitization.EntitySanitizerService;
 import org.chainoptimstorage.core.warehouse.repository.WarehouseRepository;
-import org.chainoptimstorage.core.warehouseinventoryitem.model.OrderStatus;
 import org.chainoptimstorage.core.warehouseinventoryitem.model.WarehouseInventoryItem;
 import org.chainoptimstorage.core.warehouseinventoryitem.model.WarehouseInventoryEvent;
 import org.chainoptimstorage.core.warehouseinventoryitem.repository.WarehouseInventoryItemRepository;

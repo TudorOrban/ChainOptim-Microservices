@@ -12,6 +12,8 @@ import org.chainoptim.features.factory.repository.FactoryStageRepository;
 import org.chainoptim.features.product.repository.ProductRepository;
 import org.chainoptim.features.productpipeline.repository.ComponentRepository;
 import org.chainoptim.features.productpipeline.repository.StageRepository;
+import org.chainoptim.internalcommunication.in.storage.repository.WarehouseInventoryItemRepository;
+import org.chainoptim.internalcommunication.in.storage.repository.WarehouseRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierOrderRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierShipmentRepository;

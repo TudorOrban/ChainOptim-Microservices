@@ -8,7 +8,6 @@ import org.chainoptimstorage.exception.ValidationException;
 import org.chainoptimstorage.shared.PaginatedResults;
 import org.chainoptimstorage.shared.enums.SearchMode;
 import org.chainoptimstorage.shared.search.SearchParams;
-import org.chainoptimstorage.core.warehouseinventoryitem.model.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

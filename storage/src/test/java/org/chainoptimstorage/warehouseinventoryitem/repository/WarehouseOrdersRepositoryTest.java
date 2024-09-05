@@ -3,7 +3,6 @@ package org.chainoptimstorage.warehouseinventoryitem.repository;
 import org.chainoptimstorage.core.warehouseinventoryitem.repository.WarehouseInventoryItemRepository;
 import org.chainoptimstorage.core.warehouse.model.Warehouse;
 import org.chainoptimstorage.internal.in.location.dto.Location;
-import org.chainoptimstorage.core.warehouseinventoryitem.model.OrderStatus;
 import org.chainoptimstorage.core.warehouseinventoryitem.model.WarehouseInventoryItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

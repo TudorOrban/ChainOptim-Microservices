@@ -6,7 +6,6 @@ import org.chainoptimstorage.shared.PaginatedResults;
 import org.chainoptimstorage.shared.enums.SearchMode;
 import org.chainoptimstorage.shared.search.SearchParams;
 import org.chainoptimstorage.core.warehouse.model.Warehouse;
-import org.chainoptimstorage.core.warehouseinventoryitem.model.OrderStatus;
 import org.chainoptimstorage.core.warehouseinventoryitem.model.WarehouseInventoryItem;
 
 import org.junit.jupiter.api.BeforeEach;

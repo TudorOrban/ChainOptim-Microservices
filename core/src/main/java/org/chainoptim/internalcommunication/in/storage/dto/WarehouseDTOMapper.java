@@ -1,7 +1,8 @@
 package org.chainoptim.internalcommunication.in.storage.dto;
 
-import org.chainoptimstorage.core.warehouse.model.Warehouse;
-import org.chainoptimstorage.internal.in.location.dto.Location;
+
+import org.chainoptim.internalcommunication.in.storage.model.Warehouse;
+import org.chainoptim.shared.commonfeatures.location.model.Location;
 
 public class WarehouseDTOMapper {
 

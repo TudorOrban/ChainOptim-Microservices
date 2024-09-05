@@ -15,11 +15,6 @@ import org.chainoptim.features.productpipeline.dto.CreateComponentDTO;
 import org.chainoptim.features.productpipeline.dto.CreateStageDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateComponentDTO;
 import org.chainoptim.features.productpipeline.dto.UpdateStageDTO;
-import org.chainoptim.features.warehouse.dto.CreateWarehouseDTO;
-import org.chainoptim.features.warehouse.dto.CreateWarehouseInventoryItemDTO;
-import org.chainoptim.features.warehouse.dto.UpdateWarehouseDTO;
-import org.chainoptim.features.warehouse.dto.UpdateWarehouseInventoryItemDTO;
-import org.chainoptim.internalcommunication.in.supplier.dto.*;
 import org.chainoptim.shared.commonfeatures.location.dto.CreateLocationDTO;
 import org.chainoptim.shared.commonfeatures.location.dto.UpdateLocationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,27 +78,6 @@ public class EntitySanitizerServiceImpl implements EntitySanitizerService {
     }
 
     public UpdateFactoryInventoryItemDTO sanitizeUpdateFactoryInventoryItemDTO(UpdateFactoryInventoryItemDTO itemDTO) {
-        return itemDTO;
-    }
-
-    // Warehouses
-    public CreateWarehouseDTO sanitizeCreateWarehouseDTO(CreateWarehouseDTO warehouseDTO) {
-        warehouseDTO.setName(sanitizationService.sanitize(warehouseDTO.getName()));
-
-        return warehouseDTO;
-    }
-
-    public UpdateWarehouseDTO sanitizeUpdateWarehouseDTO(UpdateWarehouseDTO warehouseDTO) {
-        warehouseDTO.setName(sanitizationService.sanitize(warehouseDTO.getName()));
-
-        return warehouseDTO;
-    }
-
-    public CreateWarehouseInventoryItemDTO sanitizeCreateWarehouseInventoryItemDTO(CreateWarehouseInventoryItemDTO itemDTO) {
-        return itemDTO;
-    }
-
-    public UpdateWarehouseInventoryItemDTO sanitizeUpdateWarehouseInventoryItemDTO(UpdateWarehouseInventoryItemDTO itemDTO) {
         return itemDTO;
     }
 

@@ -1,6 +1,5 @@
 package org.chainoptim.internalcommunication.in.storage.dto;
 
-import org.chainoptim.shared.commonfeatures.location.dto.CreateLocationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateWarehouseDTO {
+public class UpdateWarehouseInventoryItemDTO {
 
     private Integer id;
-    private String name;
+    private Integer warehouseId;
     private Integer organizationId;
-    private Integer locationId;
-    private CreateLocationDTO location;
-    private boolean createLocation;
+    private Integer productId;
+    private Integer componentId;
+    private String companyId;
+    private Float quantity;
+    private Float minimumRequiredQuantity;
 }

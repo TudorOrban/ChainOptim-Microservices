@@ -1,9 +1,9 @@
 package org.chainoptim.internalcommunication.in.storage.dto;
 
+import org.chainoptim.shared.commonfeatures.location.dto.CreateLocationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.chainoptimstorage.internal.in.location.dto.CreateLocationDTO;
 
 @Data
 @AllArgsConstructor

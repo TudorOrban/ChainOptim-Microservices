@@ -8,8 +8,6 @@ import org.chainoptim.features.factory.model.FactoryStage;
 import org.chainoptim.features.product.model.Product;
 import org.chainoptim.features.product.model.UnitOfMeasurement;
 import org.chainoptim.features.productpipeline.model.Stage;
-import org.chainoptim.features.warehouse.model.Warehouse;
-import org.chainoptim.features.warehouse.model.WarehouseInventoryItem;
 import org.chainoptim.shared.search.dto.SmallEntityDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -117,36 +115,6 @@ class ProductRepositoryTest {
         assertEquals(factory.getId(), factoryNames.getFirst().getId());
     }
 
-    @Test
-    void findWarehouseNamesByProductId() {
-        // Arrange
-        // - Product
-        Product savedProduct = addTestProduct();
-
-        // - Warehouse and WarehouseInventoryItem
-        Warehouse warehouse = new Warehouse();
-        warehouse.setName("Test Warehouse");
-        warehouse.setOrganizationId(organizationId);
-
-        entityManager.persist(warehouse);
-        entityManager.flush();
-
-        WarehouseInventoryItem warehouseInventoryItem = new WarehouseInventoryItem();
-        warehouseInventoryItem.setWarehouseId(warehouse.getId());
-        warehouseInventoryItem.setProduct(savedProduct);
-
-        entityManager.persist(warehouseInventoryItem);
-        entityManager.flush();
-
-        // Act
-        List<SmallEntityDTO> warehouseNames = productRepository.findWarehouseNamesByProductId(savedProduct.getId());
-
-        // Assert
-        assertNotNull(warehouseNames);
-        assertEquals(1, warehouseNames.size());
-        assertEquals("Test Warehouse", warehouseNames.getFirst().getName());
-        assertEquals(warehouse.getId(), warehouseNames.getFirst().getId());
-    }
 
     @Test
     void testFindClientNamesByOrganizationId() {

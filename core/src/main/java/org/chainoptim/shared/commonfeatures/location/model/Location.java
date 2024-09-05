@@ -2,12 +2,10 @@ package org.chainoptim.shared.commonfeatures.location.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.chainoptim.features.client.model.Client;
 import org.chainoptim.features.factory.model.Factory;
-import org.chainoptim.features.warehouse.model.Warehouse;
 
 import java.util.Set;
 
@@ -49,10 +47,6 @@ public class Location {
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Factory> factories;
-
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Warehouse> warehouses;
 
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
