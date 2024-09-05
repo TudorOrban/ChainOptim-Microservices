@@ -33,77 +33,77 @@ class WarehouseServiceTest {
     private EntitySanitizerService entitySanitizerService;
 
     @InjectMocks
-    private WarehouseServiceImpl supplierService;
+    private WarehouseServiceImpl warehouseService;
 
     @Test
-    void testCreateSupplier() {
+    void testCreateWarehouse() {
         // Arrange
-        CreateWarehouseDTO supplierDTO = new CreateWarehouseDTO("Test Supplier", 1, 1, new CreateLocationDTO(), false);
-        Warehouse expectedWarehouse = WarehouseDTOMapper.convertCreateSupplierDTOToSupplier(supplierDTO);
+        CreateWarehouseDTO warehouseDTO = new CreateWarehouseDTO("Test Warehouse", 1, 1, new CreateLocationDTO(), false);
+        Warehouse expectedWarehouse = WarehouseDTOMapper.mapCreateWarehouseDTOToWarehouse(warehouseDTO);
 
         when(warehouseRepository.save(any(Warehouse.class))).thenReturn(expectedWarehouse);
         when(planLimiterService.isLimitReached(any(), any(), any())).thenReturn(false);
-        when(entitySanitizerService.sanitizeCreateSupplierDTO(any(CreateWarehouseDTO.class))).thenReturn(supplierDTO);
+        when(entitySanitizerService.sanitizeCreateWarehouseDTO(any(CreateWarehouseDTO.class))).thenReturn(warehouseDTO);
 
         // Act
-        Warehouse createdWarehouse = supplierService.createSupplier(supplierDTO);
+        Warehouse createdWarehouse = warehouseService.createWarehouse(warehouseDTO);
 
         // Assert
         assertNotNull(createdWarehouse);
         assertEquals(expectedWarehouse.getName(), createdWarehouse.getName());
         assertEquals(expectedWarehouse.getOrganizationId(), createdWarehouse.getOrganizationId());
-        assertEquals(expectedWarehouse.getLocationId(), createdWarehouse.getLocationId());
+        assertEquals(expectedWarehouse.getLocation(), createdWarehouse.getLocation());
 
         verify(warehouseRepository, times(1)).save(any(Warehouse.class));
     }
 
     @Test
-    void testUpdateSupplier_ExistingSupplier() {
+    void testUpdateWarehouse_ExistingWarehouse() {
         // Arrange
-        UpdateWarehouseDTO supplierDTO = new UpdateWarehouseDTO(1, "Test Supplier", 1, new CreateLocationDTO(), false);
+        UpdateWarehouseDTO warehouseDTO = new UpdateWarehouseDTO(1, "Test Warehouse", 1, 1, new CreateLocationDTO(), false);
         Warehouse existingWarehouse = new Warehouse();
         existingWarehouse.setId(1);
 
         when(warehouseRepository.findById(1)).thenReturn(Optional.of(existingWarehouse));
         when(warehouseRepository.save(any(Warehouse.class))).thenReturn(existingWarehouse);
-        when(entitySanitizerService.sanitizeUpdateSupplierDTO(any(UpdateWarehouseDTO.class))).thenReturn(supplierDTO);
+        when(entitySanitizerService.sanitizeUpdateWarehouseDTO(any(UpdateWarehouseDTO.class))).thenReturn(warehouseDTO);
 
         // Act
-        Warehouse updatedWarehouse = supplierService.updateSupplier(supplierDTO);
+        Warehouse updatedWarehouse = warehouseService.updateWarehouse(warehouseDTO);
 
         // Assert
         assertNotNull(updatedWarehouse);
         assertEquals(existingWarehouse.getName(), updatedWarehouse.getName());
         assertEquals(existingWarehouse.getOrganizationId(), updatedWarehouse.getOrganizationId());
-        assertEquals(existingWarehouse.getLocationId(), updatedWarehouse.getLocationId());
+        assertEquals(existingWarehouse.getLocation(), updatedWarehouse.getLocation());
 
         verify(warehouseRepository, times(1)).findById(1);
     }
 
     @Test
-    void testUpdateSupplier_NonExistingSupplier() {
+    void testUpdateWarehouse_NonExistingWarehouse() {
         // Arrange
-        UpdateWarehouseDTO supplierDTO = new UpdateWarehouseDTO(1, "Test Supplier", 1, new CreateLocationDTO(), false);
+        UpdateWarehouseDTO warehouseDTO = new UpdateWarehouseDTO(1, "Test Warehouse", 1, 1, new CreateLocationDTO(), false);
         Warehouse existingWarehouse = new Warehouse();
         existingWarehouse.setId(1);
 
         when(warehouseRepository.findById(1)).thenReturn(Optional.empty());
-        when(entitySanitizerService.sanitizeUpdateSupplierDTO(any(UpdateWarehouseDTO.class))).thenReturn(supplierDTO);
+        when(entitySanitizerService.sanitizeUpdateWarehouseDTO(any(UpdateWarehouseDTO.class))).thenReturn(warehouseDTO);
 
         // Act and assert
-        assertThrows(ResourceNotFoundException.class, () -> supplierService.updateSupplier(supplierDTO));
+        assertThrows(ResourceNotFoundException.class, () -> warehouseService.updateWarehouse(warehouseDTO));
 
         verify(warehouseRepository, times(1)).findById(1);
         verify(warehouseRepository, never()).save(any(Warehouse.class));
     }
 
     @Test
-    void testDeleteSupplier() {
+    void testDeleteWarehouse() {
         // Arrange
         doNothing().when(warehouseRepository).delete(any(Warehouse.class));
 
         // Act
-        supplierService.deleteSupplier(1);
+        warehouseService.deleteWarehouse(1);
 
         // Assert
         verify(warehouseRepository, times(1)).delete(any(Warehouse.class));

@@ -2,6 +2,7 @@ package org.chainoptimstorage.warehouse.repository;
 
 import org.chainoptimstorage.core.warehouse.model.Warehouse;
 import org.chainoptimstorage.core.warehouse.repository.WarehouseRepository;
+import org.chainoptimstorage.internal.in.location.dto.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,36 +29,38 @@ class WarehouseRepositoryTest {
     private WarehouseRepository warehouseRepository;
 
     Integer organizationId = 1;
-    Integer locationId = 1;
+    Location location;
     Integer supplierId;
 
     @BeforeEach
     void setUp() {
         // Set up supplier for update and delete tests
-        Warehouse warehouse = addTestSupplier();
+        location = new Location();
+        location.setId(1);
+        Warehouse warehouse = addTestWarehouse();
         supplierId = warehouse.getId();
     }
 
     @Test
-    void testCreateSupplier() {
+    void testCreateWarehouse() {
         // Arrange
-        Warehouse savedWarehouse = addTestSupplier();
+        Warehouse savedWarehouse = addTestWarehouse();
 
         entityManager.flush();
         entityManager.clear();
 
         // Assert
-        Optional<Warehouse> foundSupplierOpt = warehouseRepository.findById(savedWarehouse.getId());
-        assertTrue(foundSupplierOpt.isPresent(), "Supplier should be found in the database");
+        Optional<Warehouse> foundWarehouseOpt = warehouseRepository.findById(savedWarehouse.getId());
+        assertTrue(foundWarehouseOpt.isPresent(), "Warehouse should be found in the database");
 
-        Warehouse foundWarehouse = foundSupplierOpt.get();
+        Warehouse foundWarehouse = foundWarehouseOpt.get();
         assertEquals(savedWarehouse.getName(), foundWarehouse.getName());
         assertEquals(savedWarehouse.getOrganizationId(), foundWarehouse.getOrganizationId());
-        assertEquals(savedWarehouse.getLocationId(), foundWarehouse.getLocationId());
+        assertEquals(savedWarehouse.getLocation(), foundWarehouse.getLocation());
     }
 
     @Test
-    void testUpdateSupplier() {
+    void testUpdateWarehouse() {
         // Arrange
         Optional<Warehouse> supplierOptional = warehouseRepository.findById(supplierId); // Id from setUp
         if (supplierOptional.isEmpty()) {
@@ -76,7 +79,7 @@ class WarehouseRepositoryTest {
     }
 
     @Test
-    void testDeleteSupplier() {
+    void testDeleteWarehouse() {
         // Arrange
         Optional<Warehouse> supplierToBeDeletedOptional = warehouseRepository.findById(supplierId);
         if (supplierToBeDeletedOptional.isEmpty()) {
@@ -89,17 +92,17 @@ class WarehouseRepositoryTest {
         warehouseRepository.delete(warehouseToBeDeleted);
 
         // Assert
-        Optional<Warehouse> deletedSupplierOptional = warehouseRepository.findById(supplierId);
-        if (deletedSupplierOptional.isPresent()) {
+        Optional<Warehouse> deletedWarehouseOptional = warehouseRepository.findById(supplierId);
+        if (deletedWarehouseOptional.isPresent()) {
             fail("Expected supplier with id 1 to have been deleted");
         }
     }
 
-    Warehouse addTestSupplier() {
+    Warehouse addTestWarehouse() {
         Warehouse warehouse = new Warehouse();
-        warehouse.setName("Test Supplier");
+        warehouse.setName("Test Warehouse");
         warehouse.setOrganizationId(organizationId);
-        warehouse.setLocationId(locationId);
+        warehouse.setLocation(location);
 
         return entityManager.persist(warehouse);
     }

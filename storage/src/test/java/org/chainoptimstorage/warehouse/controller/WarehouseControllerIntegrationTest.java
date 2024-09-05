@@ -1,6 +1,7 @@
 package org.chainoptimstorage.warehouse.controller;
 
 import org.chainoptimstorage.core.warehouse.model.Warehouse;
+import org.chainoptimstorage.internal.in.location.dto.Location;
 import org.chainoptimstorage.internal.in.tenant.service.SubscriptionPlanLimiterService;
 import org.chainoptimstorage.internal.in.location.dto.CreateLocationDTO;
 import org.chainoptimstorage.internal.in.location.service.LocationService;
@@ -52,13 +53,16 @@ class WarehouseControllerIntegrationTest {
     Integer organizationId = 1;
     String jwtToken = "validToken";
     CreateLocationDTO locationDTO;
-    Integer locationId = 1;
+    Location location;
     Integer supplierId;
 
     @BeforeEach
     void setUp() {
         // Set up supplier for search, update and delete tests
         createTestSuppliers();
+        
+        location = new Location();
+        location.setId(1);
     }
 
     void createTestSuppliers() {
@@ -74,7 +78,7 @@ class WarehouseControllerIntegrationTest {
         Warehouse warehouse = new Warehouse();
         warehouse.setName(supplierName);
         warehouse.setOrganizationId(organizationId);
-        warehouse.setLocationId(locationId);
+        warehouse.setLocation(location);
 
         return warehouseRepository.save(warehouse);
     }
@@ -117,7 +121,7 @@ class WarehouseControllerIntegrationTest {
     @Test
     void testCreateSupplier() throws Exception {
         // Arrange
-        CreateWarehouseDTO supplierDTO = new CreateWarehouseDTO("Test Supplier - Unique Title 123456789", organizationId, locationId, locationDTO, false);
+        CreateWarehouseDTO supplierDTO = new CreateWarehouseDTO("Test Supplier - Unique Title 123456789", organizationId, location.getId(), locationDTO, false);
         String supplierDTOJson = objectMapper.writeValueAsString(supplierDTO);
         String invalidJWTToken = "Invalid";
 
@@ -150,13 +154,13 @@ class WarehouseControllerIntegrationTest {
         assertNotNull(createdWarehouse);
         assertEquals(supplierDTO.getName(), createdWarehouse.getName());
         assertEquals(supplierDTO.getOrganizationId(), createdWarehouse.getOrganizationId());
-        assertEquals(supplierDTO.getLocationId(), createdWarehouse.getLocationId());
+        assertEquals(supplierDTO.getLocationId(), createdWarehouse.getLocation().getId());
     }
 
     @Test
     void testUpdateSupplier() throws Exception {
         // Arrange
-        UpdateWarehouseDTO supplierDTO = new UpdateWarehouseDTO(supplierId, "Test Supplier - Updated Unique Title 123456789", locationId, null, false);
+        UpdateWarehouseDTO supplierDTO = new UpdateWarehouseDTO(supplierId, "Test Supplier - Updated Unique Title 123456789", organizationId, location.getId(), null, false);
         String supplierDTOJson = objectMapper.writeValueAsString(supplierDTO);
         String invalidJWTToken = "Invalid";
 
@@ -188,7 +192,7 @@ class WarehouseControllerIntegrationTest {
         Warehouse updatedWarehouse = updatedSupplierOptional.get();
         assertNotNull(updatedWarehouse);
         assertEquals(supplierDTO.getName(), updatedWarehouse.getName());
-        assertEquals(supplierDTO.getLocationId(), updatedWarehouse.getLocationId());
+        assertEquals(supplierDTO.getLocationId(), updatedWarehouse.getLocation().getId());
     }
 
     @Test

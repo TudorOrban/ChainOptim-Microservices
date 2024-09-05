@@ -32,18 +32,13 @@ public class SubscriptionPlanLimiterServiceImpl implements SubscriptionPlanLimit
 
         return switch (feature) {
             case Feature.SUPPLIER -> {
-                long suppliersCount = warehouseRepository.countByOrganizationId(organizationId);
-                yield suppliersCount + quantity >= planDetails.getMaxSuppliers();
+                long warehousesCount = warehouseRepository.countByOrganizationId(organizationId);
+                yield warehousesCount + quantity >= planDetails.getMaxWarehouses();
             }
-            case Feature.SUPPLIER_ORDER -> {
-//                long supplierOrdersCount = supplierRepository.getSupplierOrdersCount(organizationId);
-                long supplierOrdersCount = 0;
-                yield supplierOrdersCount + quantity >= planDetails.getMaxSupplierOrders();
-            }
-            case Feature.SUPPLIER_SHIPMENT -> {
-//                long supplierShipmentsCount = supplierRepository.getSupplierShipmentsCount(organizationId);
-                long supplierShipmentsCount = 0;
-                yield supplierShipmentsCount + quantity >= planDetails.getMaxSupplierShipments();
+            case Feature.WAREHOUSE_INVENTORY -> {
+//                long warehouseInventoryItemsCount = warehouseRepository.getWarehouseInventoryItemsCount(organizationId);
+                long warehouseInventoryItemsCount = 0;
+                yield warehouseInventoryItemsCount + quantity >= planDetails.getMaxWarehouseInventoryItems();
             }
             default -> false;
         };

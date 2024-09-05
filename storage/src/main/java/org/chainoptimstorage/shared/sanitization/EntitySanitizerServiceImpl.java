@@ -1,6 +1,8 @@
 package org.chainoptimstorage.shared.sanitization;
 
 import org.chainoptimstorage.core.warehouse.dto.*;
+import org.chainoptimstorage.core.warehouseinventoryitem.dto.CreateWarehouseInventoryItemDTO;
+import org.chainoptimstorage.core.warehouseinventoryitem.dto.UpdateWarehouseInventoryItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,33 +17,26 @@ public class EntitySanitizerServiceImpl implements EntitySanitizerService {
     }
 
 
-    // Suppliers
-    public CreateWarehouseDTO sanitizeCreateSupplierDTO(CreateWarehouseDTO supplierDTO) {
-        supplierDTO.setName(sanitizationService.sanitize(supplierDTO.getName()));
+    // Warehouses
+    public CreateWarehouseDTO sanitizeCreateWarehouseDTO(CreateWarehouseDTO warehouseDTO) {
+        warehouseDTO.setName(sanitizationService.sanitize(warehouseDTO.getName()));
 
-        return supplierDTO;
+        return warehouseDTO;
     }
 
-    public UpdateWarehouseDTO sanitizeUpdateSupplierDTO(UpdateWarehouseDTO supplierDTO) {
-        supplierDTO.setName(sanitizationService.sanitize(supplierDTO.getName()));
+    public UpdateWarehouseDTO sanitizeUpdateWarehouseDTO(UpdateWarehouseDTO warehouseDTO) {
+        warehouseDTO.setName(sanitizationService.sanitize(warehouseDTO.getName()));
 
-        return supplierDTO;
+        return warehouseDTO;
     }
 
-    public CreateSupplierOrderDTO sanitizeCreateSupplierOrderDTO(CreateSupplierOrderDTO orderDTO) {
+    public CreateWarehouseInventoryItemDTO sanitizeCreateWarehouseInventoryItemDTO(CreateWarehouseInventoryItemDTO orderDTO) {
         return orderDTO;
     }
 
-    public UpdateSupplierOrderDTO sanitizeUpdateSupplierOrderDTO(UpdateSupplierOrderDTO orderDTO) {
+    public UpdateWarehouseInventoryItemDTO sanitizeUpdateWarehouseInventoryItemDTO(UpdateWarehouseInventoryItemDTO orderDTO) {
         return orderDTO;
     }
 
-    public CreateSupplierShipmentDTO sanitizeCreateSupplierShipmentDTO(CreateSupplierShipmentDTO shipmentDTO) {
-        return shipmentDTO;
-    }
-
-    public UpdateSupplierShipmentDTO sanitizeUpdateSupplierShipmentDTO(UpdateSupplierShipmentDTO shipmentDTO) {
-        return shipmentDTO;
-    }
 
 }
