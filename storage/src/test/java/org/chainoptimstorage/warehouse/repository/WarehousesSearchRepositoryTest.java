@@ -38,7 +38,7 @@ class WarehousesSearchRepositoryTest {
                 .name(name)
                 .createdAt(LocalDateTime.parse(createdAt, formatter))
                 .updatedAt(LocalDateTime.parse(updatedAt, formatter))
-                .location(new Location())
+                .locationId(1)
                 .build();
 
         entityManager.persist(warehouse);

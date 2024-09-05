@@ -1,4 +1,4 @@
-package org.chainoptimstorage.core.warehouse.dto;
+package org.chainoptim.internalcommunication.in.storage.dto;
 
 import org.chainoptimstorage.core.warehouse.model.Warehouse;
 import org.chainoptimstorage.internal.in.location.dto.Location;

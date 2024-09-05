@@ -1,9 +1,8 @@
-package org.chainoptim.features.warehouse.dto;
+package org.chainoptim.internalcommunication.in.storage.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.chainoptim.shared.commonfeatures.location.model.Location;
 
 import java.time.LocalDateTime;
 
@@ -15,5 +14,5 @@ public class WarehousesSearchDTO {
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Location location;
+    private Integer locationId;
 }

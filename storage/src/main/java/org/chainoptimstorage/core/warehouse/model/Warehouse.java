@@ -33,9 +33,8 @@ public class Warehouse {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location location;
+    @Column(name = "location_id")
+    private Integer locationId;
 
     @Column(name = "organization_id", nullable = false)
     private Integer organizationId;

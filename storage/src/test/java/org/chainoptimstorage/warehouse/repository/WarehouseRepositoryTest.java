@@ -56,7 +56,7 @@ class WarehouseRepositoryTest {
         Warehouse foundWarehouse = foundWarehouseOpt.get();
         assertEquals(savedWarehouse.getName(), foundWarehouse.getName());
         assertEquals(savedWarehouse.getOrganizationId(), foundWarehouse.getOrganizationId());
-        assertEquals(savedWarehouse.getLocation(), foundWarehouse.getLocation());
+        assertEquals(savedWarehouse.getLocationId(), foundWarehouse.getLocationId());
     }
 
     @Test
@@ -102,7 +102,7 @@ class WarehouseRepositoryTest {
         Warehouse warehouse = new Warehouse();
         warehouse.setName("Test Warehouse");
         warehouse.setOrganizationId(organizationId);
-        warehouse.setLocation(location);
+        warehouse.setLocationId(location.getId());
 
         return entityManager.persist(warehouse);
     }

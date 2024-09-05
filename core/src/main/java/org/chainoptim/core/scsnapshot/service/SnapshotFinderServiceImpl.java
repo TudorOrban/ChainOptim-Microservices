@@ -15,8 +15,6 @@ import org.chainoptim.features.productpipeline.repository.StageRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierOrderRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierRepository;
 import org.chainoptim.internalcommunication.in.supplier.repository.SupplierShipmentRepository;
-import org.chainoptim.features.warehouse.repository.WarehouseInventoryItemRepository;
-import org.chainoptim.features.warehouse.repository.WarehouseRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

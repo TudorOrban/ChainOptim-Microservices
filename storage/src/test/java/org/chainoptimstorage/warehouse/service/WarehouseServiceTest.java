@@ -52,7 +52,7 @@ class WarehouseServiceTest {
         assertNotNull(createdWarehouse);
         assertEquals(expectedWarehouse.getName(), createdWarehouse.getName());
         assertEquals(expectedWarehouse.getOrganizationId(), createdWarehouse.getOrganizationId());
-        assertEquals(expectedWarehouse.getLocation(), createdWarehouse.getLocation());
+        assertEquals(expectedWarehouse.getLocationId(), createdWarehouse.getLocationId());
 
         verify(warehouseRepository, times(1)).save(any(Warehouse.class));
     }
@@ -75,7 +75,7 @@ class WarehouseServiceTest {
         assertNotNull(updatedWarehouse);
         assertEquals(existingWarehouse.getName(), updatedWarehouse.getName());
         assertEquals(existingWarehouse.getOrganizationId(), updatedWarehouse.getOrganizationId());
-        assertEquals(existingWarehouse.getLocation(), updatedWarehouse.getLocation());
+        assertEquals(existingWarehouse.getLocationId(), updatedWarehouse.getLocationId());
 
         verify(warehouseRepository, times(1)).findById(1);
     }

@@ -78,7 +78,7 @@ class WarehouseControllerIntegrationTest {
         Warehouse warehouse = new Warehouse();
         warehouse.setName(supplierName);
         warehouse.setOrganizationId(organizationId);
-        warehouse.setLocation(location);
+        warehouse.setLocationId(location.getId());
 
         return warehouseRepository.save(warehouse);
     }
@@ -154,7 +154,7 @@ class WarehouseControllerIntegrationTest {
         assertNotNull(createdWarehouse);
         assertEquals(supplierDTO.getName(), createdWarehouse.getName());
         assertEquals(supplierDTO.getOrganizationId(), createdWarehouse.getOrganizationId());
-        assertEquals(supplierDTO.getLocationId(), createdWarehouse.getLocation().getId());
+        assertEquals(supplierDTO.getLocationId(), createdWarehouse.getLocationId());
     }
 
     @Test
@@ -192,7 +192,7 @@ class WarehouseControllerIntegrationTest {
         Warehouse updatedWarehouse = updatedSupplierOptional.get();
         assertNotNull(updatedWarehouse);
         assertEquals(supplierDTO.getName(), updatedWarehouse.getName());
-        assertEquals(supplierDTO.getLocationId(), updatedWarehouse.getLocation().getId());
+        assertEquals(supplierDTO.getLocationId(), updatedWarehouse.getLocationId());
     }
 
     @Test

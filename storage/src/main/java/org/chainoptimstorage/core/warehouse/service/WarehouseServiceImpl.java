@@ -85,7 +85,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         if (sanitizedWarehouseDTO.isCreateLocation() && sanitizedWarehouseDTO.getLocation() != null) {
             Location location = locationService.createLocation(sanitizedWarehouseDTO.getLocation());
             Warehouse warehouse = WarehouseDTOMapper.mapCreateWarehouseDTOToWarehouse(sanitizedWarehouseDTO);
-            warehouse.setLocation(location);
+            warehouse.setLocationId(location.getId());
             return warehouseRepository.save(warehouse);
         } else {
             return warehouseRepository.save(WarehouseDTOMapper.mapCreateWarehouseDTOToWarehouse(sanitizedWarehouseDTO));
@@ -110,7 +110,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         } else {
             throw new ValidationException("Location is required.");
         }
-        warehouse.setLocation(location);
+        warehouse.setLocationId(location.getId());
 
         warehouseRepository.save(warehouse);
         return warehouse;

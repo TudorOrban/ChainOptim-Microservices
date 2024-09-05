@@ -114,7 +114,7 @@ class WarehouseOrdersRepositoryTest {
         warehouse.setOrganizationId(organizationId);
         Location location = new Location();
         location.setId(locationId);
-        warehouse.setLocation(location);
+        warehouse.setLocationId(location.getId());
 
         return entityManager.persist(warehouse);
     }

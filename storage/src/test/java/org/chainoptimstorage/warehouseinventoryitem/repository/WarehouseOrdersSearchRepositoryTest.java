@@ -235,7 +235,7 @@ class WarehouseOrdersSearchRepositoryTest {
                 .name("Test Warehouse")
                 .createdAt(LocalDateTime.parse("2024-01-23 12:02:02", formatter))
                 .updatedAt(LocalDateTime.parse("2024-01-23 12:02:02", formatter))
-                .location(location)
+                .locationId(location.getId())
                 .build();
 
         entityManager.persist(warehouse);

@@ -15,5 +15,5 @@ public class WarehousesSearchDTO {
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Location location;
+    private Integer locationId;
 }
